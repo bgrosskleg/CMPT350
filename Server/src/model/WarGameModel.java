@@ -14,6 +14,6 @@ public class WarGameModel extends GenericGameModel
 	}
 }
 /*
- * test
+ * HEY PAUL IT WORKS
  */
 
