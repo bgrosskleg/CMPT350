@@ -20,8 +20,8 @@ public class Card extends JPanel
 	
 	public static enum Value
 	{
-		ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
-		NINE, TEN, JACK, QUEEN, KING
+		TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
+		NINE, TEN, JACK, QUEEN, KING, ONE
 	}
 	
 	public static enum Suit

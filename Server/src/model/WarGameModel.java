@@ -32,8 +32,18 @@ public class WarGameModel extends GenericGameModel
 
 	@Override
 	protected void evalHand() {
-		// TODO Auto-generated method stub
-
+		/*
+		 *receive a card from each player, and send them to the winner 
+		 */
+		CardList currentRound = new CardList();
+		Card temp;
+		for(int i = 0; i < players.size(); i++)
+		{
+			/*
+			 * receive cards somehow, and put them in currentRound
+			 */
+		}
+		
 	}
 
 	@Override
