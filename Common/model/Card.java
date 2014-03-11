@@ -53,11 +53,14 @@ public class Card extends JPanel
 		cardBack = null;
 		try 
 		{
+			//Filepath's originate at the root folder of the project itself
+			//to get the image, step up one level to CMPT350 folder with '../'
+			//then drill down into 'Common' and find the resource needed
 			String imagePath;
-			imagePath = "resources/cards/" + suit + "/" + value + ".png";
+			imagePath = "../Common/resources/cards/" + suit + "/" + value + ".png";
 			cardFace = ImageIO.read(new File(imagePath));
 			
-			imagePath = "resources/cards/BACK.png";
+			imagePath = "../Common/resources/cards/BACK.png";
 			cardBack = ImageIO.read(new File(imagePath));
 		} 
 		catch (IOException e) 
