@@ -13,4 +13,7 @@ public class WarGameModel extends GenericGameModel
 		players.add(new Player("Player 2"));
 	}
 }
+/*
+ * test
+ */
 
