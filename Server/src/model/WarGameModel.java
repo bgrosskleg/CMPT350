@@ -35,8 +35,8 @@ public class WarGameModel extends GenericGameModel
 		/*
 		 *receive a card from each player, and send them to the winner 
 		 */
-		CardList currentRound = new CardList();
-		Card temp;
+		//CardList currentRound = new CardList();
+		//Card temp;
 		for(int i = 0; i < players.size(); i++)
 		{
 			/*
