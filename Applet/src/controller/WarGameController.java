@@ -1,9 +1,14 @@
 package controller;
-
+/**
+ * WarGameController is an object 
+ *
+ */
 public class WarGameController extends GenericGameController
 {
 
-	@Override
+	/**
+	 * 
+	 */
 	public void evaluateHand() 
 	{
 		// TODO Auto-generated method stub

@@ -5,7 +5,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import model.Card;
-
+/**
+ * WarGame is the main entry point from which the game is played
+ *
+ */
 public class WarGame 
 {
 	public static void main(String [ ] args)

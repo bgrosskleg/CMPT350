@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class GenericGameModel 
 {
-	CardList cards;
+	CardList cards;	
 	ArrayList<Player> players;
 	
 	protected GenericGameModel()
 	{
-		cards = new CardList();
-		players = new ArrayList<Player>();
+		cards = new CardList();				//new CardList which extends
+		players = new ArrayList<Player>();		
 	}
 	
 	protected void initializeCards(int numOfDecks)
