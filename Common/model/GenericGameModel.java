@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class GenericGameModel 
+public abstract class GenericGameModel 
 {
 	CardList cards;	
 	ArrayList<Player> players;
@@ -28,4 +28,22 @@ public class GenericGameModel
 			}
 		}
 	}
+	
+	protected void sendCard(Card card, Player player)
+	{
+		
+	}
+	
+	protected void receiveCard(Player player)
+	{
+		
+	}
+	
+	protected abstract void dealCards();
+	
+	protected abstract void evalHand();
+	
+	protected abstract void gameOver();
+	
+	
 }
