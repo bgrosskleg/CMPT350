@@ -19,4 +19,14 @@
 	{
 		this.name = name;
 	}
+
+	public CardList getHand() 
+	{
+		return hand;
+	}
+
+	public void setHand(CardList hand) 
+	{
+		this.hand = hand;
+	}
  }
