@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import model.Player.Dest;
+
 public abstract class GenericGameModel 
 {
 	CardList cards;	
@@ -29,7 +31,7 @@ public abstract class GenericGameModel
 		}
 	}
 	
-	protected void sendCard(Card card, Player player)
+	protected void sendCard(Card card, Player player, Dest dest)
 	{
 		
 	}
