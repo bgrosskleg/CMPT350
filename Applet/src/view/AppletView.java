@@ -8,7 +8,7 @@ import javax.swing.JApplet;
  * to be explained..? 
  * the view the player can see in the browser window?
  */
-public class WarGameView extends JApplet
+public class AppletView extends JApplet
 {
 	private static final long serialVersionUID = 1L;
 

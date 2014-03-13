@@ -6,13 +6,13 @@ package model;
  * 				Dest 
  *
  */
-public class WarPlayerModel extends Player{
+public class AppletModel extends Player{
 
 	/**
 	 * @param name:	the username the player has chosen
 	 * 
 	 */
-	protected WarPlayerModel(String name) {
+	protected AppletModel(String name) {
 		super(name);
 	}
 	

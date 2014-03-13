@@ -1,4 +1,4 @@
-package server;
+package view;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -9,7 +9,7 @@ import model.Card;
  * WarGame is the main entry point from which the game is played
  *
  */
-public class WarGame 
+public class ServerView 
 {
 	public static void main(String [ ] args)
 	{		

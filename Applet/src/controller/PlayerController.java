@@ -2,7 +2,7 @@ package controller;
 
 import model.Card;
 
-public class GenericPlayerController
+public class PlayerController
 {
 	 protected void sendCard(Card card)
 	 {

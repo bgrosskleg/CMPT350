@@ -5,7 +5,7 @@ package controller;
  * games will implement 
  *
  */
-public abstract class GenericGameController
+public abstract class ServerController extends GenericController
 {
 	/**
 	 * a generic function to evaluate what cards the players have given

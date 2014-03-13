@@ -2,9 +2,9 @@ package model;
 
 import model.Player.Dest;
 
-public class WarGameModel extends GenericGameModel
+public class ServerModel extends GenericGameModel
 {
-	public WarGameModel()
+	public ServerModel()
 	{
 		//calls the constructor of the GenericGameModel
 		//creates new CardList of cards and new ArrayedList of players
