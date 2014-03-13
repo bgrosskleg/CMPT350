@@ -19,13 +19,20 @@ public class Card extends JPanel implements Comparable<Card>
 	public static final int WIDTH = 71;
 	public static final int HEIGHT = 96;
 	
-	//the order that we put these in gives them an ordinal value 
-	//for instance TWO=0 and ACE=12, this will allow us to compare them later
+	//each enum has been given a value in brackets behind it (this will allow us to compare them later)
 	//** if we ever implement a game where aces are low this will have to be overwritten
 	public static enum Value
 	{
-		TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
-		NINE, TEN, JACK, QUEEN, KING, ACE
+		TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8),
+		NINE(9), TEN(10), JACK(11), QUEEN(12), KING(13), ACE(14);
+		
+		private int ordinal;
+		private Value(int ordinal)
+		{
+			this.ordinal=ordinal;
+		}
+		
+		
 	}
 	
 	public static enum Suit
@@ -134,8 +141,13 @@ public class Card extends JPanel implements Comparable<Card>
 	}
 	
 	@Override
-	public int compareTo(Card arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Card that) 
+	{
+		if(this.value.ordinal==that.value.ordinal)
+			return 0;
+		if(this.value.ordinal < that.value.ordinal)
+			return -1;
+		else
+			return 1;
 	}
 }
