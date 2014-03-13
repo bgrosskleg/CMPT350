@@ -12,7 +12,7 @@ public class GameController extends GenericController
 	public GameController()
 	{
 		this.systemModel = new WarGame();
-		this.comThread = new ServerCommunicationThread(this);
+		this.comThread = new ServerCommunicationThreadOLD();
 	}
 	
 	

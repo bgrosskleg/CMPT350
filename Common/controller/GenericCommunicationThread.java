@@ -6,15 +6,13 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.net.Socket;
-import model.GenericModel;
 
 
 public abstract class GenericCommunicationThread extends Thread implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	
-	private GenericController controller;
-	
+	protected final boolean VERBOSE = false;
 	
 	//ActiveObject stream
 	protected Socket activeObjectSocket;
@@ -46,14 +44,12 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
     
     protected boolean connected;
     
-    public GenericCommunicationThread(String name, GenericController cntrl)
+    public GenericCommunicationThread(String name)
     {
     	super(name);
-    	controller = cntrl;
     }
     
     protected abstract void initializeConnection() throws IOException;
-    
     
     
     public void run() 
@@ -100,7 +96,7 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
     					throw new Exception();
     				}
 
-    				if(controller.VERBOSE)
+    				if(VERBOSE)
     				{System.out.println("Received: |" + recieved + "|");}
     				
     				//Process command
@@ -131,16 +127,16 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
     
   //OBJECT TRANSMISSION*****************************************************************
 
-  	public void sendModel()
+  	public void sendObject(String notification, Object object)
   	{		
   		//Send object
   		try 
   		{
-  			if(controller.VERBOSE)
-  			{System.out.println("Sending model...");}
+  			if(VERBOSE)
+  			{System.out.println("Sending object...");}
 
   			//Notify on command stream
-  			activeCommandStreamOut.println("MODEL");
+  			activeCommandStreamOut.println(notification);
 
   			//Analyze command stream response
   			if(activeCommandStreamIn.readLine().equals("OKAY"))
@@ -149,17 +145,17 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
   				activeObjectStreamOut.reset();
 
   				//Write object to object stream
-  				activeObjectStreamOut.writeObject(controller.systemModel);
+  				activeObjectStreamOut.writeObject(object);
 
   				//Analyze command stream response
   				if(activeCommandStreamIn.readLine().equals("OKAY"))
   				{
-  					if(controller.VERBOSE)
-  					{System.out.println("Model sent successfully.");}
+  					if(VERBOSE)
+  					{System.out.println("Object sent successfully.");}
   				}
   				else if(activeCommandStreamIn.readLine().equals("FAIL"))
   				{
-  					System.err.println("Model did not send successfully.");
+  					System.err.println("Object did not send successfully.");
   				}
   				else
   				{
@@ -173,13 +169,13 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
   		} 
   		catch (Exception e) 
   		{
-  			System.err.println("Failure sending model.");
+  			System.err.println("Failure sending object.");
   			//e.printStackTrace();
   		}
   	}
 
 
-  	public GenericModel receiveModel()
+  	public Object receiveObject()
   	{
   		//Get objects
   		try 
@@ -187,24 +183,24 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
   			//Notify ready
   			passiveCommandStreamOut.println("OKAY");
 
-  			if(controller.VERBOSE)
-  			{System.out.println("Recieving model...");}
+  			if(VERBOSE)
+  			{System.out.println("Recieving object...");}
 
   			//Read object off object stream
-  			GenericModel received = (GenericModel) passiveObjectStreamIn.readObject();
+  			Object received = passiveObjectStreamIn.readObject();
   			
   			//Notify result
   			passiveCommandStreamOut.println("OKAY");
 
-  			if(controller.VERBOSE)
-  			{System.out.println("Model recieved successfully.");}
+  			if(VERBOSE)
+  			{System.out.println("Object recieved successfully.");}
 
   			return received;
   		} 
   		catch (Exception e) 
   		{
   			passiveCommandStreamOut.println("FAIL");
-  			System.err.println("Failure receiving model.");
+  			System.err.println("Failure receiving object.");
   			//e.printStackTrace();
   			return null;
   		}

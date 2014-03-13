@@ -20,9 +20,9 @@ public class AppletCommunicationThread extends GenericCommunicationThread
 	 * Create the LAN communication thread, extends generic controller thread
 	 * @param cntrl the controller used by the applet, in order to use the controller methods
 	 */
-	public AppletCommunicationThread(PlayerController cntrl) 
+	public AppletCommunicationThread() 
     {
-		super("AppletCommunicationThread", cntrl);
+		super("AppletCommunicationThread");
 		
 		//Grab codebase to support loading files from host
 		//This finds the codebase and host name that the application was loaded from (ie. the server)
