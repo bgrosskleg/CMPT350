@@ -14,6 +14,11 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
 	
 	protected final boolean VERBOSE = false;
 	
+	protected enum notifications 
+	{
+		
+	}
+	
 	//ActiveObject stream
 	protected Socket activeObjectSocket;
 	protected ObjectOutputStream activeObjectStreamOut;

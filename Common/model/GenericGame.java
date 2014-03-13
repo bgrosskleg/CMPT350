@@ -2,10 +2,14 @@ package model;
 
 import java.util.ArrayList;
 
+import controller.GenericGameController;
+
 public abstract class GenericGame extends GenericModel
 {
 	protected CardList deck;	
 	protected ArrayList<GenericPlayer> players;
+	
+	protected GenericGameController controller;
 	
 	protected GenericGame()
 	{

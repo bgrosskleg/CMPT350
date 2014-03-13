@@ -13,7 +13,6 @@ public class WarGame extends GenericGame
 		//initialize 1 deck of cards
 		this.initializeDeck(1);
 		this.deck.shuffle();
-
 		
 		//Start thread that waits for players
 		

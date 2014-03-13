@@ -9,6 +9,5 @@ public abstract class GenericGameController
 	/**
 	 * A barebones controller needs a comThread and systemModel
 	 */
-	protected GenericModel systemModel;
 	protected GenericCommunicationThread comThread;
 }
