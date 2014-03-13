@@ -1,10 +1,8 @@
 package model;
 
-import model.Player.Dest;
-
-public class ServerModel extends GenericGameModel
+public class WarGame extends GenericGame
 {
-	public ServerModel()
+	public WarGame()
 	{
 		//calls the constructor of the GenericGameModel
 		//creates new CardList of cards and new ArrayedList of players
@@ -14,8 +12,8 @@ public class ServerModel extends GenericGameModel
 		this.initializeCards(1);
 
 		//Create Players
-		players.add(new Player("Player 1"));
-		players.add(new Player("Player 2"));
+		players.add(new WarPlayer("Player 1"));
+		players.add(new WarPlayer("Player 2"));
 	}
 
 	@Override
@@ -25,7 +23,7 @@ public class ServerModel extends GenericGameModel
 		{
 			for(int i = 0; i < players.size() && !cards.isEmpty(); i++)
 			{
-				sendCard(cards.remove(0), players.get(i), Dest.HAND);
+				sendCard(cards.remove(0), players.get(i));
 			}
 		}
 	}

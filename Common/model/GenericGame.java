@@ -2,17 +2,16 @@ package model;
 
 import java.util.ArrayList;
 
-import model.Player.Dest;
-
-public abstract class GenericGameModel 
+public abstract class GenericGame extends GenericModel
 {
 	CardList cards;	
-	ArrayList<Player> players;
+	ArrayList<GenericPlayer> players;
 	
-	protected GenericGameModel()
+	protected GenericGame()
 	{
-		cards = new CardList();				//new CardList which extends
-		players = new ArrayList<Player>();		
+		super();
+		cards = new CardList();
+		players = new ArrayList<GenericPlayer>();		
 	}
 	
 	protected void initializeCards(int numOfDecks)
@@ -31,12 +30,12 @@ public abstract class GenericGameModel
 		}
 	}
 	
-	protected void sendCard(Card card, Player player, Dest dest)
+	protected void sendCard(Card card, GenericPlayer player)
 	{
 		
 	}
 	
-	protected void receiveCard(Player player)
+	protected void receiveCard(GenericPlayer player)
 	{
 		
 	}

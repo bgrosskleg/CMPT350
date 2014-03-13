@@ -20,4 +20,19 @@ public class CardList extends ArrayList<Card>
 		//Collections is a data type inside of java
 		Collections.shuffle(this);
 	}
+	
+	public void organize()
+	{
+		//TODO  ORDER CARDS SMALLEST TO LARGEST, ALTERNATING RED BLACK SUITS
+	}
+	
+	public void showAll()
+	{
+		//TODO Flip all cards face up
+	}
+	
+	public void hideAll()
+	{
+		//TODO Flip all cards face down
+	}
 }
