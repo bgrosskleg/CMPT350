@@ -12,13 +12,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class Card extends JPanel implements Comparable
+public class Card extends JPanel implements Comparable<Card>
 {
 	private static final long serialVersionUID = 1L;
 
 	public static final int WIDTH = 71;
 	public static final int HEIGHT = 96;
 	
+	//the order that we put these in gives them an ordinal value 
+	//for instance TWO=0 and ACE=12, this will allow us to compare them later
+	//** if we ever implement a game where aces are low this will have to be overwritten
 	public static enum Value
 	{
 		TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
@@ -131,7 +134,7 @@ public class Card extends JPanel implements Comparable
 	}
 	
 	@Override
-	public int compareTo(Object arg0) {
+	public int compareTo(Card arg0) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
