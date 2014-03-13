@@ -8,10 +8,11 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class Card extends JPanel
+public class Card extends JPanel implements Comparable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -127,5 +128,11 @@ public class Card extends JPanel
 	    //TODO ...   
 	    
 	   return false;
+	}
+	
+	@Override
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
