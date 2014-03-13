@@ -21,9 +21,9 @@ public class CardList extends ArrayList<Card>
 		Collections.shuffle(this);
 	}
 	
-	public void organize()
+	public void sort()
 	{
-		//TODO  ORDER CARDS SMALLEST TO LARGEST, ALTERNATING RED BLACK SUITS
+		//TODO  SORT CARDS SMALLEST TO LARGEST, ALTERNATING RED BLACK SUITS
 	}
 	
 	public void showAll()

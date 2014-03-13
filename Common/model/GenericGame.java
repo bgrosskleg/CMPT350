@@ -4,19 +4,20 @@ import java.util.ArrayList;
 
 public abstract class GenericGame extends GenericModel
 {
-	CardList cards;	
-	ArrayList<GenericPlayer> players;
+	protected CardList deck;	
+	protected ArrayList<GenericPlayer> players;
 	
 	protected GenericGame()
 	{
+		//Calls the constructor of the GenericModel
 		super();
-		cards = new CardList();
+		deck = new CardList();
 		players = new ArrayList<GenericPlayer>();		
 	}
 	
-	protected void initializeCards(int numOfDecks)
+	protected void initializeDeck(int numOfDecks)
 	{
-		cards = new CardList();
+		deck = new CardList();
 		
 		for(int iter = numOfDecks; iter > 1; iter--)
 		{
@@ -24,20 +25,10 @@ public abstract class GenericGame extends GenericModel
 			{
 				for(Card.Value value: Card.Value.values())
 				{
-					cards.add(new Card(value, suit, Card.Display.FACEDOWN));
+					deck.add(new Card(value, suit, Card.Display.FACEDOWN));
 				}
 			}
 		}
-	}
-	
-	protected void sendCard(Card card, GenericPlayer player)
-	{
-		
-	}
-	
-	protected void receiveCard(GenericPlayer player)
-	{
-		
 	}
 	
 	protected abstract void dealCards();

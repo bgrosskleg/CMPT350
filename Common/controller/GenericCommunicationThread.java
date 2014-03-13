@@ -86,21 +86,21 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
     			while (true) 
     			{
     				// Receive request on passive stream
-    				String recieved = null;
+    				String notification = null;
 
-    				recieved = passiveCommandStreamIn.readLine();
+    				notification = passiveCommandStreamIn.readLine();
 
-    				if(recieved == null)
+    				if(notification == null)
     				{
     					//EOF Stream is closed, likely remote closed socket, trigger catch statement
     					throw new Exception();
     				}
 
     				if(VERBOSE)
-    				{System.out.println("Received: |" + recieved + "|");}
+    				{System.out.println("Notification: |" + notification + "|");}
     				
     				//Process command
-    				switch(recieved)
+    				switch(notification)
     				{	
 	    				case "WINPILE":			//Send card to win pile
 	    										break;

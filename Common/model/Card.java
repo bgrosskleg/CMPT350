@@ -105,4 +105,27 @@ public class Card extends JPanel
 			}
 		}
 	}
+	
+	/**
+	 * Equals is used in the ArrayList contains function
+	 * By implementing equals for each type of object it is possible to call
+	 * ArrayList<Card>.contains(Card) and it will work
+	 */
+	@Override
+	public boolean equals(Object other) 
+	{
+		if (other == null) 
+		{return false;}
+		
+	    if (other == this) 
+	    {return true;}
+	    
+	    if (!(other instanceof Card))
+	    {return false;}
+	    
+	    //Class specific comparison
+	    //TODO ...   
+	    
+	   return false;
+	}
 }

@@ -2,7 +2,7 @@ package controller;
 
 import model.GenericModel;
 
-public abstract class GenericController
+public abstract class GenericGameController
 {			
 	public final boolean VERBOSE = false;
 	

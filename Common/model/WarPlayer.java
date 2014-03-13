@@ -2,14 +2,16 @@ package model;
 
 public class WarPlayer extends GenericPlayer
 {
-	public static enum Dest
+	private Card cardPlayed;
+	
+	public static enum Destination
 	{
 		HAND,WINPILE
 	}
 
-	protected WarPlayer(String name) 
+	public WarPlayer(String name) 
 	{
 		super(name);
-		// TODO Auto-generated constructor stub
+		cardPlayed = null;
 	}
 }
