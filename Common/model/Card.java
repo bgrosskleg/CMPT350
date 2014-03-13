@@ -20,8 +20,13 @@ public class Card extends JPanel
 	
 	public static enum Value
 	{
+<<<<<<< HEAD
 		ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
 		NINE, TEN, JACK, QUEEN, KING
+=======
+		TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
+		NINE, TEN, JACK, QUEEN, KING, ONE
+>>>>>>> branch 'master' of https://github.com/bgrosskleg/CMPT350.git
 	}
 	
 	public static enum Suit

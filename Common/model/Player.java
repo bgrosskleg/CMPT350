@@ -7,7 +7,7 @@
 	 
 	 public static enum Dest
 	 {
-		 HAND, WINPILE
+		 HAND,WINPILE
 	 }
 	 
 	 protected Player(String name)
