@@ -30,9 +30,7 @@ public class Card extends JPanel implements Comparable<Card>
 		private Value(int ordinal)
 		{
 			this.ordinal=ordinal;
-		}
-		
-		
+		}	
 	}
 	
 	public static enum Suit
@@ -40,25 +38,19 @@ public class Card extends JPanel implements Comparable<Card>
 		CLUB, HEART, SPADE, DIAMOND
 	}
 	
-	public static enum Display
-	{
-		FACEUP, FACEDOWN
-	}
 
 	Value value;
 	Suit suit;
-	Display display;
 	
 	BufferedImage cardFace;
 	BufferedImage cardBack;
 	
-	public Card(Value value, Suit suit, Display display)
+	public Card(Value value, Suit suit)
 	{
 		super();
 		
 		this.value = value;
 		this.suit = suit;
-		this.display = display;
 				
 		cardFace = null;
 		cardBack = null;
@@ -69,6 +61,7 @@ public class Card extends JPanel implements Comparable<Card>
 			//then drill down into 'Common' and find the resource needed
 			String imagePath;
 			imagePath = "../Common/resources/cards/" + suit + "/" + value + ".png";
+			System.out.println(imagePath);
 			cardFace = ImageIO.read(new File(imagePath));
 			
 			imagePath = "../Common/resources/cards/BACK.png";
@@ -84,37 +77,37 @@ public class Card extends JPanel implements Comparable<Card>
 		this.setMinimumSize(getPreferredSize());
 	}
 	
-	@Override
-	public void paintComponent(Graphics g)
+	public void paintFace()
 	{
-		Graphics2D g2 = (Graphics2D) g;
+		Graphics2D g2 = (Graphics2D) this.getGraphics();
 		
-		if(this.display.equals(Card.Display.FACEUP))
+		if(cardFace == null)
 		{
-			if(cardFace == null)
-			{
-				g2.setColor(Color.WHITE);
-				g2.setStroke(new BasicStroke(2));
-				g2.drawRect(0, 0, WIDTH, HEIGHT);
-			}
-			else
-			{
-				g2.drawImage(cardFace, 0, 0, null);
-			}
+			g2.setColor(Color.WHITE);
+			g2.setStroke(new BasicStroke(2));
+			g2.drawRect(0, 0, WIDTH, HEIGHT);
 		}
-		else if(this.display.equals(Card.Display.FACEDOWN))
+		else
 		{
-			if(cardBack == null)
-			{
-				g2.setColor(Color.WHITE);
-				g2.setStroke(new BasicStroke(2));
-				g2.drawRect(0, 0, WIDTH, HEIGHT);
-			}
-			else
-			{
-				g.drawImage(cardBack, 0, 0, null);
-			}
+			g2.drawImage(cardFace, 0, 0, null);
 		}
+	}
+	
+	public void paintBack()
+	{
+		Graphics2D g2 = (Graphics2D) this.getGraphics();
+		
+		if(cardBack == null)
+		{
+			g2.setColor(Color.WHITE);
+			g2.setStroke(new BasicStroke(2));
+			g2.drawRect(0, 0, WIDTH, HEIGHT);
+		}
+		else
+		{
+			g2.drawImage(cardBack, 0, 0, null);
+		}
+		
 	}
 	
 	/**

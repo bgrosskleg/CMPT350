@@ -1,6 +1,6 @@
 package controller;
 
-import model.GenericModel;
+import controller.GenericCommunicationThread;
 
 public abstract class GenericGameController
 {			

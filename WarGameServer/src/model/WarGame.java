@@ -53,17 +53,6 @@ public class WarGame extends GenericGame
 		// TODO Auto-generated method stub
 
 	}
-
-	public int getNumOfPlayers() 
-	{
-		return numOfPlayers;
-	}
-
-	public void setNumOfPlayers(int numOfPlayers) 
-	{
-		this.numOfPlayers = numOfPlayers;
-		this.notifyModelSubscribers();
-	}
 }
 
 
