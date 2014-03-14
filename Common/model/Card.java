@@ -36,11 +36,16 @@ public class Card extends JPanel implements Comparable<Card>
 	public static enum Suit
 	{
 		CLUB, HEART, SPADE, DIAMOND
-	}
+	}	
 	
+	public static enum Display
+	{
+		FACEUP, FACEDOWN
+	}
 
 	Value value;
 	Suit suit;
+	Display display;
 	
 	BufferedImage cardFace;
 	BufferedImage cardBack;
@@ -51,6 +56,7 @@ public class Card extends JPanel implements Comparable<Card>
 		
 		this.value = value;
 		this.suit = suit;
+		this.display = Display.FACEDOWN;
 				
 		cardFace = null;
 		cardBack = null;
@@ -59,12 +65,13 @@ public class Card extends JPanel implements Comparable<Card>
 			//Filepath's originate at the root folder of the project itself
 			//to get the image, step up one level to CMPT350 folder with '../'
 			//then drill down into 'Common' and find the resource needed
+			String cardPath = "../Common/resources/cards/";
 			String imagePath;
-			imagePath = "../Common/resources/cards/" + suit + "/" + value + ".png";
+			imagePath = cardPath + suit + "/" + value + ".png";
 			System.out.println(imagePath);
 			cardFace = ImageIO.read(new File(imagePath));
 			
-			imagePath = "../Common/resources/cards/BACK.png";
+			imagePath = cardPath + "BACK.png";
 			cardBack = ImageIO.read(new File(imagePath));
 		} 
 		catch (IOException e) 
@@ -77,37 +84,37 @@ public class Card extends JPanel implements Comparable<Card>
 		this.setMinimumSize(getPreferredSize());
 	}
 	
-	public void paintFace()
+	@Override
+	public void paintComponent(Graphics g)
 	{
-		Graphics2D g2 = (Graphics2D) this.getGraphics();
+		Graphics2D g2 = (Graphics2D) g;
 		
-		if(cardFace == null)
+		if(display.equals(Display.FACEUP))
 		{
-			g2.setColor(Color.WHITE);
-			g2.setStroke(new BasicStroke(2));
-			g2.drawRect(0, 0, WIDTH, HEIGHT);
+			if(cardFace == null)
+			{
+				g2.setColor(Color.WHITE);
+				g2.setStroke(new BasicStroke(2));
+				g2.drawRect(0, 0, WIDTH, HEIGHT);
+			}
+			else
+			{
+				g2.drawImage(cardFace, 0, 0, null);
+			}
 		}
-		else
+		else if(display.equals(Display.FACEDOWN))
 		{
-			g2.drawImage(cardFace, 0, 0, null);
+			if(cardBack == null)
+			{
+				g2.setColor(Color.WHITE);
+				g2.setStroke(new BasicStroke(2));
+				g2.drawRect(0, 0, WIDTH, HEIGHT);
+			}
+			else
+			{
+				g2.drawImage(cardBack, 0, 0, null);
+			}
 		}
-	}
-	
-	public void paintBack()
-	{
-		Graphics2D g2 = (Graphics2D) this.getGraphics();
-		
-		if(cardBack == null)
-		{
-			g2.setColor(Color.WHITE);
-			g2.setStroke(new BasicStroke(2));
-			g2.drawRect(0, 0, WIDTH, HEIGHT);
-		}
-		else
-		{
-			g2.drawImage(cardBack, 0, 0, null);
-		}
-		
 	}
 	
 	/**

@@ -18,8 +18,8 @@ public class WarGameView
 		JPanel contentPane = new JPanel();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.LINE_AXIS));
 		
-		contentPane.add(new Card(Card.Value.EIGHT, Card.Suit.SPADE, Card.Display.FACEUP));
-		contentPane.add(new Card(Card.Value.EIGHT, Card.Suit.SPADE, Card.Display.FACEDOWN));
+		contentPane.add(new Card(Card.Value.EIGHT, Card.Suit.SPADE));
+		contentPane.add(new Card(Card.Value.EIGHT, Card.Suit.SPADE));
 		
 		frame.add(contentPane);
 		
