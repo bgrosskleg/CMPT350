@@ -7,7 +7,7 @@ import javax.swing.JPanel;
  {
 	 private String name;
 	 private CardList hand;
-	 
+	 	 
 	 protected GenericPlayer(String name)
 	 {
 		 this.name = name;
