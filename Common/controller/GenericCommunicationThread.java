@@ -13,10 +13,10 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
 	private static final long serialVersionUID = 1L;
 	
 	protected final boolean VERBOSE = false;
-	
-	protected enum notifications 
-	{
 		
+	protected static enum notifications
+	{
+		CARD, CARDLIST;
 	}
 	
 	//ActiveObject stream
@@ -46,7 +46,6 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
     protected BufferedReader passiveCommandStreamIn;
     protected int passiveCommandPort;
     
-    
     protected boolean connected;
     
     public GenericCommunicationThread(String name)
@@ -55,6 +54,8 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
     }
     
     protected abstract void initializeConnection() throws IOException;
+    
+    protected abstract void processNotification();
     
     
     public void run() 
@@ -104,19 +105,7 @@ public abstract class GenericCommunicationThread extends Thread implements Seria
     				if(VERBOSE)
     				{System.out.println("Notification: |" + notification + "|");}
     				
-    				//Process command
-    				switch(notification)
-    				{	
-	    				case "WINPILE":			//Send card to win pile
-	    										break;
-	    						
-	    				case "HAND":			//Send card to hand
-	    										
-												break;
-	
-	    				default:				System.err.println("DEFAULT BEHAVIOUR");
-	    										break;
-	    			}
+    				processNotification();
     			} 
     		}
     		catch (Exception e)

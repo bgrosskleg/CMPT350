@@ -42,17 +42,21 @@ public class Card extends JPanel implements Comparable<Card>
 	{
 		FACEUP, FACEDOWN
 	}
-
-	Value value;
-	Suit suit;
-	Display display;
 	
-	BufferedImage cardFace;
-	BufferedImage cardBack;
+	private GenericPlayer owner;
+
+	private Value value;
+	private Suit suit;
+	private Display display;
+	
+	private BufferedImage cardFace;
+	private BufferedImage cardBack;
 	
 	public Card(Value value, Suit suit)
 	{
 		super();
+		
+		owner = null;
 		
 		this.value = value;
 		this.suit = suit;
@@ -65,10 +69,11 @@ public class Card extends JPanel implements Comparable<Card>
 			//Filepath's originate at the root folder of the project itself
 			//to get the image, step up one level to CMPT350 folder with '../'
 			//then drill down into 'Common' and find the resource needed
-			String cardPath = "../Common/resources/cards/";
+			String cardPath = "src/resources/cards/";
 			String imagePath;
 			imagePath = cardPath + suit + "/" + value + ".png";
-			System.out.println(imagePath);
+			
+			//System.out.println(imagePath);
 			cardFace = ImageIO.read(new File(imagePath));
 			
 			imagePath = cardPath + "BACK.png";
@@ -93,9 +98,11 @@ public class Card extends JPanel implements Comparable<Card>
 		{
 			if(cardFace == null)
 			{
-				g2.setColor(Color.WHITE);
+				g2.setColor(Color.BLACK);
 				g2.setStroke(new BasicStroke(2));
 				g2.drawRect(0, 0, WIDTH, HEIGHT);
+				
+				g2.drawString("Card Back", 5, 15);
 			}
 			else
 			{
@@ -106,9 +113,12 @@ public class Card extends JPanel implements Comparable<Card>
 		{
 			if(cardBack == null)
 			{
-				g2.setColor(Color.WHITE);
+				g2.setColor(Color.BLACK);
 				g2.setStroke(new BasicStroke(2));
 				g2.drawRect(0, 0, WIDTH, HEIGHT);
+				g2.drawString(this.value.name(), 5, 15);
+				g2.drawString("of", 5, 30);
+				g2.drawString(this.suit.name(), 5, 45);
 			}
 			else
 			{
@@ -149,5 +159,15 @@ public class Card extends JPanel implements Comparable<Card>
 			return -1;
 		else
 			return 1;
+	}
+
+	public GenericPlayer getOwner() 
+	{
+		return owner;
+	}
+
+	public void setOwner(GenericPlayer owner) 
+	{
+		this.owner = owner;
 	}
 }

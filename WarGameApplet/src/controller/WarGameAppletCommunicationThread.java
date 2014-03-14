@@ -10,6 +10,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 
+import javax.swing.JApplet;
+
 public class WarGameAppletCommunicationThread extends GenericCommunicationThread
 {	
 	private static final long serialVersionUID = 1L;
@@ -20,13 +22,13 @@ public class WarGameAppletCommunicationThread extends GenericCommunicationThread
 	 * Create the LAN communication thread, extends generic controller thread
 	 * @param cntrl the controller used by the applet, in order to use the controller methods
 	 */
-	public WarGameAppletCommunicationThread() 
+	public WarGameAppletCommunicationThread(JApplet applet) 
     {
 		super("AppletCommunicationThread");
 		
 		//Grab codebase to support loading files from host
 		//This finds the codebase and host name that the application was loaded from (ie. the server)
-		codebase = cntrl.getClientApplet().getCodeBase();
+		codebase = applet.getCodeBase();
 		System.out.println("Codebase: " + codebase);		
 			
 		//Set right port numbers
@@ -106,5 +108,12 @@ public class WarGameAppletCommunicationThread extends GenericCommunicationThread
 	public URL getCodebase() 
 	{
 		return codebase;
+	}
+
+	@Override
+	protected void processNotification() 
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

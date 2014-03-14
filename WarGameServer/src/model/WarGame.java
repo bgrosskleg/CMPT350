@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class WarGame extends GenericGame
 {	
 	public WarGame()
@@ -21,13 +19,19 @@ public class WarGame extends GenericGame
 	@Override
 	protected void dealCards() 
 	{
+		this.deck.shuffle();
+		
+		//Populate each players hand
 		while(!deck.isEmpty())
 		{
 			for(int i = 0; i < players.size() && !deck.isEmpty(); i++)
 			{
-				sendCard(deck.remove(0), players.get(i));
+				players.get(i).getHand().add(deck.remove(0));
 			}
 		}
+		
+		//Send players their cardList
+		
 	}
 
 	@Override

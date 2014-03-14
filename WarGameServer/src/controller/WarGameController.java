@@ -12,14 +12,14 @@ import model.WarGame;
  * games will implement 
  *
  */
-public class WarGameController extends GenericGameController
+public class WarGameController extends GenericController
 {
 	ArrayList<Socket> connections;
 	
 	public WarGameController()
 	{
-		this.systemModel = new WarGame();
-		this.comThread = new ServerCommunicationThreadOLD();
+		this.model = new WarGame();
+		this.comThread = new WarGameServerCommunicationThread();
 	}
 	
 	

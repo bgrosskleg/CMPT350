@@ -4,7 +4,9 @@ import javax.swing.JApplet;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import model.Card;
+import controller.WarGameAppletCommunicationThread;
+import controller.WarPlayerController;
+import model.CardList;
 import model.WarPlayer;
 /**
  * parameters:	serialVersionUID
@@ -17,8 +19,10 @@ public class WarGameAppletView extends JApplet
 {
 	private static final long serialVersionUID = 1L;
 	
-	private WarPlayer me;
-	
+	private static WarPlayer player;
+	private static WarPlayerController controller;
+	private static WarGameAppletCommunicationThread comThread;
+		
 	public void init()
 	{
 		try 
@@ -43,17 +47,25 @@ public class WarGameAppletView extends JApplet
      */
     private void createGUI() 
     {    	
-    	String name = JOptionPane.showInputDialog(this, "Please enter your name:", "Welcome New Player", JOptionPane.PLAIN_MESSAGE);
-    	me = new WarPlayer(name);
+    	//Create local model
+    	String name = JOptionPane.showInputDialog(null, "Please enter your name:", "Welcome New Player", JOptionPane.PLAIN_MESSAGE);
+    	player = new WarPlayer(name);
     	
-    	me.getHand().add(new Card(Card.Value.ACE, Card.Suit.HEART));
-    	me.getHand().add(new Card(Card.Value.THREE, Card.Suit.DIAMOND));
-    	me.getHand().add(new Card(Card.Value.KING, Card.Suit.SPADE));
-    	me.getHand().add(new Card(Card.Value.JACK, Card.Suit.HEART));
-    	me.getHand().add(new Card(Card.Value.FOUR, Card.Suit.HEART));
-    	me.getHand().add(new Card(Card.Value.SEVEN, Card.Suit.CLUB));
+    	//Create controller
+        controller = new WarPlayerController();         	
     	
-    	add(me.generateHandView());	
+    	//Create communication thread
+        comThread = new WarGameAppletCommunicationThread(this);
+        comThread.start();
+    	
+    	//Wait for cards from game
+        while(player.getHand().isEmpty())
+        {
+        	//Wait
+        }
+    	
+    	//Display hand and start game
+    	add(player.generateHandView());	
 	}
 
 }

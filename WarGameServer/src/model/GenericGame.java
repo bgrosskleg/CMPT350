@@ -2,14 +2,14 @@ package model;
 
 import java.util.ArrayList;
 
-import controller.GenericGameController;
+import controller.GenericController;
 
 public abstract class GenericGame extends GenericModel
 {
 	protected CardList deck;	
 	protected ArrayList<GenericPlayer> players;
 	
-	protected GenericGameController controller;
+	protected GenericController controller;
 	
 	protected GenericGame()
 	{
@@ -29,7 +29,7 @@ public abstract class GenericGame extends GenericModel
 			{
 				for(Card.Value value: Card.Value.values())
 				{
-					deck.add(new Card(value, suit, Card.Display.FACEDOWN));
+					deck.add(new Card(value, suit));
 				}
 			}
 		}

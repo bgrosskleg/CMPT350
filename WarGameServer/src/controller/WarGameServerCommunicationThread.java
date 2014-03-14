@@ -6,9 +6,6 @@ public class WarGameServerCommunicationThread extends GenericCommunicationThread
 {
 	private static final long serialVersionUID = 1L;
 	
-	
-	
-
 	public WarGameServerCommunicationThread()
 	{
 		super("ServerCommunicationThread");
@@ -27,5 +24,12 @@ public class WarGameServerCommunicationThread extends GenericCommunicationThread
 		{
 			
 		}
+	}
+
+	@Override
+	protected void processNotification() 
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }
