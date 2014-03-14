@@ -1,14 +1,16 @@
 package controller;
 
 import model.GenericModel;
+import view.GenericView;
 
 public class GenericController 
 {
-	public final boolean VERBOSE = false;
+	private GenericModel model;
+	private GenericView view;
 	
-	/**
-	 * A barebones controller needs a comThread and systemModel
-	 */
-	protected GenericCommunicationThread comThread;
-	protected GenericModel model;
+	protected GenericController(GenericModel model, GenericView view)
+	{
+		this.model = model;
+		this.view = view;
+	}
 }

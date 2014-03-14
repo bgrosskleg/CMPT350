@@ -1,12 +1,16 @@
  package model;
 
+import java.net.Socket;
+
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
- public class GenericPlayer
+ public class GenericPlayer extends GenericModel
  {
 	 private String name;
 	 private CardList hand;
+	 
+	 private Socket socket;
 	 	 
 	 protected GenericPlayer(String name)
 	 {
@@ -22,6 +26,7 @@ import javax.swing.JPanel;
 	 public void setName(String name) 
 	 {
 		 this.name = name;
+		 this.notifyModelSubscribers();
 	 }
 
 	 public CardList getHand() 
@@ -32,6 +37,18 @@ import javax.swing.JPanel;
 	 public void setHand(CardList hand) 
 	 {
 		 this.hand = hand;
+		 this.notifyModelSubscribers();
+	 }
+	 
+	 public Socket getSocket() 
+	 {
+		 return socket;
+	 }
+
+	 public void setSocket(Socket socket) 
+	 {
+		 this.socket = socket;
+		 this.notifyModelSubscribers();
 	 }
 	 
 	 public JPanel generateHandView()
