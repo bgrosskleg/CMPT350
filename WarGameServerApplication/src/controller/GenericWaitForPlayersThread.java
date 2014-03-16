@@ -8,11 +8,14 @@ public abstract class GenericWaitForPlayersThread extends Thread
 {
 	protected final int port;
 	protected ServerSocket serverSocket;
+	protected GenericController controller;
 	
-	public GenericWaitForPlayersThread(int port, String threadName) throws IOException
+	public GenericWaitForPlayersThread(int port, GenericController controller, String threadName) throws IOException
 	{
 		//http://www.oracle.com/technetwork/java/socket-140484.html
 		super(threadName);
+		
+		this.controller = controller;
 		
 		this.port = port;
 		this.serverSocket = new ServerSocket(port);

@@ -13,6 +13,7 @@ public abstract class GenericView extends JPanel
 	public GenericView(GenericModel model)
 	{
 		this.model = model;
+		this.add(generatePanel());
 	}
 
 	protected abstract JPanel generatePanel();

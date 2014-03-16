@@ -5,10 +5,10 @@ import java.net.Socket;
 
 public class WarGameWaitForPlayersThread extends GenericWaitForPlayersThread
 {		
-	public WarGameWaitForPlayersThread() throws IOException
+	public WarGameWaitForPlayersThread(int port, GenericController controller) throws IOException
 	{
 		//http://www.oracle.com/technetwork/java/socket-140484.html
-		super(65000, "WarGameWaitForPlayersThread");
+		super(port, controller, "WarGameWaitForPlayersThread");
 	}
 
 	@Override
