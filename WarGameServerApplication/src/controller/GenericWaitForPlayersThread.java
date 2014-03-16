@@ -4,27 +4,22 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class WaitForWarPlayersThread extends Thread
-{	
-	private final int port = 65000;
-	private ServerSocket serverSocket;
+public abstract class GenericWaitForPlayersThread extends Thread
+{
+	protected final int port;
+	protected ServerSocket serverSocket;
 	
-	public WaitForWarPlayersThread()
+	public GenericWaitForPlayersThread(int port, String threadName) throws IOException
 	{
 		//http://www.oracle.com/technetwork/java/socket-140484.html
-
-		super("WaitForConnectionsThread");
+		super(threadName);
 		
-		try 
-		{
-			serverSocket = new ServerSocket(port);
-		} 
-		catch (IOException e) 
-		{
-		    System.err.println("Could not listen on port " + port + "!");
-		    System.exit(-1);
-		}
-		
+		this.port = port;
+		this.serverSocket = new ServerSocket(port);
+	}
+	
+	public void run()
+	{		
 		while(true)
 		{
 		    GenericSocketWorker worker;
@@ -32,7 +27,7 @@ public class WaitForWarPlayersThread extends Thread
 		    {
 		    	//server.accept returns a client connection
 		    	Socket player = serverSocket.accept();
-		    	worker = new WarGameClientWorker(player);
+		    	worker = createClientWorker(player);
 		    	Thread thread = new Thread(worker);
 		    	thread.start();
 		    } 
@@ -42,6 +37,7 @@ public class WaitForWarPlayersThread extends Thread
 		      System.exit(-1);
 		    }
 		}
-		
 	}
+	
+	protected abstract GenericSocketWorker createClientWorker(Socket player);
 }

@@ -5,8 +5,8 @@ import view.GenericView;
 
 public class GenericController 
 {
-	private GenericModel model;
-	private GenericView view;
+	protected GenericModel model;
+	protected GenericView view;
 	
 	protected GenericController(GenericModel model, GenericView view)
 	{
