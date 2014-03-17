@@ -5,7 +5,7 @@ import java.net.Socket;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
- public class GenericPlayer extends GenericModel
+ public abstract class GenericPlayer extends GenericModel
  {
 	 private String name;
 	 private CardList hand;

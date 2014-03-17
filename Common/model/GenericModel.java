@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import interfaces.ModelSubscriber;
 
-public class GenericModel 
+public abstract class GenericModel 
 {
 	/**
 	 * List of model subscribers to be notified

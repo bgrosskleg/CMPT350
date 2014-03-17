@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import model.WarGameModel;
 
-public class WarGameServerView extends GenericView
+public class WarGameServerView extends GenericGameServerView
 {
 	private static final long serialVersionUID = 1L;
 
