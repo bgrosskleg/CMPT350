@@ -1,5 +1,5 @@
-import model.GenericModel;
 import view.GenericView;
+import model.GenericModel;
 import controller.GenericController;
 
 /**

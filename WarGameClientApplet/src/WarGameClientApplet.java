@@ -5,6 +5,9 @@ import view.WarGameClientAppletView;
 import model.GenericModel;
 import model.WarPlayer;
 
+
+
+
 public class WarGameClientApplet extends GenericClientApplet
 {
 	private static final long serialVersionUID = 1L;

@@ -20,5 +20,10 @@
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/Common</locationURI>
 		</link>
+		<link>
+			<name>Common Generic</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/Common%20Generic</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>

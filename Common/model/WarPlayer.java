@@ -1,5 +1,6 @@
 package model;
 
+
 public class WarPlayer extends GenericPlayer
 {	
 	public Card cardPlayed;
