@@ -28,7 +28,4 @@ public class WarGameClientApplet extends GenericCardGameClientApplet
 	{
 		return new WarCardGameClientAppletController(this.model, this.view);
 	}
-
-	
-
 }
