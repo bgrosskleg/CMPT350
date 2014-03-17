@@ -7,6 +7,5 @@ public abstract class GenericCardGameWaitForConnectionsThread extends GenericMVC
 	protected GenericCardGameWaitForConnectionsThread(int port, GenericCardGameController controller, String threadName) throws IOException
 	{	
 		super(port, controller, threadName);
-		
 	}
 }
