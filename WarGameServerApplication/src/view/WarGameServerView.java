@@ -7,13 +7,13 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
-import model.GenericModel;
+import model.WarGameModel;
 
 public class WarGameServerView extends GenericView
 {
 	private static final long serialVersionUID = 1L;
 
-	public WarGameServerView(GenericModel model)
+	public WarGameServerView(WarGameModel model)
 	{
 		super(model);
 	}

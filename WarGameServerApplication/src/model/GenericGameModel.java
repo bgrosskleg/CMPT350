@@ -15,7 +15,7 @@ public abstract class GenericGameModel extends GenericModel
 		players = new ArrayList<GenericPlayer>();		
 	}
 	
-	protected void initializeDeck(int numOfDecks)
+	public void initializeDeck(int numOfDecks)
 	{
 		deck = new CardList();
 		
@@ -29,11 +29,31 @@ public abstract class GenericGameModel extends GenericModel
 				}
 			}
 		}
+		
+		this.notifyModelSubscribers();
 	}
 	
-	protected abstract void dealCards();
+	public abstract void dealCards();
 	
-	protected abstract void evalHand();
 	
-	protected abstract void gameOver();
+	/**
+	 * display the end game screen
+	 * reset the players hands and deck
+	 * possibly increment a larger score (games won/lost statistics etc)
+	 * send back to initial game screen
+	 */
+	public abstract void gameOver();
+	
+	/**
+	 * evaluates the players hands determining who has won the round
+	 * toDo:	send cards to players winpiles?
+	 * 			take in hands as parameters?
+	 */
+	public abstract void evaluateHand();
+	
+	/**
+	 * gets the game ready to be played
+	 * calls all the methods needed to set up the players and cards
+	 */
+	public abstract void initializeGame();
 }

@@ -34,12 +34,12 @@ public class WarGameServerApplication extends GenericServerApplication
 	@Override
 	protected GenericView createView() 
 	{
-		return new WarGameServerView(model);
+		return new WarGameServerView((WarGameModel) model);
 	}
 
 	@Override
 	protected GenericController createController() 
 	{
-		return new WarGameServerController(model, view);
+		return new WarGameServerController((WarGameModel) model, (WarGameServerView) view);
 	}
 }
