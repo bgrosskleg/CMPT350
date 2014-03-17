@@ -34,9 +34,14 @@ public abstract class GenericMVCWaitForConnectionsThread extends Thread
 		    {
 		    	//server.accept returns a client connection
 		    	Socket socket = serverSocket.accept();
+		    	System.out.println("CONNECTION ACCEPTED");
+		    	
 		    	worker = createSocketWorker(socket);
+		    	System.out.println("SOCKET WORKER CREATED");
+		    	
 		    	Thread thread = new Thread(worker);
 		    	thread.start();
+		    	System.out.println("THREAD STARTED");
 		    } 
 		    catch (IOException e) 
 		    {

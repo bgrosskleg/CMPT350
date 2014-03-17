@@ -22,8 +22,9 @@ public abstract class GenericMVCSocketWorker implements Runnable
 		
 		try 
 		{
-			OIS = new ObjectInputStream(socket.getInputStream());
+			//CREATE OBJECTOUTPUTSTREAM FIRST, http://frequal.com/java/OpenObjectOutputStreamFirst.html
 			OOS = new ObjectOutputStream(socket.getOutputStream());
+			OIS = new ObjectInputStream(socket.getInputStream());
 		} 
 		catch (IOException e) 
 		{

@@ -7,7 +7,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
-import model.GenericCardGameModel;
+import model.WarCardGameModel;
 /**
  * parameters:	serialVersionUID
  * methods:		none
@@ -20,7 +20,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	private static final long serialVersionUID = 1L;
 
 
-	public WarCardGameClientAppletView(GenericCardGameModel model) 
+	public WarCardGameClientAppletView(WarCardGameModel model) 
     {
 		super(model);
 		// TODO Auto-generated constructor stub

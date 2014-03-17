@@ -1,6 +1,6 @@
 package model;
 
-import controller.WarCardGameClientAppletSocketWorker;
+import controller.GenericCardGameSocketWorker;
 
 
 public class WarCardGamePlayer extends GenericCardGamePlayer
@@ -13,7 +13,7 @@ public class WarCardGamePlayer extends GenericCardGamePlayer
 		HAND, WINPILE
 	}
 
-	public WarCardGamePlayer(WarCardGameClientAppletSocketWorker socketWorker) 
+	public WarCardGamePlayer(GenericCardGameSocketWorker socketWorker) 
 	{
 		super(socketWorker);
 		cardPlayed = null;

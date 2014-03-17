@@ -12,6 +12,6 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 	@Override
 	public void run() 
 	{
-		
+		//TODO 	
 	}
 }
