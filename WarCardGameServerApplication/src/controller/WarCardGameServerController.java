@@ -1,6 +1,6 @@
 package controller;
 
-import view.WarGameServerView;
+import view.WarCardGameServerView;
 import model.WarCardGameModel;
 
 /**
@@ -10,7 +10,7 @@ import model.WarCardGameModel;
  */
 public class WarCardGameServerController extends GenericCardGameServerController
 {	
-	public WarCardGameServerController(WarCardGameModel model, WarGameServerView view) 
+	public WarCardGameServerController(WarCardGameModel model, WarCardGameServerView view) 
 	{
 		super(model, view);
 	}

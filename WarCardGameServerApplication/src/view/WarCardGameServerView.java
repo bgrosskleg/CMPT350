@@ -10,11 +10,11 @@ import javax.swing.JPanel;
 
 import model.WarCardGameModel;
 
-public class WarGameServerView extends GenericCardGameServerView
+public class WarCardGameServerView extends GenericCardGameServerView
 {
 	private static final long serialVersionUID = 1L;
 
-	public WarGameServerView(WarCardGameModel model)
+	public WarCardGameServerView(WarCardGameModel model)
 	{
 		super(model);
 	}

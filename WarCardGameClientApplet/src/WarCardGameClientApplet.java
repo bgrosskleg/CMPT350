@@ -3,7 +3,7 @@ import view.WarCardGameClientAppletView;
 import model.WarPlayer;
 
 
-public class WarGameClientApplet extends GenericCardGameClientApplet
+public class WarCardGameClientApplet extends GenericCardGameClientApplet
 {
 	private static final long serialVersionUID = 1L;
 

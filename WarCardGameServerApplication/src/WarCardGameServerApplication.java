@@ -3,7 +3,7 @@ import javax.swing.JFrame;
 import controller.GenericController;
 import controller.WarCardGameServerController;
 import view.GenericView;
-import view.WarGameServerView;
+import view.WarCardGameServerView;
 import model.GenericModel;
 import model.WarCardGameModel;
 
@@ -36,12 +36,12 @@ public class WarCardGameServerApplication extends GenericCardGameServerApplicati
 	@Override
 	protected GenericView createView() 
 	{
-		return new WarGameServerView((WarCardGameModel) model);
+		return new WarCardGameServerView((WarCardGameModel) model);
 	}
 
 	@Override
 	protected GenericController createController() 
 	{
-		return new WarCardGameServerController((WarCardGameModel) model, (WarGameServerView) view);
+		return new WarCardGameServerController((WarCardGameModel) model, (WarCardGameServerView) view);
 	}
 }
