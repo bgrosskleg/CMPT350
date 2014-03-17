@@ -4,7 +4,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import controller.WarCardGameClientAppletController;
-import controller.WarCardGameSocketWorker;
+import controller.WarCardGameClientAppletSocketWorker;
 import view.WarCardGameClientAppletView;
 import model.WarCardGameModel;
 
@@ -37,7 +37,7 @@ public class WarCardGameClientApplet extends GenericCardGameClientApplet
 	}
 
 	@Override
-	protected WarCardGameSocketWorker createSocketWorker() 
+	protected WarCardGameClientAppletSocketWorker createSocketWorker() 
 	{
 		Socket socket;
 		try 
@@ -56,6 +56,6 @@ public class WarCardGameClientApplet extends GenericCardGameClientApplet
 			return null;
 		}
 		
-		return new WarCardGameSocketWorker(socket, (WarCardGameClientAppletController)this.controller);
+		return new WarCardGameClientAppletSocketWorker(socket, (WarCardGameClientAppletController)this.controller);
 	}
 }

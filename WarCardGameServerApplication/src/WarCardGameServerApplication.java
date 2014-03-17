@@ -3,7 +3,7 @@ import java.io.IOException;
 import javax.swing.JFrame;
 
 import controller.WarCardGameServerController;
-import controller.WarCardGameWaitForConnectionsThread;
+import controller.WarCardGameServerWaitForConnectionsThread;
 import view.WarCardGameServerView;
 import model.WarCardGameModel;
 
@@ -21,7 +21,7 @@ public class WarCardGameServerApplication extends GenericCardGameServerApplicati
 		
 		try
 		{
-			(new WarCardGameWaitForConnectionsThread(65000, (WarCardGameServerController)game.controller)).start();
+			(new WarCardGameServerWaitForConnectionsThread(65000, (WarCardGameServerController)game.controller)).start();
 		}
 		catch (IOException e) 
 		{
