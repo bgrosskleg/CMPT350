@@ -3,7 +3,7 @@ package controller;
 import java.io.IOException;
 import java.net.Socket;
 
-public class WarGameWaitForPlayersThread extends GenericWaitForPlayersThread
+public class WarGameWaitForPlayersThread extends GenericGameWaitForPlayersThread
 {		
 	public WarGameWaitForPlayersThread(int port, GenericController controller) throws IOException
 	{

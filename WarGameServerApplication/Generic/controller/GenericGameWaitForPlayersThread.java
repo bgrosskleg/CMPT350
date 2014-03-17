@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public abstract class GenericWaitForPlayersThread extends Thread
+public abstract class GenericGameWaitForPlayersThread extends Thread
 {
 	protected final int port;
 	protected ServerSocket serverSocket;
 	protected GenericController controller;
 	
-	public GenericWaitForPlayersThread(int port, GenericController controller, String threadName) throws IOException
+	public GenericGameWaitForPlayersThread(int port, GenericController controller, String threadName) throws IOException
 	{
 		//http://www.oracle.com/technetwork/java/socket-140484.html
 		super(threadName);
