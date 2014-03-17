@@ -17,7 +17,7 @@ public class WarCardGameServerWaitForPlayersThread extends GenericCardGameServer
 	@Override
 	protected WarCardGameServerSocketWorker createServerSocketWorker(Socket socket) 
 	{		
-		((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().add(new WarPlayer("test"));
+		//((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().add(new WarPlayer("test"));
 		((WarCardGameModel)((WarCardGameServerController) controller).model).notifyModelSubscribers();
 		return new WarCardGameServerSocketWorker(socket, (WarCardGameServerController) controller);
 	}
