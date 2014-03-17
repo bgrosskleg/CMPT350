@@ -14,9 +14,14 @@ public abstract class GenericCardGameServerWaitForPlayersThread extends Thread
 	{
 		//http://www.oracle.com/technetwork/java/socket-140484.html
 		super(threadName);
+		this.controller = controller;
 		
 		this.port = port;
 		this.serverSocket = new ServerSocket(port);
+		if(this.serverSocket != null)
+		{
+			System.out.println("Server listening on port: " + port);
+		}
 	}
 	
 	public void run()

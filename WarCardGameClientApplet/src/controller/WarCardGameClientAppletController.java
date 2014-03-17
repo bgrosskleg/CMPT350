@@ -1,13 +1,13 @@
 package controller;
 
-import model.GenericModel;
-import view.GenericView;
+import model.WarPlayer;
+import view.WarCardGameClientAppletView;
 
 
 public class WarCardGameClientAppletController extends GenericCardGameClientAppletController
 {
 
-	public WarCardGameClientAppletController(GenericModel model, GenericView view) 
+	public WarCardGameClientAppletController(WarPlayer model, WarCardGameClientAppletView view) 
 	{
 		super(model, view);
 		// TODO Auto-generated constructor stub

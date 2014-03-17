@@ -3,6 +3,7 @@ import javax.swing.JApplet;
 import javax.swing.SwingUtilities;
 
 import controller.GenericController;
+import controller.GenericSocketWorker;
 import view.GenericView;
 import model.GenericModel;
 
@@ -14,6 +15,8 @@ public abstract class GenericMVCClientApplet extends JApplet
 	protected GenericModel model;
 	protected GenericView view;
 	protected GenericController controller;
+	protected GenericSocketWorker socketWorker;
+	protected int port;
 	
 	public void init()
 	{
@@ -26,6 +29,7 @@ public abstract class GenericMVCClientApplet extends JApplet
                 	model = createModel();
                 	view = createView();
                 	controller = createController();
+                	socketWorker = createSocketWorker();
                 }
             });
             
@@ -37,8 +41,9 @@ public abstract class GenericMVCClientApplet extends JApplet
             e.printStackTrace();
         } 		
 	}
-	
+		
 	protected abstract GenericModel createModel();
 	protected abstract GenericView createView();
 	protected abstract GenericController createController();
+	protected abstract GenericSocketWorker createSocketWorker();
 }

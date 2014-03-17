@@ -42,6 +42,9 @@ public class WarCardGameServerView extends GenericCardGameServerView
 	@Override
 	public void modelChanged() 
 	{
-		this.repaint();
+		if(((WarCardGameModel)model).getPlayers().size() > 0)
+		{
+			panel.setBackground(Color.GREEN);
+		}
 	}
 }

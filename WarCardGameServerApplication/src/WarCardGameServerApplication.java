@@ -1,10 +1,10 @@
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
-import controller.GenericController;
 import controller.WarCardGameServerController;
-import view.GenericView;
+import controller.WarCardGameServerWaitForPlayersThread;
 import view.WarCardGameServerView;
-import model.GenericModel;
 import model.WarCardGameModel;
 
 public class WarCardGameServerApplication extends GenericCardGameServerApplication
@@ -19,7 +19,17 @@ public class WarCardGameServerApplication extends GenericCardGameServerApplicati
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		((WarCardGameServerController)game.controller).initializeGame();
+		try
+		{
+			(new WarCardGameServerWaitForPlayersThread(65000, (WarCardGameServerController)game.controller)).start();
+		}
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		((WarCardGameServerController)game.controller).initializeGame();		
 	}
 	
 	public WarCardGameServerApplication()
@@ -28,19 +38,19 @@ public class WarCardGameServerApplication extends GenericCardGameServerApplicati
 	}
 
 	@Override
-	protected GenericModel createModel() 
+	protected WarCardGameModel createModel() 
 	{
 		return new WarCardGameModel();
 	}
 
 	@Override
-	protected GenericView createView() 
+	protected WarCardGameServerView createView() 
 	{
 		return new WarCardGameServerView((WarCardGameModel) model);
 	}
 
 	@Override
-	protected GenericController createController() 
+	protected WarCardGameServerController createController() 
 	{
 		return new WarCardGameServerController((WarCardGameModel) model, (WarCardGameServerView) view);
 	}
