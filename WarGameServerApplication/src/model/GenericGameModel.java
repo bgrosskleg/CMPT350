@@ -36,6 +36,4 @@ public abstract class GenericGameModel extends GenericModel
 	protected abstract void evalHand();
 	
 	protected abstract void gameOver();
-	
-	
 }

@@ -1,5 +1,8 @@
+import controller.GenericController;
 import controller.WarGameClientAppletController;
+import view.GenericView;
 import view.WarGameClientAppletView;
+import model.GenericModel;
 import model.WarPlayer;
 
 public class WarGameClientApplet extends GenericClientApplet
@@ -7,25 +10,25 @@ public class WarGameClientApplet extends GenericClientApplet
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void initializeModel() 
+	protected GenericModel createModel() 
 	{
 		//Prompt for name
 		String name = null;
 		//...
 		
-		this.model = new WarPlayer(name);
+		return new WarPlayer(name);
 	}
 
 	@Override
-	protected void initializeView() 
+	protected GenericView createView() 
 	{
-		this.view = new WarGameClientAppletView(this.model);	
+		return new WarGameClientAppletView(this.model);	
 	}
 
 	@Override
-	protected void initializeController() 
+	protected GenericController createController() 
 	{
-		this.controller = new WarGameClientAppletController(this.model, this.view);
+		return new WarGameClientAppletController(this.model, this.view);
 	}
 
 	

@@ -22,9 +22,9 @@ public abstract class GenericClientApplet extends JApplet
             {
                 public void run() 
                 {
-                	initializeModel();
-                	initializeView();
-                	initializeController();
+                	model = createModel();
+                	view = createView();
+                	controller = createController();
                 }
             });
         }
@@ -35,7 +35,7 @@ public abstract class GenericClientApplet extends JApplet
         } 		
 	}
 	
-	protected abstract void initializeModel();
-	protected abstract void initializeView();
-	protected abstract void initializeController();
+	protected abstract GenericModel createModel();
+	protected abstract GenericView createView();
+	protected abstract GenericController createController();
 }

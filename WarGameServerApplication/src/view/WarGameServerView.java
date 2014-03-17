@@ -1,14 +1,19 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
 import javax.swing.JPanel;
 
-import model.WarGameModel;
+import model.GenericModel;
 
 public class WarGameServerView extends GenericView
 {
 	private static final long serialVersionUID = 1L;
 
-	public WarGameServerView(WarGameModel model)
+	public WarGameServerView(GenericModel model)
 	{
 		super(model);
 	}
@@ -16,8 +21,18 @@ public class WarGameServerView extends GenericView
 	@Override
 	protected JPanel generatePanel() 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		JPanel result = new JPanel();
+		
+		result.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		result.setBackground(Color.RED);
+		result.setPreferredSize(new Dimension(500,500));
+		result.setMaximumSize(getPreferredSize());
+		result.setMinimumSize(getPreferredSize());
+		
+		
+		
+		return result;
 	}
-	
 }
