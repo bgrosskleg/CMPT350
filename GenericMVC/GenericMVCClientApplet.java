@@ -2,20 +2,20 @@
 import javax.swing.JApplet;
 import javax.swing.SwingUtilities;
 
-import controller.GenericController;
-import controller.GenericSocketWorker;
-import view.GenericView;
-import model.GenericModel;
+import controller.GenericMVCController;
+import controller.GenericMVCSocketWorker;
+import view.GenericMVCView;
+import model.GenericMVCModel;
 
 
 public abstract class GenericMVCClientApplet extends JApplet 
 {
 	private static final long serialVersionUID = 1L;
 	
-	protected GenericModel model;
-	protected GenericView view;
-	protected GenericController controller;
-	protected GenericSocketWorker socketWorker;
+	protected GenericMVCModel model;
+	protected GenericMVCView view;
+	protected GenericMVCController controller;
+	protected GenericMVCSocketWorker socketWorker;
 	protected int port;
 	
 	public void init()
@@ -42,8 +42,8 @@ public abstract class GenericMVCClientApplet extends JApplet
         } 		
 	}
 		
-	protected abstract GenericModel createModel();
-	protected abstract GenericView createView();
-	protected abstract GenericController createController();
-	protected abstract GenericSocketWorker createSocketWorker();
+	protected abstract GenericMVCModel createModel();
+	protected abstract GenericMVCView createView();
+	protected abstract GenericMVCController createController();
+	protected abstract GenericMVCSocketWorker createSocketWorker();
 }

@@ -5,27 +5,19 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import model.WarPlayer;
-/**
- * parameters:	serialVersionUID
- * methods:		none
- * 
- * to be explained..? 
- * the view the player can see in the browser window?
- */
-public class WarCardGameClientAppletView extends GenericCardGameClientAppletView
+import model.WarCardGameModel;
+
+public class WarCardGameServerView extends GenericCardGameView
 {
 	private static final long serialVersionUID = 1L;
 
-
-	public WarCardGameClientAppletView(WarPlayer model) 
-    {
+	public WarCardGameServerView(WarCardGameModel model)
+	{
 		super(model);
-		// TODO Auto-generated constructor stub
 	}
-
 
 	@Override
 	protected JPanel generatePanel() 
@@ -35,24 +27,24 @@ public class WarCardGameClientAppletView extends GenericCardGameClientAppletView
 		result.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		result.setBackground(Color.BLUE);
+		result.setBackground(Color.RED);
 		result.setPreferredSize(new Dimension(500,500));
 		result.setMaximumSize(getPreferredSize());
 		result.setMinimumSize(getPreferredSize());
 		
-		
+		result.add(new JLabel("Number of Players: " + ((WarCardGameModel)model).getPlayers().size()));
 		
 		
 		
 		return result;
 	}
 
-
 	@Override
 	public void modelChanged() 
 	{
-		// TODO Auto-generated method stub
-		
+		if(((WarCardGameModel)model).getPlayers().size() > 0)
+		{
+			panel.setBackground(Color.GREEN);
+		}
 	}
-
 }

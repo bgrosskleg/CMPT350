@@ -1,14 +1,14 @@
 
-import controller.GenericController;
-import view.GenericView;
-import model.GenericModel;
+import controller.GenericMVCController;
+import view.GenericMVCView;
+import model.GenericMVCModel;
 
 
 public abstract class GenericMVCServerApplication 
 {	
-	protected GenericModel model;
-	protected GenericView view;
-	protected GenericController controller;
+	protected GenericMVCModel model;
+	protected GenericMVCView view;
+	protected GenericMVCController controller;
 		
 	protected GenericMVCServerApplication()
 	{
@@ -17,7 +17,7 @@ public abstract class GenericMVCServerApplication
     	controller = createController();
 	}
 	
-	protected abstract GenericModel createModel();
-	protected abstract GenericView createView();
-	protected abstract GenericController createController();
+	protected abstract GenericMVCModel createModel();
+	protected abstract GenericMVCView createView();
+	protected abstract GenericMVCController createController();
 }

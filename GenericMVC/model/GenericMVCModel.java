@@ -2,18 +2,18 @@ package model;
 
 import java.util.ArrayList;
 
-import interfaces.ModelSubscriber;
+import interfaces.GenericMVCModelSubscriber;
 
-public abstract class GenericModel 
+public abstract class GenericMVCModel 
 {
 	/**
 	 * List of model subscribers to be notified
 	 */
-	protected ArrayList<ModelSubscriber> modelSubscriberList;
+	protected ArrayList<GenericMVCModelSubscriber> modelSubscriberList;
 
-	protected GenericModel()
+	protected GenericMVCModel()
 	{
-		modelSubscriberList = new ArrayList<ModelSubscriber>();
+		modelSubscriberList = new ArrayList<GenericMVCModelSubscriber>();
 	}
 	
 	//SUBSCRIBERS/OBSERVERS****************************************************************
@@ -22,7 +22,7 @@ public abstract class GenericModel
 	 * Add modelSubscriber
 	 * @param subscriber the subscriber to add
 	 */
-	public void addModelSubscriber(ModelSubscriber subscriber) 
+	public void addModelSubscriber(GenericMVCModelSubscriber subscriber) 
 	{
 		modelSubscriberList.add(subscriber);		
 	}
@@ -31,7 +31,7 @@ public abstract class GenericModel
 	 * Remove modelSubscriber
 	 * @param subscriber the subscriber to remove
 	 */
-	public void removeModelSubscriber(ModelSubscriber subscriber) 
+	public void removeModelSubscriber(GenericMVCModelSubscriber subscriber) 
 	{
 		modelSubscriberList.remove(subscriber);
 	}
@@ -41,7 +41,7 @@ public abstract class GenericModel
 	 */
 	public void notifyModelSubscribers() 
 	{
-		for(ModelSubscriber subscriber : modelSubscriberList)
+		for(GenericMVCModelSubscriber subscriber : modelSubscriberList)
 		{
 			subscriber.modelChanged();
 		}

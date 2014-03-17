@@ -3,11 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class CardList extends ArrayList<Card>
+public class GenericCardGameCardList extends ArrayList<GenericCardGameCard>
 {
 	private static final long serialVersionUID = 1L;
 
-	public CardList()
+	public GenericCardGameCardList()
 	{
 		super();
 		this.shuffle();

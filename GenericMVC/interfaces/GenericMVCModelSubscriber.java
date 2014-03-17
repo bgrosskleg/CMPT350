@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface ModelSubscriber 
+public interface GenericMVCModelSubscriber 
 {
 	public void modelChanged();
 }

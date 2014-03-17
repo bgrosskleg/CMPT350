@@ -1,19 +1,19 @@
 package view;
 
-import interfaces.ModelSubscriber;
+import interfaces.GenericMVCModelSubscriber;
 
 import javax.swing.JPanel;
 
-import model.GenericModel;
+import model.GenericMVCModel;
 
-public abstract class GenericView extends JPanel implements ModelSubscriber
+public abstract class GenericMVCView extends JPanel implements GenericMVCModelSubscriber
 {
 	private static final long serialVersionUID = 1L;
 
-	protected GenericModel model;
+	protected GenericMVCModel model;
 	protected JPanel panel;
 
-	protected GenericView(GenericModel model)
+	protected GenericMVCView(GenericMVCModel model)
 	{
 		this.model = model;
 		this.model.addModelSubscriber(this);

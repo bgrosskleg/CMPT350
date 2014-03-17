@@ -12,7 +12,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class Card extends JPanel implements Comparable<Card>
+public class GenericCardGameCard extends JPanel implements Comparable<GenericCardGameCard>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class Card extends JPanel implements Comparable<Card>
 		FACEUP, FACEDOWN
 	}
 	
-	private GenericPlayer owner;
+	private GenericCardGamePlayer owner;
 
 	private Value value;
 	private Suit suit;
@@ -52,7 +52,7 @@ public class Card extends JPanel implements Comparable<Card>
 	private BufferedImage cardFace;
 	private BufferedImage cardBack;
 	
-	public Card(Value value, Suit suit)
+	public GenericCardGameCard(Value value, Suit suit)
 	{
 		super();
 		
@@ -141,7 +141,7 @@ public class Card extends JPanel implements Comparable<Card>
 	    if (other == this) 
 	    {return true;}
 	    
-	    if (!(other instanceof Card))
+	    if (!(other instanceof GenericCardGameCard))
 	    {return false;}
 	    
 	    //Class specific comparison
@@ -151,7 +151,7 @@ public class Card extends JPanel implements Comparable<Card>
 	}
 	
 	@Override
-	public int compareTo(Card that) 
+	public int compareTo(GenericCardGameCard that) 
 	{
 		if(this.value.ordinal==that.value.ordinal)
 			return 0;
@@ -161,12 +161,12 @@ public class Card extends JPanel implements Comparable<Card>
 			return 1;
 	}
 
-	public GenericPlayer getOwner() 
+	public GenericCardGamePlayer getOwner() 
 	{
 		return owner;
 	}
 
-	public void setOwner(GenericPlayer owner) 
+	public void setOwner(GenericCardGamePlayer owner) 
 	{
 		this.owner = owner;
 	}

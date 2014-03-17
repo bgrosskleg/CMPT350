@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public abstract class GenericCardGameServerWaitForPlayersThread extends Thread
+public abstract class GenericMVCWaitForConnectionsThread extends Thread
 {
 	protected final int port;
 	protected ServerSocket serverSocket;
-	protected GenericCardGameServerController controller;
+	protected GenericMVCController controller;
 	
-	protected GenericCardGameServerWaitForPlayersThread(int port, GenericCardGameServerController controller, String threadName) throws IOException
+	protected GenericMVCWaitForConnectionsThread(int port, GenericMVCController controller, String threadName) throws IOException
 	{
 		//http://www.oracle.com/technetwork/java/socket-140484.html
 		super(threadName);
@@ -18,6 +18,7 @@ public abstract class GenericCardGameServerWaitForPlayersThread extends Thread
 		
 		this.port = port;
 		this.serverSocket = new ServerSocket(port);
+		
 		if(this.serverSocket != null)
 		{
 			System.out.println("Server listening on port: " + port);
@@ -28,12 +29,12 @@ public abstract class GenericCardGameServerWaitForPlayersThread extends Thread
 	{		
 		while(true)
 		{
-			GenericCardGameServerSocketWorker worker;
+			GenericMVCSocketWorker worker;
 		    try
 		    {
 		    	//server.accept returns a client connection
-		    	Socket player = serverSocket.accept();
-		    	worker = createServerSocketWorker(player);
+		    	Socket socket = serverSocket.accept();
+		    	worker = createSocketWorker(socket);
 		    	Thread thread = new Thread(worker);
 		    	thread.start();
 		    } 
@@ -45,5 +46,5 @@ public abstract class GenericCardGameServerWaitForPlayersThread extends Thread
 		}
 	}
 	
-	protected abstract GenericCardGameServerSocketWorker createServerSocketWorker(Socket socket);
+	protected abstract GenericMVCSocketWorker createSocketWorker(Socket socket);
 }

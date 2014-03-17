@@ -16,11 +16,6 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Common</name>
-			<type>2</type>
-			<location>C:/Users/Brian Grosskleg/git/CMPT350/Common</location>
-		</link>
-		<link>
 			<name>GenericCardGame</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/GenericCardGame</locationURI>
@@ -29,6 +24,11 @@
 			<name>GenericMVC</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/GenericMVC</locationURI>
+		</link>
+		<link>
+			<name>WarCardGame</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/WarCardGame</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

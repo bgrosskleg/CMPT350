@@ -1,6 +1,9 @@
 package controller;
 
 import view.WarCardGameServerView;
+import model.GenericCardGameCard;
+import model.GenericCardGameCardList;
+import model.GenericCardGameModel;
 import model.WarCardGameModel;
 
 /**
@@ -8,17 +11,16 @@ import model.WarCardGameModel;
  * games will implement 
  *
  */
-public class WarCardGameServerController extends GenericCardGameServerController
+public class WarCardGameServerController extends GenericCardGameController
 {	
 	public WarCardGameServerController(WarCardGameModel model, WarCardGameServerView view) 
 	{
 		super(model, view);
 	}
 
-	@Override
 	public void initializeGame() 
 	{
-		this.initializeDeck(1);
+		initializeDeck(1);
 		
 		System.out.println("GET'S HERE 1");
 		
@@ -33,22 +35,39 @@ public class WarCardGameServerController extends GenericCardGameServerController
 		//Wait for players action
 		evaluateHand();
 	}
+	
+	public void initializeDeck(int numOfDecks)
+	{
+		((GenericCardGameModel)model).setDeck(new GenericCardGameCardList());
 
-	@Override
+		for(int iter = numOfDecks; iter > 1; iter--)
+		{
+			for(GenericCardGameCard.Suit suit : GenericCardGameCard.Suit.values())
+			{
+				for(GenericCardGameCard.Value value: GenericCardGameCard.Value.values())
+				{
+					((GenericCardGameModel)model).getDeck().add(new GenericCardGameCard(value, suit));
+				}
+			}
+		}
+
+		((GenericCardGameModel)model).getDeck().shuffle();
+
+		model.notifyModelSubscribers();
+	}
+
 	public void dealCards()
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void gameOver() 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void evaluateHand() 
 	{
 		// TODO Auto-generated method stub

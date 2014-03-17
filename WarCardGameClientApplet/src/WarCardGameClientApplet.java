@@ -4,9 +4,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import controller.WarCardGameClientAppletController;
-import controller.WarCardGameClientAppletSocketWorker;
+import controller.WarCardGameSocketWorker;
 import view.WarCardGameClientAppletView;
-import model.WarPlayer;
+import model.WarCardGameModel;
 
 
 public class WarCardGameClientApplet extends GenericCardGameClientApplet
@@ -19,29 +19,25 @@ public class WarCardGameClientApplet extends GenericCardGameClientApplet
 	}
 	
 	@Override
-	protected WarPlayer createModel() 
+	protected WarCardGameModel createModel() 
 	{
-		//Prompt for name
-		String name = null;
-		//...
-		
-		return new WarPlayer(name);
+		return new WarCardGameModel();
 	}
 
 	@Override
 	protected WarCardGameClientAppletView createView() 
 	{
-		return new WarCardGameClientAppletView((WarPlayer)this.model);	
+		return new WarCardGameClientAppletView((WarCardGameModel)this.model);	
 	}
 
 	@Override
 	protected WarCardGameClientAppletController createController() 
 	{
-		return new WarCardGameClientAppletController((WarPlayer)this.model, (WarCardGameClientAppletView)this.view);
+		return new WarCardGameClientAppletController((WarCardGameModel)this.model, (WarCardGameClientAppletView)this.view);
 	}
 
 	@Override
-	protected WarCardGameClientAppletSocketWorker createSocketWorker() 
+	protected WarCardGameSocketWorker createSocketWorker() 
 	{
 		Socket socket;
 		try 
@@ -60,6 +56,6 @@ public class WarCardGameClientApplet extends GenericCardGameClientApplet
 			return null;
 		}
 		
-		return new WarCardGameClientAppletSocketWorker(socket, (WarCardGameClientAppletController)this.controller);
+		return new WarCardGameSocketWorker(socket, (WarCardGameClientAppletController)this.controller);
 	}
 }
