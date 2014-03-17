@@ -25,8 +25,8 @@ public class WarCardGameServerApplication extends GenericCardGameServerApplicati
 		}
 		catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.exit(-1);
 		}
 		
 		((WarCardGameServerController)game.controller).initializeGame();		
