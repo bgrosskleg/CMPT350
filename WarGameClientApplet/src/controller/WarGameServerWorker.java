@@ -2,7 +2,7 @@ package controller;
 
 import java.net.Socket;
 
-public class WarGameServerWorker extends GenericGameServerWorker
+public class WarGameServerWorker extends GenericGameClientAppletSocketWorker
 {
 
 	public WarGameServerWorker(Socket socket) 
