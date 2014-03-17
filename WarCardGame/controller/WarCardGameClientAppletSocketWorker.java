@@ -12,6 +12,6 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 	@Override
 	public void run() 
 	{
-		
+		//TODO
 	}
 }
