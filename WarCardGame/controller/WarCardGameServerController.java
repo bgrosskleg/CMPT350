@@ -69,7 +69,7 @@ public class WarCardGameServerController extends GenericCardGameController
 			}
 		}
 
-		((GenericCardGameModel)model).getDeck().shuffleCards();
+		((GenericCardGameModel)model).getDeck().shuffle();
 
 		model.notifyModelSubscribers();
 	}
@@ -81,12 +81,12 @@ public class WarCardGameServerController extends GenericCardGameController
 
 	public void dealCards()
 	{
-		while(((WarCardGameModel)this.model).getDeck().getListSize() > 0)
+		while(((WarCardGameModel)this.model).getDeck().size() > 0)
 		{
 			for(GenericCardGamePlayer player : ((WarCardGameModel)this.model).getPlayers())
 			{
-				if(((WarCardGameModel)this.model).getDeck().getListSize() > 0)
-					player.getHand().add(((WarCardGameModel)this.model).getDeck().removeCard(0));
+				if(((WarCardGameModel)this.model).getDeck().size() > 0)
+					player.getHand().add(((WarCardGameModel)this.model).getDeck().remove(0));
 			}
 		}
 
@@ -151,9 +151,9 @@ public class WarCardGameServerController extends GenericCardGameController
 				}
 				else
 				{
-					((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.shuffleCards();
+					((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.shuffle();
 					while(!((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.isEmpty())
-						((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).getHand().add(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.removeCard(0));
+						((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).getHand().add(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.remove(0));
 				}
 			}
 		}
