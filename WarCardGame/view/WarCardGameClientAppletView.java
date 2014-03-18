@@ -40,10 +40,6 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		result.setMaximumSize(getPreferredSize());
 		result.setMinimumSize(getPreferredSize());
 		
-		
-		
-		
-		
 		return result;
 	}
 

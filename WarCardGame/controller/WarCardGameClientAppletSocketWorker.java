@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.net.Socket;
 
 import model.WarCardGameModel;
@@ -16,7 +17,6 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 	@Override
 	public void run() 
 	{
-		//TODO Handle client-server communication
 		//Wait for object on stream
 		controller.updateModel((WarCardGameModel)this.recieveObject());
 	}
@@ -24,7 +24,17 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 	@Override
 	public void modelChanged() 
 	{
-		// TODO Auto-generated method stub
+		//Transmit model to other side
+		try 
+		{
+			this.OOS.reset();
+		}
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.sendObject(new WarCardGameModel());
 		
 	}
 }

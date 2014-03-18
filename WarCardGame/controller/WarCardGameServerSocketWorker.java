@@ -14,10 +14,20 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 		super(socket, controller);
 	}
 	
+
+	@Override
+	public void run() 
+	{
+		while(true)
+		{
+			//Wait for object on stream
+			controller.updateModel((WarCardGameModel)this.recieveObject());
+		}
+	}
+	
 	@Override
 	public void modelChanged() 
 	{
-		// TODO Auto-generated method stub
 		//Transmit model to other side
 		try 
 		{
@@ -29,12 +39,5 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 			e.printStackTrace();
 		}
 		this.sendObject(new WarCardGameModel());
-	}
-
-	@Override
-	public void run() 
-	{
-		// TODO Handle communication between client-server
-		
 	}
 }
