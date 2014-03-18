@@ -64,10 +64,12 @@ public abstract class GenericMVCSocketWorker implements Runnable, GenericMVCMode
 		catch (ClassNotFoundException e) 
 		{
 			e.printStackTrace();
+			//TODO HANDLE CONNECTION LOST 
 			return null;
 		} catch (IOException e) 
 		{
 			e.printStackTrace();
+			//TODO HANDLE CONNECTION LOST 
 			return null;
 		}
 	}

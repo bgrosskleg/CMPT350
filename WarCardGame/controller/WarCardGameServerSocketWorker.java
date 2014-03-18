@@ -38,6 +38,6 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.sendObject(new WarCardGameModel());
+		this.sendObject(controller.model);
 	}
 }
