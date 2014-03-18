@@ -29,7 +29,8 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 	public void modelChanged() 
 	{
 		//Transmit model to other side
-		try 
+		/*
+		 * try 
 		{
 			this.OOS.reset();
 		}
@@ -38,6 +39,8 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.sendObject(controller.model);
+		*/
+		
+		this.sendObject(((WarCardGameModel)((WarCardGameServerController)controller).model));
 	}
 }

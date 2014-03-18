@@ -11,28 +11,30 @@ public abstract class GenericCardGamePlayer extends GenericMVCModel
 {
 	private static final long serialVersionUID = 1L;
 
-	private GenericCardGameCardList hand;
+	//private GenericCardGameCardList hand;
 	 
-	protected transient GenericCardGameSocketWorker socketWorker;
+	//protected transient GenericCardGameSocketWorker socketWorker;
 
 	protected GenericCardGamePlayer(GenericCardGameSocketWorker socketWorker)
 	{
-		this.socketWorker = socketWorker;
+		super();
+		
+		//this.socketWorker = socketWorker;
 
-		this.hand = new GenericCardGameCardList(); 
+		//this.hand = new GenericCardGameCardList(); 
 	}
 
 	public GenericCardGameCardList getHand() 
 	{
-		return hand;
+		return null;
 	}
 
-	public GenericCardGameSocketWorker getSocketWorker() 
-	{
-		return socketWorker;
-	}
+	//public GenericCardGameSocketWorker getSocketWorker() 
+	//{
+	//	return socketWorker;
+	//}
 
-	public JPanel generateHandView()
+	/*public JPanel generateHandView()
 	{
 		JPanel result = new JPanel();
 
@@ -46,5 +48,5 @@ public abstract class GenericCardGamePlayer extends GenericMVCModel
 		}
 
 		return result;
-	}
+	}*/
 }
