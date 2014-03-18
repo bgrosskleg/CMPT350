@@ -5,7 +5,7 @@ import model.WarCardGameModel;
 import view.WarCardGameClientAppletView;
 
 
-public class WarCardGameClientAppletController extends GenericCardGameController
+public class WarCardGameClientAppletController extends WarCardGameGeneralController
 {
 
 	public WarCardGameClientAppletController(WarCardGameModel model, WarCardGameClientAppletView view) 
