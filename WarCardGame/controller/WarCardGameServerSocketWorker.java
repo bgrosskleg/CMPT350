@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.net.Socket;
 
 import model.WarCardGameModel;
@@ -18,7 +19,16 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 	{
 		// TODO Auto-generated method stub
 		//Transmit model to other side
-		this.sendObject((WarCardGameModel)controller.model);
+		try 
+		{
+			this.OOS.reset();
+		}
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.sendObject(new WarCardGameModel());
 	}
 
 	@Override
