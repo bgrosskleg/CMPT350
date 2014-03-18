@@ -24,39 +24,49 @@ public abstract class WarCardGameGeneralController extends GenericCardGameContro
 	{
 		// Compare interesting parts of the model and update
 		boolean hasChanged = false;
-
-		for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)
+		if(((WarCardGameModel)this.model).getPlayers().size() != ((WarCardGameModel)newModel).getPlayers().size())
 		{
-			WarCardGamePlayer player = ((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i));
-			WarCardGamePlayer newPlayer = ((WarCardGamePlayer)((WarCardGameModel)newModel).getPlayers().get(i));
-			if(!player.winPile.equals(newPlayer.winPile))
+			((WarCardGameModel)this.model).getPlayers().clear();
+			while(!((WarCardGameModel)newModel).getPlayers().isEmpty())
 			{
-				player.winPile.clear();
-				while(!newPlayer.winPile.isEmpty())
+				((WarCardGameModel)this.model).getPlayers().add(((WarCardGameModel)newModel).getPlayers().remove(0));
+			}
+			hasChanged = true;
+		}
+		else{
+			for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)
+			{
+				WarCardGamePlayer player = ((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i));
+				WarCardGamePlayer newPlayer = ((WarCardGamePlayer)((WarCardGameModel)newModel).getPlayers().get(i));
+				if(!player.winPile.equals(newPlayer.winPile))
 				{
-					player.winPile.add(newPlayer.winPile.remove(0));
+					player.winPile.clear();
+					while(!newPlayer.winPile.isEmpty())
+					{
+						player.winPile.add(newPlayer.winPile.remove(0));
+					}
+					hasChanged = true;
 				}
-				hasChanged = true;
-			}
-			if(!player.getHand().equals(newPlayer.getHand()))
-			{
-				player.getHand().clear();
-				while(!newPlayer.getHand().isEmpty())
+				if(!player.getHand().equals(newPlayer.getHand()))
 				{
-					player.getHand().add(newPlayer.getHand().remove(0));
+					player.getHand().clear();
+					while(!newPlayer.getHand().isEmpty())
+					{
+						player.getHand().add(newPlayer.getHand().remove(0));
+					}
+					hasChanged = true;
 				}
-				hasChanged = true;
-			}
-			if(player.cardPlayed.getValue().ordinal() != newPlayer.cardPlayed.getValue().ordinal()
-					|| player.cardPlayed.getSuit() != newPlayer.cardPlayed.getSuit())
-			{
-				player.cardPlayed = newPlayer.cardPlayed;
-				hasChanged = true;
-			}
-			//If changed were made, notify subscribers
-			if(hasChanged)
-			{
-				this.model.notifyModelSubscribers();
+				if(player.cardPlayed.getValue().ordinal() != newPlayer.cardPlayed.getValue().ordinal()
+						|| player.cardPlayed.getSuit() != newPlayer.cardPlayed.getSuit())
+				{
+					player.cardPlayed = newPlayer.cardPlayed;
+					hasChanged = true;
+				}
+				//If changed were made, notify subscribers
+				if(hasChanged)
+				{
+					this.model.notifyModelSubscribers();
+				}
 			}
 		}
 	}
