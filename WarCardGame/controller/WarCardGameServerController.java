@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.JOptionPane;
+
 import view.WarCardGameServerView;
 import model.GenericCardGameCard;
 import model.GenericCardGameCardList;
@@ -16,7 +18,7 @@ import model.WarCardGamePlayer;
 public class WarCardGameServerController extends GenericCardGameController
 {	
 	private int requiredNumberOfPlayers = 2;
-	
+
 	public WarCardGameServerController(WarCardGameModel model, WarCardGameServerView view) 
 	{
 		super(model, view);
@@ -25,9 +27,9 @@ public class WarCardGameServerController extends GenericCardGameController
 	public void initializeGame() 
 	{
 		initializeDeck(1);
-		
+
 		System.out.println("WAITING FOR ENOUGH PLAYERS");
-		
+
 		while(((WarCardGameModel)this.model).getPlayers().size() < requiredNumberOfPlayers)
 		{
 			/*WAIT FOR PLAYERS CONNECTION*/
@@ -41,16 +43,16 @@ public class WarCardGameServerController extends GenericCardGameController
 				e.printStackTrace();
 			}
 		}
-		
+
 		System.out.println("ENOUGH PLAYERS FOUND");
-		
+
 		//Deal cards
 		dealCards();
-		
+
 		//Wait for players action
 		evaluateHand();
 	}
-	
+
 	public void initializeDeck(int numOfDecks)
 	{
 		((GenericCardGameModel)model).setDeck(new GenericCardGameCardList());
@@ -75,7 +77,7 @@ public class WarCardGameServerController extends GenericCardGameController
 	{
 		return requiredNumberOfPlayers;
 	}
-	
+
 	public void dealCards()
 	{
 		while(((WarCardGameModel)this.model).getDeck().size() > 0)
@@ -86,20 +88,24 @@ public class WarCardGameServerController extends GenericCardGameController
 					player.getHand().add(((WarCardGameModel)this.model).getDeck().remove(0));
 			}
 		}
-		
+
 		//Send all players their card
 		((WarCardGameModel)this.model).notifyModelSubscribers();
 	}
 
-	public void gameOver() 
+	public void gameOver(int winner) 
 	{
 		// TODO Auto-generated method stub
-		
+		//custom title, no icon
+		JOptionPane.showMessageDialog(null,
+				"Player " + winner+1 + " wins!",
+				"Game Over",
+				JOptionPane.PLAIN_MESSAGE);
+		this.initializeGame();
 	}
 
 	public void evaluateHand() 
 	{
-		// TODO Auto-generated method stub
 		//Finds the player with the highest card and places cards accordingly
 		//Doesn't handle wars yet
 		int winningPlayer = -1;
@@ -140,7 +146,7 @@ public class WarCardGameServerController extends GenericCardGameController
 			{
 				if(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.isEmpty())
 				{
-					this.gameOver();
+					this.gameOver(winningPlayer);
 				}
 				else
 				{
@@ -150,10 +156,12 @@ public class WarCardGameServerController extends GenericCardGameController
 				}
 			}
 		}
-		
+
 		//Notify subscribers and get ready for next hand
 		((WarCardGameModel)this.model).notifyModelSubscribers();
-		
+
 		evaluateHand();
 	}
+
+	
 }
