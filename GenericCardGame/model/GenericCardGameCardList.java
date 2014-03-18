@@ -18,10 +18,10 @@ public class GenericCardGameCardList extends JPanel implements Serializable
 	{
 		super();
 		cards = new ArrayList<GenericCardGameCard>();
-		this.shuffle();
+		this.shuffleCards();
 	}
 	
-	public void shuffle()
+	public void shuffleCards()
 	{
 		//http://stackoverflow.com/questions/4228975/how-to-randomize-arraylist
 		//shuffle is a static function inside java which takes a list and shuffles it randomly
@@ -29,34 +29,39 @@ public class GenericCardGameCardList extends JPanel implements Serializable
 		Collections.shuffle(cards);
 	}
 	
-	public void sort()
+	public void sortCards()
 	{
 		//TODO  SORT CARDS SMALLEST TO LARGEST, ALTERNATING RED BLACK SUITS
 	}
 	
-	public void showAll()
+	public void showAllCards()
 	{
 		//TODO Flip all cards face up
 	}
 	
-	public void hideAll()
+	public void hideAllCards()
 	{
 		//TODO Flip all cards face down
 	}
 	
-	public boolean add(GenericCardGameCard card)
+	public boolean addCard(GenericCardGameCard card)
 	{
 		return cards.add(card);
 	}
 	
-	public boolean remove(GenericCardGameCard card)
+	public GenericCardGameCard removeCard(int index)
 	{
-		return cards.remove(card);
+		return cards.remove(index);
 	}
 	
 	public boolean isEmpty()
 	{
 		return cards.isEmpty();
+	}
+	
+	public int getListSize()
+	{
+		return cards.size();
 	}
 	
 	@Override
