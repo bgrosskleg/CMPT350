@@ -176,4 +176,9 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 	{
 		return this.value;
 	}
+	
+	public Suit getSuit()
+	{
+		return this.suit;
+	}
 }
