@@ -7,7 +7,6 @@ import model.GenericCardGameCard;
 import model.GenericCardGameCardList;
 import model.GenericCardGameModel;
 import model.GenericCardGamePlayer;
-import model.GenericMVCModel;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
 
@@ -16,7 +15,7 @@ import model.WarCardGamePlayer;
  * games will implement 
  *
  */
-public class WarCardGameServerController extends GenericCardGameController
+public class WarCardGameServerController extends WarCardGameGeneralController
 {	
 	private int requiredNumberOfPlayers = 2;
 
@@ -162,49 +161,5 @@ public class WarCardGameServerController extends GenericCardGameController
 		((WarCardGameModel)this.model).notifyModelSubscribers();
 
 		evaluateHand();
-	}
-
-
-	@Override
-	protected void updateModel(GenericMVCModel newModel)
-	{
-		// TODO Auto-generated method stub
-		// Compare interesting parts of the model and update
-		boolean hasChanged = false;
-
-		for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)
-		{
-			WarCardGamePlayer player = ((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i));
-			WarCardGamePlayer newPlayer = ((WarCardGamePlayer)((WarCardGameModel)newModel).getPlayers().get(i));
-			if(!player.winPile.equals(newPlayer.winPile))
-			{
-				player.winPile.clear();
-				while(!newPlayer.winPile.isEmpty())
-				{
-					player.winPile.add(newPlayer.winPile.remove(0));
-				}
-				hasChanged = true;
-			}
-			if(!player.getHand().equals(newPlayer.getHand()))
-			{
-				player.getHand().clear();
-				while(!newPlayer.getHand().isEmpty())
-				{
-					player.getHand().add(newPlayer.getHand().remove(0));
-				}
-				hasChanged = true;
-			}
-			if(player.cardPlayed.getValue().ordinal() != newPlayer.cardPlayed.getValue().ordinal()
-					|| player.cardPlayed.getSuit() != newPlayer.cardPlayed.getSuit())
-			{
-				player.cardPlayed = newPlayer.cardPlayed;
-				hasChanged = true;
-			}
-			//If changed were made, notify subscribers
-			if(hasChanged)
-			{
-				this.model.notifyModelSubscribers();
-			}
-		}
 	}
 }
