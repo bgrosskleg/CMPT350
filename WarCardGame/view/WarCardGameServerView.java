@@ -13,6 +13,8 @@ import model.WarCardGameModel;
 public class WarCardGameServerView extends GenericCardGameView
 {
 	private static final long serialVersionUID = 1L;
+	
+	private JLabel playerStatus;
 
 	public WarCardGameServerView(WarCardGameModel model)
 	{
@@ -32,19 +34,23 @@ public class WarCardGameServerView extends GenericCardGameView
 		result.setMaximumSize(getPreferredSize());
 		result.setMinimumSize(getPreferredSize());
 		
-		result.add(new JLabel("Number of Players: " + ((WarCardGameModel)model).getPlayers().size()));
-		
-		
-		
+		playerStatus = new JLabel("Waiting for " + (2-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+		result.add(playerStatus);
+				
 		return result;
 	}
 
 	@Override
 	public void modelChanged() 
 	{
-		if(((WarCardGameModel)model).getPlayers().size() > 1)
+		if(((WarCardGameModel)model).getPlayers().size() < 2)
 		{
-			panel.setBackground(Color.GREEN);
+			playerStatus.setText("Waiting for " + (2-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+		}
+		else
+		{
+			this.panel.remove(playerStatus);
+			this.panel.setBackground(Color.GREEN);
 		}
 	}
 }

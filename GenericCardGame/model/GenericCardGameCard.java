@@ -8,11 +8,12 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class GenericCardGameCard extends JPanel implements Comparable<GenericCardGameCard>
+public class GenericCardGameCard extends JPanel implements Comparable<GenericCardGameCard>, Serializable
 {
 	private static final long serialVersionUID = 1L;
 

@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class GenericCardGameCardList extends ArrayList<GenericCardGameCard>
+public class GenericCardGameCardList extends ArrayList<GenericCardGameCard> implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 

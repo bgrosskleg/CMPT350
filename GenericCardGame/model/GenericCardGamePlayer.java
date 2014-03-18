@@ -9,7 +9,9 @@ import model.GenericCardGameCardList;
 
  public abstract class GenericCardGamePlayer extends GenericMVCModel
  {
-	 private GenericCardGameCardList hand;
+	private static final long serialVersionUID = 1L;
+
+	private GenericCardGameCardList hand;
 	 
 	 protected GenericCardGameSocketWorker socketWorker;
 	 	 

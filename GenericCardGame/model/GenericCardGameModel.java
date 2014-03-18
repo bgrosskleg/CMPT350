@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public abstract class GenericCardGameModel extends GenericMVCModel
 {
+	private static final long serialVersionUID = 1L;
+	
 	protected GenericCardGameCardList deck;	
 	protected ArrayList<GenericCardGamePlayer> players;
 		

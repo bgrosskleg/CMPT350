@@ -4,43 +4,45 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public abstract class GenericMVCWaitForConnectionsThread extends Thread
+public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 {
 	protected final int port;
 	protected ServerSocket serverSocket;
 	protected GenericMVCController controller;
+	protected boolean acceptingConnections;
 	
-	protected GenericMVCWaitForConnectionsThread(int port, GenericMVCController controller, String threadName) throws IOException
+	protected GenericMVCWaitForConnectionsWorker(int port, GenericMVCController controller) throws IOException
 	{
 		//http://www.oracle.com/technetwork/java/socket-140484.html
-		super(threadName);
 		this.controller = controller;
 		
 		this.port = port;
 		this.serverSocket = new ServerSocket(port);
-		
+		this.acceptingConnections = true;
 		if(this.serverSocket != null)
 		{
 			System.out.println("Server listening on port: " + port);
 		}
 	}
 	
+	@Override
 	public void run()
 	{		
-		while(true)
+		while(acceptingConnections)
 		{
 			GenericMVCSocketWorker worker;
 		    try
 		    {
 		    	//server.accept returns a client connection
+		    	System.out.println("WAITING FOR CONNECTION");
+		    	
 		    	Socket socket = serverSocket.accept();
 		    	System.out.println("CONNECTION ACCEPTED");
 		    	
 		    	worker = createSocketWorker(socket);
 		    	System.out.println("SOCKET WORKER CREATED");
 		    	
-		    	Thread thread = new Thread(worker);
-		    	thread.start();
+		    	(new Thread(worker)).start();
 		    	System.out.println("THREAD STARTED");
 		    } 
 		    catch (IOException e) 
@@ -49,6 +51,19 @@ public abstract class GenericMVCWaitForConnectionsThread extends Thread
 		      System.exit(-1);
 		    }
 		}
+		
+		System.out.println("STOPPED ACCEPTING CONNECTIONS");
+	}
+	
+	public void stopAcceptingConnections()
+	{
+		this.acceptingConnections = false;
+	}
+	
+	public void resumeAcceptingConnections()
+	{
+		this.acceptingConnections = true;
+		this.run();
 	}
 	
 	protected abstract GenericMVCSocketWorker createSocketWorker(Socket socket);

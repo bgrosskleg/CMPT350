@@ -1,11 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import interfaces.GenericMVCModelSubscriber;
 
-public abstract class GenericMVCModel 
+public abstract class GenericMVCModel implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * List of model subscribers to be notified
 	 */

@@ -4,6 +4,7 @@ import view.WarCardGameServerView;
 import model.GenericCardGameCard;
 import model.GenericCardGameCardList;
 import model.GenericCardGameModel;
+import model.GenericCardGamePlayer;
 import model.WarCardGameModel;
 
 /**
@@ -13,6 +14,8 @@ import model.WarCardGameModel;
  */
 public class WarCardGameServerController extends GenericCardGameController
 {	
+	private int requiredNumberOfPlayers = 2;
+	
 	public WarCardGameServerController(WarCardGameModel model, WarCardGameServerView view) 
 	{
 		super(model, view);
@@ -22,12 +25,23 @@ public class WarCardGameServerController extends GenericCardGameController
 	{
 		initializeDeck(1);
 		
-		System.out.println("GET'S HERE 1");
+		System.out.println("WAITING FOR ENOUGH PLAYERS");
 		
-		while(((WarCardGameModel)this.model).getPlayers().size() < 2)
-		{/*WAIT FOR PLAYERS CONNECTION*/}
+		while(((WarCardGameModel)this.model).getPlayers().size() < requiredNumberOfPlayers)
+		{
+			/*WAIT FOR PLAYERS CONNECTION*/
+			try 
+			{
+				Thread.sleep(50);
+			} 
+			catch (InterruptedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
-		System.out.println("GET'S HERE 2");
+		System.out.println("ENOUGH PLAYERS FOUND");
 		
 		//Deal cards
 		dealCards();
@@ -56,10 +70,23 @@ public class WarCardGameServerController extends GenericCardGameController
 		model.notifyModelSubscribers();
 	}
 
+	public int getRequiredNumberOfPlayers()
+	{
+		return requiredNumberOfPlayers;
+	}
+	
 	public void dealCards()
 	{
-		// TODO Auto-generated method stub
+		while(((WarCardGameModel)this.model).getDeck().size() > 0)
+		{
+			for(GenericCardGamePlayer player : ((WarCardGameModel)this.model).getPlayers())
+			{
+				player.getHand().add(((WarCardGameModel)this.model).getDeck().remove(0));
+			}
+		}
 		
+		//Send all players their card
+		((WarCardGameModel)this.model).notifyModelSubscribers();
 	}
 
 	public void gameOver() 
