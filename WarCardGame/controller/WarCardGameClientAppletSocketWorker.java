@@ -2,6 +2,8 @@ package controller;
 
 import java.net.Socket;
 
+import model.WarCardGameModel;
+
 public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWorker
 {	
 	private static final long serialVersionUID = 1L;
@@ -16,7 +18,7 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 	{
 		//TODO Handle client-server communication
 		//Wait for object on stream
-		controller.this.recieveObject();
+		controller.updateModel((WarCardGameModel)this.recieveObject());
 	}
 
 	@Override
