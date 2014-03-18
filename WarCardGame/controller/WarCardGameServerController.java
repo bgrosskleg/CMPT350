@@ -5,6 +5,7 @@ import model.GenericCardGameCard;
 import model.GenericCardGameCardList;
 import model.GenericCardGameModel;
 import model.GenericCardGamePlayer;
+import model.GenericMVCModel;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
 
@@ -155,5 +156,12 @@ public class WarCardGameServerController extends GenericCardGameController
 		((WarCardGameModel)this.model).notifyModelSubscribers();
 		
 		evaluateHand();
+	}
+
+	@Override
+	protected void updateModel(GenericMVCModel newModel)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

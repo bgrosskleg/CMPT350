@@ -12,5 +12,4 @@ public class WarCardGameClientAppletController extends GenericCardGameController
 		super(model, view);
 		// TODO Auto-generated constructor stub
 	}
-
 }

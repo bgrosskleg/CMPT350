@@ -15,6 +15,8 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 	public void run() 
 	{
 		//TODO Handle client-server communication
+		//Wait for object on stream
+		controller.this.recieveObject();
 	}
 
 	@Override

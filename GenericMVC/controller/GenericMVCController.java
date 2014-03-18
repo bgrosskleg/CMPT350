@@ -13,4 +13,6 @@ public abstract class GenericMVCController
 		this.model = model;
 		this.view = view;
 	}
+	
+	protected abstract void updateModel(GenericMVCModel newModel);
 }
