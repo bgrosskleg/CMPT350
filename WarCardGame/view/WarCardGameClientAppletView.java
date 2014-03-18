@@ -1,9 +1,7 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import javax.swing.*;
+import java.awt.*;
 
 import javax.swing.JPanel;
 
