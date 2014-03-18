@@ -6,6 +6,7 @@ import model.GenericCardGameCardList;
 import model.GenericCardGameModel;
 import model.GenericCardGamePlayer;
 import model.WarCardGameModel;
+import model.WarCardGamePlayer;
 
 /**
  * a generic game controller class that provides simple functions that all card
@@ -81,7 +82,8 @@ public class WarCardGameServerController extends GenericCardGameController
 		{
 			for(GenericCardGamePlayer player : ((WarCardGameModel)this.model).getPlayers())
 			{
-				player.getHand().add(((WarCardGameModel)this.model).getDeck().remove(0));
+				if(((WarCardGameModel)this.model).getDeck().size() > 0)
+					player.getHand().add(((WarCardGameModel)this.model).getDeck().remove(0));
 			}
 		}
 		
@@ -98,6 +100,60 @@ public class WarCardGameServerController extends GenericCardGameController
 	public void evaluateHand() 
 	{
 		// TODO Auto-generated method stub
+		//Finds the player with the highest card and places cards accordingly
+		//Doesn't handle wars yet
+		int winningPlayer = -1;
+		int highestCard = -1;
+		for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)
+		{
+			while(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed == null)
+			{
+				try 
+				{
+					Thread.sleep(20);
+				} 
+				catch (InterruptedException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+			if(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed.getValue().ordinal() > highestCard)
+			{
+				highestCard = ((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed.getValue().ordinal();
+				winningPlayer = i;
+			}
+		}
+		//Send model for players to view
+		((WarCardGameModel)this.model).notifyModelSubscribers();
+		//Now we will put the cards in the appropriate places
+		for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)
+		{
+			((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(winningPlayer)).winPile.add(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed);
+			((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed = null;
+		}
+		//Get ready for new hand
+		//Check for empty hands, then see if game is over
+		//or winpile needs to be shuffled and added to hand
+		for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)
+		{
+			if(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).getHand().isEmpty())
+			{
+				if(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.isEmpty())
+				{
+					this.gameOver();
+				}
+				else
+				{
+					((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.shuffle();
+					while(!((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.isEmpty())
+						((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).getHand().add(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.remove(0));
+				}
+			}
+		}
 		
+		//Notify subscribers and get ready for next hand
+		((WarCardGameModel)this.model).notifyModelSubscribers();
+		
+		evaluateHand();
 	}
 }

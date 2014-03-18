@@ -9,6 +9,7 @@ public class WarCardGamePlayer extends GenericCardGamePlayer
 	
 	public GenericCardGameCard cardPlayed;
 	public String name;
+	public GenericCardGameCardList winPile;
 	
 	public static enum Destination
 	{
@@ -20,5 +21,6 @@ public class WarCardGamePlayer extends GenericCardGamePlayer
 		super(socketWorker);
 		cardPlayed = null;
 		name = null;
+		winPile = new GenericCardGameCardList();
 	}
 }

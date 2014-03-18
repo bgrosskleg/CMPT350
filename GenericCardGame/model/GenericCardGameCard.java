@@ -171,4 +171,9 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 	{
 		this.owner = owner;
 	}
+	
+	public Value getValue()
+	{
+		return this.value;
+	}
 }
