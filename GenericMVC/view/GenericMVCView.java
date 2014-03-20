@@ -11,16 +11,14 @@ public abstract class GenericMVCView extends JPanel implements GenericMVCModelSu
 	private static final long serialVersionUID = 1L;
 
 	protected GenericMVCModel model;
-	protected JPanel panel;
 
 	protected GenericMVCView(GenericMVCModel model)
 	{
 		this.model = model;
 		this.model.addModelSubscriber(this);
-		this.panel = generatePanel();
-		this.add(panel);
+		buildPanel();
 	}
 
-	protected abstract JPanel generatePanel();
+	protected abstract void buildPanel();
 }
 

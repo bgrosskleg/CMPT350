@@ -21,6 +21,18 @@ public class GenericCardGameCardListView extends JPanel
 	@Override
 	public void paintComponent(Graphics g)
 	{
+		/*
+    	 * 	 _______________
+    	 * 	|				|
+    	 * 	|	 _______	|
+    	 * 	|	|		|	|
+    	 * 	|	| card  |	|
+    	 * 	|	|		|	|
+    	 * 	|	|_______|	|
+    	 * 	|	numCards	|
+    	 * 	|_______________|
+    	 */
+		
 		Graphics2D g2 = (Graphics2D) g;
 			
 		if(cards.size() > 0)
