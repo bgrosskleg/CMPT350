@@ -18,7 +18,20 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 	public void run() 
 	{
 		//Wait for object on stream
-		controller.updateModel((WarCardGameModel)this.recieveObject());
+		while(true)
+		{
+			Object object = this.recieveObject();
+			if(object instanceof WarCardGameModel)
+			{
+				System.out.println("Old number of players: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size());
+				controller.updateModel((WarCardGameModel)object);
+				System.out.println("New number of players: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size());
+			}
+			else
+			{
+				System.err.println("Recieved object not type WarCardGameModel!");
+			}
+		}
 	}
 
 	@Override

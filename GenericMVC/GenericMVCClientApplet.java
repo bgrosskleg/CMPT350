@@ -30,6 +30,7 @@ public abstract class GenericMVCClientApplet extends JApplet
                 	view = createView();
                 	controller = createController();
                 	socketWorker = createSocketWorker();
+                	(new Thread(socketWorker)).start();
                 }
             });
             

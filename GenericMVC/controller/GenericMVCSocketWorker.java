@@ -40,26 +40,33 @@ public abstract class GenericMVCSocketWorker implements Runnable, GenericMVCMode
 	}
 	
 	protected void sendObject(Object object)
-	{
-		try
-		{
-			OOS.writeObject(object);
-		}
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-			//Likely ClientApplet closed and closed socket, therefore erase player and destroy the thread
-			
-			//TODO Close the worker and remove the player from the model, return the views to waiting for players
-			//TODO Alternatively could trigger victory for remaining player
-		}
+	{ 
+			try
+			{
+				System.out.println("GenericMVCSocketWorker: SendObject");
+				new Exception().printStackTrace();
+				OOS.reset();
+				OOS.writeObject(object);
+				OOS.flush();
+			}
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+				//Likely ClientApplet closed and closed socket, therefore erase player and destroy the thread
+				
+				//TODO Close the worker and remove the player from the model, return the views to waiting for players
+				//TODO Alternatively could trigger victory for remaining player
+			}
 	}
 	
 	protected Object recieveObject()
 	{
 		try 
 		{
-			return OIS.readObject();
+			Object object = OIS.readObject();
+			System.out.println("GenericMVCSocketWorker: RecieveObject");
+			new Exception().printStackTrace();
+			return object;
 		} 
 		catch (ClassNotFoundException e) 
 		{

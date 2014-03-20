@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.IOException;
 import java.net.Socket;
 
 import model.WarCardGameModel;
@@ -20,8 +19,15 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 	{
 		while(true)
 		{
-			//Wait for object on stream
-			controller.updateModel((WarCardGameModel)this.recieveObject());
+			Object object = this.recieveObject();
+			if(object instanceof WarCardGameModel)
+			{
+				controller.updateModel((WarCardGameModel)object);
+			}
+			else
+			{
+				System.err.println("Recieved object not type WarCardGameModel!");
+			}
 		}
 	}
 	
@@ -40,7 +46,20 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 			e.printStackTrace();
 		}
 		*/
+		/*try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		//synchronized((WarCardGameModel)((WarCardGameServerController)controller).model)
+		//{
+			//this.sendObject(((WarCardGameModel)((WarCardGameServerController)controller).model));
+		//synchronized(this.controller.model)
+		//{
+			this.sendObject(controller.model);
+		//}
 		
-		this.sendObject(((WarCardGameModel)((WarCardGameServerController)controller).model));
+			//}
 	}
 }

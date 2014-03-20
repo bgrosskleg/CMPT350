@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+
 import java.awt.*;
 
 import model.WarCardGameModel;
@@ -15,6 +16,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	JPanel p2Card;
 	private static final long serialVersionUID = 1L;
 	private JLabel playerStatus;
+	private final int requiredNumberOfPlayers = 2;
 
 
 	public WarCardGameClientAppletView(WarCardGameModel model) 
@@ -130,7 +132,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		result.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		result.setBackground(Color.BLUE);
+		result.setBackground(Color.YELLOW);
 		result.setPreferredSize(new Dimension(500,500));
 		result.setMaximumSize(getPreferredSize());
 		result.setMinimumSize(getPreferredSize());
@@ -147,9 +149,9 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	@Override
 	public void modelChanged() 
 	{
-		if(((WarCardGameModel)model).getPlayers().size() < 2)
+		if(((WarCardGameModel)model).getPlayers().size() < requiredNumberOfPlayers)
 		{
-			playerStatus.setText("Waiting for " + (2-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+			playerStatus.setText("Waiting for " + (requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		}
 		else
 		{

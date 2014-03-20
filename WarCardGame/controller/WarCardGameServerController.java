@@ -17,8 +17,6 @@ import model.WarCardGamePlayer;
  */
 public class WarCardGameServerController extends WarCardGameGeneralController
 {	
-	private int requiredNumberOfPlayers = 2;
-
 	public WarCardGameServerController(WarCardGameModel model, WarCardGameServerView view) 
 	{
 		super(model, view);
@@ -47,30 +45,34 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 		System.out.println("ENOUGH PLAYERS FOUND");
 
 		//Deal cards
-		dealCards();
+		//dealCards();
 
 		//Wait for players action
-		evaluateHand();
+		//evaluateHand();
 	}
 
 	public void initializeDeck(int numOfDecks)
 	{
-		((GenericCardGameModel)model).setDeck(new GenericCardGameCardList());
-
-		for(int iter = numOfDecks; iter > 1; iter--)
+		synchronized(this.model)
 		{
-			for(GenericCardGameCard.Suit suit : GenericCardGameCard.Suit.values())
+			((GenericCardGameModel)model).setDeck(new GenericCardGameCardList());
+	
+			for(int iter = numOfDecks; iter > 1; iter--)
 			{
-				for(GenericCardGameCard.Value value: GenericCardGameCard.Value.values())
+				for(GenericCardGameCard.Suit suit : GenericCardGameCard.Suit.values())
 				{
-					((GenericCardGameModel)model).getDeck().add(new GenericCardGameCard(value, suit));
+					for(GenericCardGameCard.Value value: GenericCardGameCard.Value.values())
+					{
+						((GenericCardGameModel)model).getDeck().add(new GenericCardGameCard(value, suit));
+					}
 				}
 			}
+	
+			((GenericCardGameModel)model).getDeck().shuffle();
 		}
-
-		((GenericCardGameModel)model).getDeck().shuffle();
-
+		
 		model.notifyModelSubscribers();
+
 	}
 
 	public int getRequiredNumberOfPlayers()
@@ -80,15 +82,18 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 
 	public void dealCards()
 	{
-		while(((WarCardGameModel)this.model).getDeck().size() > 0)
+		synchronized(this.model)
 		{
-			for(GenericCardGamePlayer player : ((WarCardGameModel)this.model).getPlayers())
+			while(((WarCardGameModel)this.model).getDeck().size() > 0)
 			{
-				if(((WarCardGameModel)this.model).getDeck().size() > 0)
-					player.getHand().add(((WarCardGameModel)this.model).getDeck().remove(0));
-			}
+				for(GenericCardGamePlayer player : ((WarCardGameModel)this.model).getPlayers())
+				{
+					if(((WarCardGameModel)this.model).getDeck().size() > 0)
+						player.getHand().add(((WarCardGameModel)this.model).getDeck().remove(0));
+				}
+			}	
 		}
-
+		
 		//Send all players their card
 		((WarCardGameModel)this.model).notifyModelSubscribers();
 	}

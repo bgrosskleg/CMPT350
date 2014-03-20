@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import model.WarCardGameModel;
+
 public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 {
 	protected final int port;
@@ -44,6 +46,9 @@ public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 		    	
 		    	(new Thread(worker)).start();
 		    	System.out.println("THREAD STARTED");
+		    	
+				controller.model.notifyModelSubscribers();
+				System.out.println("SUBSCRIBERS NOTIFIED");
 		    } 
 		    catch (IOException e) 
 		    {

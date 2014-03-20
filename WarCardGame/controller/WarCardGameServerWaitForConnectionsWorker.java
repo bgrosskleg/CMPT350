@@ -24,10 +24,6 @@ public class WarCardGameServerWaitForConnectionsWorker extends GenericCardGameWa
 		
 			((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().add(new WarCardGamePlayer(socketWorker));
 		
-			
-			System.out.println("WarCardGameServerWaitForConnectionsWorker: GET'S HERE 1");
-			((WarCardGameModel)((WarCardGameServerController) controller).model).notifyModelSubscribers();
-		
 			if(((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().size() == ((WarCardGameServerController)this.controller).getRequiredNumberOfPlayers())
 			{
 				this.acceptingConnections = false;

@@ -13,61 +13,71 @@ import model.WarCardGamePlayer;
  */
 public abstract class WarCardGameGeneralController extends GenericCardGameController
 {	
-
-	protected WarCardGameGeneralController(GenericCardGameModel model,
-			GenericCardGameView view) {
+	protected final int requiredNumberOfPlayers = 2;
+	
+	protected WarCardGameGeneralController(GenericCardGameModel model, GenericCardGameView view) 
+	{
 		super(model, view);
 	}
 
 	@Override
 	protected void updateModel(GenericMVCModel newModel)
 	{
-		// Compare interesting parts of the model and update
-		boolean hasChanged = false;
-		if(((WarCardGameModel)this.model).getPlayers().size() != ((WarCardGameModel)newModel).getPlayers().size())
-		{
-			((WarCardGameModel)this.model).getPlayers().clear();
-			while(!((WarCardGameModel)newModel).getPlayers().isEmpty())
+		System.out.println("WarCardGameGeneralWorker: UpdateModel");
+		//synchronized(model)
+		//{
+			// Compare interesting parts of the model and update local model
+			boolean hasChanged = false;
+			if(((WarCardGameModel)this.model).getPlayers().size() != ((WarCardGameModel)newModel).getPlayers().size())
 			{
-				((WarCardGameModel)this.model).getPlayers().add(((WarCardGameModel)newModel).getPlayers().remove(0));
+				((WarCardGameModel)this.model).getPlayers().clear();
+				while(!((WarCardGameModel)newModel).getPlayers().isEmpty())
+				{
+					((WarCardGameModel)this.model).getPlayers().add(((WarCardGameModel)newModel).getPlayers().remove(0));
+				}
+				hasChanged = true;
 			}
-			hasChanged = true;
-		}
-		else{
-			for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)
+			else
 			{
-				WarCardGamePlayer player = ((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i));
-				WarCardGamePlayer newPlayer = ((WarCardGamePlayer)((WarCardGameModel)newModel).getPlayers().get(i));
-				if(!player.winPile.equals(newPlayer.winPile))
+				for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size(); i++)
 				{
-					player.winPile.clear();
-					while(!newPlayer.winPile.isEmpty())
+					WarCardGamePlayer player = ((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i));
+					WarCardGamePlayer newPlayer = ((WarCardGamePlayer)((WarCardGameModel)newModel).getPlayers().get(i));
+					if(!player.winPile.equals(newPlayer.winPile))
 					{
-						player.winPile.add(newPlayer.winPile.remove(0));
+						player.winPile.clear();
+						while(!newPlayer.winPile.isEmpty())
+						{
+							player.winPile.add(newPlayer.winPile.remove(0));
+						}
+						hasChanged = true;
 					}
-					hasChanged = true;
-				}
-				if(!player.getHand().equals(newPlayer.getHand()))
-				{
-					player.getHand().clear();
-					while(!newPlayer.getHand().isEmpty())
+					if(!player.getHand().equals(newPlayer.getHand()))
 					{
-						player.getHand().add(newPlayer.getHand().remove(0));
+						player.getHand().clear();
+						while(!newPlayer.getHand().isEmpty())
+						{
+							player.getHand().add(newPlayer.getHand().remove(0));
+						}
+						hasChanged = true;
 					}
-					hasChanged = true;
-				}
-				if(player.cardPlayed.getValue().ordinal() != newPlayer.cardPlayed.getValue().ordinal()
-						|| player.cardPlayed.getSuit() != newPlayer.cardPlayed.getSuit())
-				{
-					player.cardPlayed = newPlayer.cardPlayed;
-					hasChanged = true;
-				}
-				//If changed were made, notify subscribers
-				if(hasChanged)
-				{
-					this.model.notifyModelSubscribers();
+					if(player.cardPlayed.getValue().ordinal() != newPlayer.cardPlayed.getValue().ordinal()
+							|| player.cardPlayed.getSuit() != newPlayer.cardPlayed.getSuit())
+					{
+						player.cardPlayed = newPlayer.cardPlayed;
+						hasChanged = true;
+					}
+					
 				}
 			}
-		}
+			
+			//If changed were made, notify subscribers
+			if(hasChanged)
+			{
+				System.out.println("HAS CHANGED");
+				this.model.notifyModelSubscribers();
+			}
+		//}
+		 
 	}
 }

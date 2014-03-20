@@ -12,7 +12,7 @@ public abstract class GenericMVCModel implements Serializable
 	/**
 	 * List of model subscribers to be notified
 	 */
-	protected ArrayList<GenericMVCModelSubscriber> modelSubscriberList;
+	protected transient ArrayList<GenericMVCModelSubscriber> modelSubscriberList;
 
 	protected GenericMVCModel()
 	{

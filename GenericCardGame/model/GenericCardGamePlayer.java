@@ -13,13 +13,13 @@ public abstract class GenericCardGamePlayer extends GenericMVCModel
 
 	//private GenericCardGameCardList hand;
 	 
-	//protected transient GenericCardGameSocketWorker socketWorker;
+	protected transient GenericCardGameSocketWorker socketWorker;
 
 	protected GenericCardGamePlayer(GenericCardGameSocketWorker socketWorker)
 	{
 		super();
 		
-		//this.socketWorker = socketWorker;
+		this.socketWorker = socketWorker;
 
 		//this.hand = new GenericCardGameCardList(); 
 	}
@@ -29,10 +29,10 @@ public abstract class GenericCardGamePlayer extends GenericMVCModel
 		return null;
 	}
 
-	//public GenericCardGameSocketWorker getSocketWorker() 
-	//{
-	//	return socketWorker;
-	//}
+	public GenericCardGameSocketWorker getSocketWorker() 
+	{
+		return socketWorker;
+	}
 
 	/*public JPanel generateHandView()
 	{
