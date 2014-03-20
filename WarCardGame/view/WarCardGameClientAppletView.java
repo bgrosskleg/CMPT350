@@ -136,7 +136,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		result.setMinimumSize(getPreferredSize());
 		
 		
-		playerStatus = new JLabel("Waiting for " + (2-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+		playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers - ((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		result.add(playerStatus);
 		
 		

@@ -43,7 +43,7 @@ public class WarCardGameServerView extends GenericCardGameView
 	@Override
 	public void modelChanged() 
 	{
-		if(((WarCardGameModel)model).getPlayers().size() < 2)
+		if(((WarCardGameModel)model).getPlayers().size() < ((WarCardGameModel)this.model).requiredNumberOfPlayers)
 		{
 			playerStatus.setText("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		}
