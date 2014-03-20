@@ -28,7 +28,7 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 
 		System.out.println("WAITING FOR ENOUGH PLAYERS");
 
-		while(((WarCardGameModel)this.model).getPlayers().size() < requiredNumberOfPlayers)
+		while(((WarCardGameModel)this.model).getPlayers().size() < ((WarCardGameModel)this.model).requiredNumberOfPlayers)
 		{
 			/*WAIT FOR PLAYERS CONNECTION*/
 			try 
@@ -73,11 +73,6 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 		
 		model.notifyModelSubscribers();
 
-	}
-
-	public int getRequiredNumberOfPlayers()
-	{
-		return requiredNumberOfPlayers;
 	}
 
 	public void dealCards()

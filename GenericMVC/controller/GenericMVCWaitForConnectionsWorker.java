@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import model.WarCardGameModel;
-
 public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 {
 	protected final int port;

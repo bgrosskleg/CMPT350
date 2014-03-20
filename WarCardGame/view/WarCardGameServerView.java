@@ -34,7 +34,7 @@ public class WarCardGameServerView extends GenericCardGameView
 		result.setMaximumSize(getPreferredSize());
 		result.setMinimumSize(getPreferredSize());
 		
-		playerStatus = new JLabel("Waiting for " + (2-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+		playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		result.add(playerStatus);
 				
 		return result;
@@ -45,7 +45,7 @@ public class WarCardGameServerView extends GenericCardGameView
 	{
 		if(((WarCardGameModel)model).getPlayers().size() < 2)
 		{
-			playerStatus.setText("Waiting for " + (2-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+			playerStatus.setText("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		}
 		else
 		{

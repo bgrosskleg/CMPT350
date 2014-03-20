@@ -4,6 +4,8 @@ public class WarCardGameModel extends GenericCardGameModel
 {	
 	private static final long serialVersionUID = 1L;
 
+	public final int requiredNumberOfPlayers = 2;
+	
 	public WarCardGameModel()
 	{
 		//calls the constructor of the GenericGameModel

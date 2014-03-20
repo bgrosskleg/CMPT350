@@ -12,9 +12,7 @@ import model.WarCardGamePlayer;
  *
  */
 public abstract class WarCardGameGeneralController extends GenericCardGameController
-{	
-	protected final int requiredNumberOfPlayers = 2;
-	
+{		
 	protected WarCardGameGeneralController(GenericCardGameModel model, GenericCardGameView view) 
 	{
 		super(model, view);

@@ -1,10 +1,6 @@
  package model;
 
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-
 import controller.GenericCardGameSocketWorker;
-import model.GenericCardGameCard;
 import model.GenericCardGameCardList;
 
 public abstract class GenericCardGamePlayer extends GenericMVCModel

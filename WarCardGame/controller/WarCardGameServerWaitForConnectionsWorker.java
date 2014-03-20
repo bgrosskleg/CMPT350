@@ -17,14 +17,14 @@ public class WarCardGameServerWaitForConnectionsWorker extends GenericCardGameWa
 	@Override
 	protected WarCardGameServerSocketWorker createSocketWorker(Socket socket) 
 	{		
-		if(((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().size() < ((WarCardGameServerController)this.controller).getRequiredNumberOfPlayers()
+		if(((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().size() < ((WarCardGameModel)((WarCardGameServerController)this.controller).model).requiredNumberOfPlayers
 				&& this.acceptingConnections)
 		{
 			WarCardGameServerSocketWorker socketWorker = new WarCardGameServerSocketWorker(socket, (WarCardGameServerController)this.controller);
 		
 			((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().add(new WarCardGamePlayer(socketWorker));
 		
-			if(((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().size() == ((WarCardGameServerController)this.controller).getRequiredNumberOfPlayers())
+			if(((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().size() == ((WarCardGameModel)((WarCardGameServerController)this.controller).model).requiredNumberOfPlayers)
 			{
 				this.acceptingConnections = false;
 			}

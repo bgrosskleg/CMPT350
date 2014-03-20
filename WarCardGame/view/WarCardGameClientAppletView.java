@@ -16,8 +16,6 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	JPanel p2Card;
 	private static final long serialVersionUID = 1L;
 	private JLabel playerStatus;
-	private final int requiredNumberOfPlayers = 2;
-
 
 	public WarCardGameClientAppletView(WarCardGameModel model) 
     {
@@ -149,9 +147,9 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	@Override
 	public void modelChanged() 
 	{
-		if(((WarCardGameModel)model).getPlayers().size() < requiredNumberOfPlayers)
+		if(((WarCardGameModel)model).getPlayers().size() < ((WarCardGameModel)this.model).requiredNumberOfPlayers)
 		{
-			playerStatus.setText("Waiting for " + (requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+			playerStatus.setText("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers - ((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		}
 		else
 		{
