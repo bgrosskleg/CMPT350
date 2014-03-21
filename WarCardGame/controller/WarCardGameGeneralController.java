@@ -50,12 +50,12 @@ public abstract class WarCardGameGeneralController extends GenericCardGameContro
 					}
 					hasChanged = true;
 				}
-				if(!player.getHand().equals(newPlayer.getHand()))
+				if(!player.flipDeck.equals(newPlayer.flipDeck))
 				{
-					player.getHand().clear();
-					while(!newPlayer.getHand().isEmpty())
+					player.flipDeck.clear();
+					while(!newPlayer.flipDeck.isEmpty())
 					{
-						player.getHand().add(newPlayer.getHand().remove(0));
+						player.flipDeck.add(newPlayer.flipDeck.remove(0));
 					}
 					hasChanged = true;
 				}

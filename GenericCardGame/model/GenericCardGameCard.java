@@ -76,7 +76,7 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 			
 			File imageFile = new File(imagePath);
 			
-			System.out.println(imagePath);
+			//System.out.println(imagePath);
 			cardFace = new ImageIcon(ImageIO.read(imageFile));
 			
 			imagePath = cardPath + "/BACK.png";
@@ -182,5 +182,11 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 	public Suit getSuit()
 	{
 		return this.suit;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return (this.value + " of " + this.suit);
 	}
 }

@@ -101,8 +101,8 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	        gbc.weighty = 0.25;
 	        
 	        //TODO  Make all the approriate fields in the player object
-	    	JPanel p1Deck = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(0)).deck);
-	    	JPanel p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(1)).deck);
+	    	JPanel p1Deck = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(0)).flipDeck);
+	    	JPanel p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(1)).flipDeck);
 	    	JPanel p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(0)).winPile);
 	    	JPanel p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(1)).winPile);
 	    	JPanel p1Card = ((WarCardGamePlayer)model.getPlayers().get(0)).cardPlayed;

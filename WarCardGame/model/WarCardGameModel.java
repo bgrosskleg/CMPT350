@@ -12,6 +12,27 @@ public class WarCardGameModel extends GenericCardGameModel
 		//creates new CardList of cards and new ArrayedList of players
 		super();
 	}
+	
+	@Override 
+	public String toString()
+	{
+		String result = "";
+		
+		result += "*****DECK*****\n\n";
+		for(GenericCardGameCard card : this.deck)
+		{
+			result += (card.toString() + "\n");
+		}
+		
+		result += "*****PLAYERS*****\n\n";
+		for(GenericCardGamePlayer player : this.players)
+		{
+			result += ("PLAYER " + this.players.indexOf(player) + "\n");
+			result += (player.toString() + "\n");
+		}
+		
+		return result;
+	}
 }
 
 

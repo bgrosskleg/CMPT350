@@ -7,10 +7,10 @@ public class WarCardGamePlayer extends GenericCardGamePlayer
 {	
 	private static final long serialVersionUID = 1L;
 	
-	public GenericCardGameCard cardPlayed;
 	public String name;
+	public GenericCardGameCard cardPlayed;
 	public GenericCardGameCardList winPile;
-	public GenericCardGameCardList deck;
+	public GenericCardGameCardList flipDeck;
 	
 	public static enum Destination
 	{
@@ -23,11 +23,27 @@ public class WarCardGamePlayer extends GenericCardGamePlayer
 		cardPlayed = null;
 		name = null;
 		winPile = new GenericCardGameCardList();
-		deck = new GenericCardGameCardList();
+		flipDeck = new GenericCardGameCardList();
 	}
-	
-	public GenericCardGameCardList getHand()
+		
+	@Override
+	public String toString()
 	{
-		return deck;
+		String result = "";
+		
+		if(name == null)
+		{result += ("Name: NULL \n");}
+		else
+		{result += ("Name: " + name + "\n");}
+		
+		if(cardPlayed == null)
+		{result += ("CardPlayed: NULL \n");}
+		else
+		{result += ("Card Played: " + cardPlayed.toString() + "\n");}
+		
+		result += ("Win Pile:\n" + winPile.toString() + "\n");
+		result += ("Flip Deck:\n" + flipDeck.toString() + "\n");
+		
+		return result;
 	}
 }

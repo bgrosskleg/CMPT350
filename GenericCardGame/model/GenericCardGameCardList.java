@@ -36,4 +36,21 @@ public class GenericCardGameCardList extends ArrayList<GenericCardGameCard> impl
 	{
 		//TODO Flip all cards face down
 	}	
+	
+	@Override
+	public String toString()
+	{
+		if(this.isEmpty())
+		{
+			return "EMPTY";
+		}
+		
+		String result = "";
+		for(GenericCardGameCard card : this)
+		{
+			result += (card.toString() + "\n");
+		}
+		
+		return result;
+	}
 }

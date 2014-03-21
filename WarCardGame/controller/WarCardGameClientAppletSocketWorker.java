@@ -24,15 +24,18 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 			Object object = this.recieveObject();
 			if(object instanceof WarCardGameModel)
 			{
-				System.out.println("Old number of players: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size());
-				if(((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size() != 0)
-					System.out.println("Old number of cards for Player 1: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().get(0).getHand().size());
+				//System.out.println("Old number of players: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size());
+				//if(((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size() != 0)
+					//System.out.println("Old number of cards for Player 1: " + ((WarCardGamePlayer)((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().get(0)).deck.size());
+				
+				System.out.println("OLD MODEL: \n" + controller.model.toString());
 				
 				((WarCardGameGeneralController) controller).updateModel((WarCardGameModel)object, false);
 				
-				System.out.println("New number of players: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size());
-				if(((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size() != 0)
-					System.out.println("New number of cards for Player 1: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().get(0).getHand().size());
+				System.out.println("NEW MODEL: \n" + controller.model.toString());
+				//System.out.println("New number of players: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size());
+				//if(((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size() != 0)
+					//System.out.println("New number of cards for Player 1: " + ((WarCardGamePlayer)((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().get(0)).deck.size());
 			
 			
 				((WarCardGameClientAppletView)((WarCardGameGeneralController) controller).view).revalidate();
