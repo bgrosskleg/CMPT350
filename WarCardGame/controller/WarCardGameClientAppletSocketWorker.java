@@ -8,8 +8,6 @@ import model.WarCardGameModel;
 
 public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWorker
 {	
-	private static final long serialVersionUID = 1L;
-
 	public WarCardGameClientAppletSocketWorker(Socket socket, WarCardGameClientAppletController controller)
 	{
 		super(socket, controller);
@@ -37,8 +35,7 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 				//if(((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size() != 0)
 					//System.out.println("New number of cards for Player 1: " + ((WarCardGamePlayer)((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().get(0)).deck.size());
 			
-			
-				((WarCardGameClientAppletView)((WarCardGameGeneralController) controller).view).revalidate();
+				((WarCardGameClientAppletView)((WarCardGameGeneralController) controller).view).modelChanged();
 			}
 			else
 			{

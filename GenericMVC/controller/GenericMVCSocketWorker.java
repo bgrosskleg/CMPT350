@@ -5,14 +5,11 @@ import interfaces.GenericMVCModelSubscriber;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.Socket;
 
-public abstract class GenericMVCSocketWorker implements Runnable, GenericMVCModelSubscriber, Serializable
+public abstract class GenericMVCSocketWorker implements Runnable, GenericMVCModelSubscriber
 {
 	//http://www.oracle.com/technetwork/java/socket-140484.html
-
-	private static final long serialVersionUID = 1L;
 
 	protected Socket socket;
 	protected ObjectInputStream OIS;

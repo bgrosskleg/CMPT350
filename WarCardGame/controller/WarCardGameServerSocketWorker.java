@@ -6,8 +6,6 @@ import model.WarCardGameModel;
 
 public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 {	
-	private static final long serialVersionUID = 1L;
-
 	public WarCardGameServerSocketWorker(Socket socket, WarCardGameServerController controller)
 	{
 		super(socket, controller);
