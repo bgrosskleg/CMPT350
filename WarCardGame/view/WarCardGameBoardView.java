@@ -1,10 +1,12 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import model.WarCardGameModel;
@@ -56,6 +58,32 @@ public class WarCardGameBoardView extends JPanel
     	JPanel p1Card = ((WarCardGamePlayer)model.getPlayers().get(0)).cardPlayed;
     	JPanel p2Card = ((WarCardGamePlayer)model.getPlayers().get(1)).cardPlayed;
         
+    	JButton p1flip = new JButton("Player 1 Flip!");
+    	JButton p2flip = new JButton("Player 2 Flip!");
+    	
+    	p1flip.addActionListener(new ActionListener()
+    	{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				// TODO Auto-generated method stub
+				
+			}
+    		
+    	});
+    	
+    	p2flip.addActionListener(new ActionListener()
+    	{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				// TODO Auto-generated method stub
+				
+			}
+    		
+    	});
+    	
+    	
     	
     	gbc.ipady=50;
         gbc.gridx=0;
@@ -87,6 +115,14 @@ public class WarCardGameBoardView extends JPanel
         gbc.gridx=2;
         gbc.gridy=3;
         this.add(p1Winpile, gbc);
+        
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        this.add(p2flip, gbc);
+        
+        gbc.gridy = 3;
+        this.add(p1flip, gbc);
         
         this.setOpaque(false);
 	}
