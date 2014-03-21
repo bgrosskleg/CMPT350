@@ -25,4 +25,9 @@ public class WarCardGamePlayer extends GenericCardGamePlayer
 		winPile = new GenericCardGameCardList();
 		deck = new GenericCardGameCardList();
 	}
+	
+	public GenericCardGameCardList getHand()
+	{
+		return deck;
+	}
 }

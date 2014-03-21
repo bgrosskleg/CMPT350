@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import model.WarCardGameModel;
+import model.WarCardGamePlayer;
 
 public class WarCardGameClientAppletView extends GenericCardGameView
 {
@@ -100,12 +101,12 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	        gbc.weighty = 0.25;
 	        
 	        //TODO  Make all the approriate fields in the player object
-	    	/*JPanel p1Deck = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(1)).deck);
-	    	JPanel p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(2)).deck);
-	    	JPanel p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(1)).winPile);
-	    	JPanel p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(2)).winPile);
-	    	JPanel p1Card = ((WarCardGamePlayer)model.getPlayers().get(1)).cardPlayed;
-	    	JPanel p2Card = ((WarCardGamePlayer)model.getPlayers().get(2)).cardPlayed;
+	    	JPanel p1Deck = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(0)).deck);
+	    	JPanel p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(1)).deck);
+	    	JPanel p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(0)).winPile);
+	    	JPanel p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(1)).winPile);
+	    	JPanel p1Card = ((WarCardGamePlayer)model.getPlayers().get(0)).cardPlayed;
+	    	JPanel p2Card = ((WarCardGamePlayer)model.getPlayers().get(1)).cardPlayed;
 	        
 	    	
 	    	gbc.ipady=50;
@@ -117,13 +118,19 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	        gbc.gridy=0;
 	        this.add(p2Winpile, gbc);
 	    	
+	        if(p2Card != null)
+	        {
 	        gbc.gridx=1;
 	        gbc.gridy=1;
 	        this.add(p2Card, gbc);
+	        }
 	    	
+	        if(p1Card != null)
+	        {
 	        gbc.gridx=1;
 	        gbc.gridy=2;
 	        this.add(p1Card, gbc);
+	        }
 	    	
 	        gbc.gridx=0;
 	        gbc.gridy=3;
@@ -132,7 +139,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	        gbc.gridx=2;
 	        gbc.gridy=3;
 	        this.add(p1Winpile, gbc);
-	        */
+	        
 	        this.setOpaque(true);
 	        this.setBackground(Color.BLUE);
 		}

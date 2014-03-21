@@ -22,7 +22,7 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 			Object object = this.recieveObject();
 			if(object instanceof WarCardGameModel)
 			{
-				controller.updateModel((WarCardGameModel)object);
+				((GenericCardGameController)controller).updateModel((WarCardGameModel)object, true);
 			}
 			else
 			{
@@ -55,10 +55,10 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 		//synchronized((WarCardGameModel)((WarCardGameServerController)controller).model)
 		//{
 			//this.sendObject(((WarCardGameModel)((WarCardGameServerController)controller).model));
-		//synchronized(this.controller.model)
-		//{
+		synchronized(this.controller.model)
+		{
 			this.sendObject(controller.model);
-		//}
+		}
 		
 			//}
 	}

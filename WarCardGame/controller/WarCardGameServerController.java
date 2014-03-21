@@ -45,7 +45,7 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 		System.out.println("ENOUGH PLAYERS FOUND");
 
 		//Deal cards
-		//dealCards();
+		dealCards();
 
 		//Wait for players action
 		//evaluateHand();
@@ -57,7 +57,7 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 		{
 			((GenericCardGameModel)model).setDeck(new GenericCardGameCardList());
 	
-			for(int iter = numOfDecks; iter > 1; iter--)
+			for(int iter = numOfDecks; iter >= 1; iter--)
 			{
 				for(GenericCardGameCard.Suit suit : GenericCardGameCard.Suit.values())
 				{

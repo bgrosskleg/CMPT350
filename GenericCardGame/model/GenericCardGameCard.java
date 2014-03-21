@@ -5,12 +5,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class GenericCardGameCard extends JPanel implements Comparable<GenericCardGameCard>, Serializable
@@ -50,8 +50,8 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 	private Suit suit;
 	private Display display;
 	
-	private BufferedImage cardFace;
-	private BufferedImage cardBack;
+	private ImageIcon cardFace;
+	private ImageIcon cardBack;
 	
 	public GenericCardGameCard(Value value, Suit suit)
 	{
@@ -69,16 +69,18 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 		{
 			//Filepath's originate at the root folder of the project itself
 			//to get the image, step up one level to CMPT350 folder with '../'
-			//then drill down into 'Common' and find the resource needed
-			String cardPath = "src/resources/cards/";
+			//then drill down into 'GenericCardGame' and find the resource needed
+			String cardPath = "../GenericCardGame/resources/cards";
 			String imagePath;
-			imagePath = cardPath + suit + "/" + value + ".png";
+			imagePath = cardPath + "/" + suit + "/" + value + ".png";
 			
-			//System.out.println(imagePath);
-			cardFace = ImageIO.read(new File(imagePath));
+			File imageFile = new File(imagePath);
 			
-			imagePath = cardPath + "BACK.png";
-			cardBack = ImageIO.read(new File(imagePath));
+			System.out.println(imagePath);
+			cardFace = new ImageIcon(ImageIO.read(imageFile));
+			
+			imagePath = cardPath + "/BACK.png";
+			cardBack = new ImageIcon(ImageIO.read(new File(imagePath)));
 		} 
 		catch (IOException e) 
 		{
@@ -107,7 +109,7 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 			}
 			else
 			{
-				g2.drawImage(cardFace, 0, 0, null);
+				g2.drawImage(cardFace.getImage(), 0, 0, null);
 			}
 		}
 		else if(display.equals(Display.FACEDOWN))
@@ -123,7 +125,7 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 			}
 			else
 			{
-				g2.drawImage(cardBack, 0, 0, null);
+				g2.drawImage(cardBack.getImage(), 0, 0, null);
 			}
 		}
 	}

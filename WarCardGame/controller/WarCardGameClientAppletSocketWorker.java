@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.net.Socket;
 
+import view.WarCardGameClientAppletView;
 import model.WarCardGameModel;
 
 public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWorker
@@ -24,8 +25,17 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 			if(object instanceof WarCardGameModel)
 			{
 				System.out.println("Old number of players: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size());
-				controller.updateModel((WarCardGameModel)object);
+				if(((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size() != 0)
+					System.out.println("Old number of cards for Player 1: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().get(0).getHand().size());
+				
+				((WarCardGameGeneralController) controller).updateModel((WarCardGameModel)object, false);
+				
 				System.out.println("New number of players: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size());
+				if(((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().size() != 0)
+					System.out.println("New number of cards for Player 1: " + ((WarCardGameModel)((WarCardGameClientAppletController)controller).model).getPlayers().get(0).getHand().size());
+			
+			
+				((WarCardGameClientAppletView)((WarCardGameGeneralController) controller).view).revalidate();
 			}
 			else
 			{
