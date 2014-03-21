@@ -88,7 +88,6 @@ public class WarCardGameBoardView extends JPanel
         gbc.gridy=3;
         this.add(p1Winpile, gbc);
         
-        this.setOpaque(true);
-        this.setBackground(Color.BLUE);
+        this.setOpaque(false);
 	}
 }

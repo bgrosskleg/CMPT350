@@ -41,7 +41,8 @@ public class WarCardGameServerView extends GenericCardGameView
 			//Display card game
 			this.removeAll();
 			
-			this.setBackground(Color.GREEN);
+			//Green pepper from http://www.december.com/html/spec/color2.html
+			this.setBackground(new Color(0x39, 0x7D, 0x02));
 			
 			//Add board game view
 			this.add(new WarCardGameBoardView((WarCardGameModel)this.model));

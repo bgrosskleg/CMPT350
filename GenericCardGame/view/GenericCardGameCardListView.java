@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -38,10 +39,11 @@ public class GenericCardGameCardListView extends JPanel
 		if(cards.size() > 0)
 		{
 			//Paint top card
-			cards.get(0).paint(g2);
+			cards.get(0).paintComponent(g);
 		}
 		
 		//Indicate how many cards are in the stack
-		g2.drawString(String.valueOf(cards.size()), 30, 100);
+		g2.setFont(new Font("Arial", Font.BOLD, 22)); 
+		g2.drawString(String.valueOf(cards.size()), 25, 115);
 	}
 }

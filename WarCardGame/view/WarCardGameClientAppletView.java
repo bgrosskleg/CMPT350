@@ -55,7 +55,8 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 				//Remove waiting label
 				this.removeAll();
 				
-				this.setBackground(Color.GREEN);
+				//Green pepper from http://www.december.com/html/spec/color2.html
+				this.setBackground(new Color(0x39, 0x7D, 0x02));
 				
 				//Add the game board view
 				this.add(new WarCardGameBoardView((WarCardGameModel)this.model));
