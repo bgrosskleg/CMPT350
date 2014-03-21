@@ -11,7 +11,6 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 		super(socket, controller);
 	}
 	
-
 	@Override
 	public void run() 
 	{
@@ -20,7 +19,12 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 			Object object = this.recieveObject();
 			if(object instanceof WarCardGameModel)
 			{
-				((GenericCardGameController)controller).updateModel((WarCardGameModel)object, true);
+				//Update local model with received model, NOTE updateModel does NOT call notifySubscribers!
+				synchronized(this.controller.model)
+				{((GenericCardGameController)controller).updateModel((WarCardGameModel)object);}
+				
+				//Notify all subscribers on server, including all server socket workers and server view
+				controller.model.notifyModelSubscribers();
 			}
 			else
 			{
@@ -33,31 +37,7 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 	public void modelChanged() 
 	{
 		//Transmit model to other side
-		/*
-		 * try 
-		{
-			this.OOS.reset();
-		}
-		catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-		/*try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		//synchronized((WarCardGameModel)((WarCardGameServerController)controller).model)
-		//{
-			//this.sendObject(((WarCardGameModel)((WarCardGameServerController)controller).model));
 		synchronized(this.controller.model)
-		{
-			this.sendObject(controller.model);
-		}
-		
-			//}
+		{this.sendObject(controller.model);}
 	}
 }

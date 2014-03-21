@@ -12,5 +12,5 @@ public abstract class GenericCardGameController extends GenericMVCController
 	}
 
 
-	protected abstract void updateModel(GenericMVCModel newModel, boolean retransmit);
+	protected abstract void updateModel(GenericMVCModel newModel);
 }

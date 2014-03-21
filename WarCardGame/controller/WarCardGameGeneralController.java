@@ -19,13 +19,13 @@ public abstract class WarCardGameGeneralController extends GenericCardGameContro
 	}
 
 	@Override
-	protected void updateModel(GenericMVCModel newModel, boolean retransmit)
+	protected void updateModel(GenericMVCModel newModel)
 	{
 		System.out.println("WarCardGameGeneralWorker: UpdateModel");
 		//synchronized(model)
 		//{
 		// Compare interesting parts of the model and update local model
-		boolean hasChanged = false;
+		
 		if(((WarCardGameModel)this.model).getPlayers().size() != ((WarCardGameModel)newModel).getPlayers().size())
 		{
 			((WarCardGameModel)this.model).getPlayers().clear();
@@ -33,7 +33,6 @@ public abstract class WarCardGameGeneralController extends GenericCardGameContro
 			{
 				((WarCardGameModel)this.model).getPlayers().add(((WarCardGameModel)newModel).getPlayers().remove(0));
 			}
-			hasChanged = true;
 		}
 		else
 		{
@@ -48,7 +47,6 @@ public abstract class WarCardGameGeneralController extends GenericCardGameContro
 					{
 						player.winPile.add(newPlayer.winPile.remove(0));
 					}
-					hasChanged = true;
 				}
 				if(!player.flipDeck.equals(newPlayer.flipDeck))
 				{
@@ -57,7 +55,6 @@ public abstract class WarCardGameGeneralController extends GenericCardGameContro
 					{
 						player.flipDeck.add(newPlayer.flipDeck.remove(0));
 					}
-					hasChanged = true;
 				}
 				if(player.cardPlayed != newPlayer.cardPlayed)
 				{
@@ -65,20 +62,9 @@ public abstract class WarCardGameGeneralController extends GenericCardGameContro
 							|| player.cardPlayed.getSuit() != newPlayer.cardPlayed.getSuit())
 					{
 						player.cardPlayed = newPlayer.cardPlayed;
-						hasChanged = true;
 					}
 				}
-
 			}
 		}
-
-		//If changed were made, notify subscribers
-		if(hasChanged && retransmit)
-		{
-			System.out.println("HAS CHANGED");
-			this.model.notifyModelSubscribers();
-		}
-		//}
-
 	}
 }
