@@ -27,7 +27,6 @@ public class WarCardGameModel extends GenericCardGameModel
 		result += "*****PLAYERS*****\n\n";
 		for(GenericCardGamePlayer player : this.players)
 		{
-			result += ("PLAYER " + this.players.indexOf(player) + "\n");
 			result += (player.toString() + "\n");
 		}
 		

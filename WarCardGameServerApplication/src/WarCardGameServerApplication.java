@@ -21,7 +21,7 @@ public class WarCardGameServerApplication extends GenericCardGameServerApplicati
 		
 		try
 		{
-			WarCardGameServerWaitForConnectionsWorker worker = new WarCardGameServerWaitForConnectionsWorker(65000, (WarCardGameServerController)game.controller);
+			WarCardGameServerWaitForConnectionsWorker worker = new WarCardGameServerWaitForConnectionsWorker(65000, 2, (WarCardGameServerController)game.controller);
 			(new Thread(worker)).start();
 		}
 		catch (IOException e) 

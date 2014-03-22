@@ -1,14 +1,15 @@
 package controller;
 
+import java.io.IOException;
 import java.net.Socket;
 
 import model.WarCardGameModel;
 
 public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 {	
-	public WarCardGameServerSocketWorker(Socket socket, WarCardGameServerController controller)
+	public WarCardGameServerSocketWorker(Socket socket, final int playerNum, WarCardGameServerController controller)
 	{
-		super(socket, controller);
+		super(socket, playerNum, controller);
 	}
 	
 	@Override
@@ -16,7 +17,19 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 	{
 		while(true)
 		{
-			Object object = this.recieveObject();
+			Object object = null;
+			
+			try 
+			{
+				object = this.recieveObject();
+			} 
+			catch (Exception e) 
+			{
+				System.err.println("SOCKET ERROR - CLOSING CONNECTION");
+				//TODO close connection and delete player
+				e.printStackTrace();
+			}
+			
 			if(object instanceof WarCardGameModel)
 			{
 				//Update local model with received model, NOTE updateModel does NOT call notifySubscribers!
@@ -38,6 +51,17 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 	{
 		//Transmit model to other side
 		synchronized(this.controller.model)
-		{this.sendObject(controller.model);}
+		{
+			try 
+			{
+				this.sendObject(controller.model);
+			}
+			catch (IOException e) 
+			{
+				System.err.println("SOCKET ERROR - CLOSING CONNECTION");
+				//TODO close connection and delete player
+				e.printStackTrace();
+			}
+		}
 	}
 }

@@ -8,19 +8,11 @@ import model.WarCardGameModel;
 
 public class WarCardGameClientAppletView extends GenericCardGameView
 {
-    JPanel p1Deck;
-	JPanel p2Deck;
-	JPanel p1Winpile;
-	JPanel p2Winpile;
-	JPanel p1Card;
-	JPanel p2Card;
 	private static final long serialVersionUID = 1L;
-	private JLabel playerStatus;
 
 	public WarCardGameClientAppletView(WarCardGameModel model) 
     {
-		super(model);
-		// TODO Auto-generated constructor stub
+		super(model, 0);
 	}
     
 	@Override
@@ -31,7 +23,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		this.setMaximumSize(getPreferredSize());
 		this.setMinimumSize(getPreferredSize());
 		
-		playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers - ((WarCardGameModel)model).getPlayers().size()) + " more players...");
+		this.playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers - ((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		this.add(playerStatus);
 	}
 
@@ -46,7 +38,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 			if(((WarCardGameModel)model).getPlayers().size() < ((WarCardGameModel)this.model).requiredNumberOfPlayers)
 			{				
 				//Display waiting text
-				playerStatus.setText("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers - ((WarCardGameModel)model).getPlayers().size()) + " more players...");
+				this.playerStatus.setText("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers - ((WarCardGameModel)model).getPlayers().size()) + " more players...");
 			}
 			else if(((WarCardGameModel)model).getPlayers().size() == ((WarCardGameModel)this.model).requiredNumberOfPlayers)
 			{
@@ -59,11 +51,8 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 				this.setBackground(new Color(0x39, 0x7D, 0x02));
 				
 				//Add the game board view
-				this.add(new WarCardGameBoardView((WarCardGameModel)this.model));
-				
-				//Add this players hand view
-				//TODO add view
-				
+				this.add(new WarCardGameBoardView((WarCardGameModel)this.model, playerNumber));
+								
 				this.revalidate();
 				
 			}

@@ -8,12 +8,10 @@ import model.WarCardGameModel;
 public class WarCardGameServerView extends GenericCardGameView
 {
 	private static final long serialVersionUID = 1L;
-	
-	private JLabel playerStatus;
 
 	public WarCardGameServerView(WarCardGameModel model)
 	{
-		super(model);
+		super(model, 0);
 	}
 
 	@Override
@@ -24,7 +22,7 @@ public class WarCardGameServerView extends GenericCardGameView
 		this.setMaximumSize(getPreferredSize());
 		this.setMinimumSize(getPreferredSize());
 		
-		playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+		this.playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		this.add(playerStatus);
 	}
 
@@ -34,7 +32,7 @@ public class WarCardGameServerView extends GenericCardGameView
 		if(((WarCardGameModel)model).getPlayers().size() < ((WarCardGameModel)this.model).requiredNumberOfPlayers)
 		{
 			//Display waiting text
-			playerStatus.setText("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+			this.playerStatus.setText("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		}
 		else
 		{
@@ -45,7 +43,7 @@ public class WarCardGameServerView extends GenericCardGameView
 			this.setBackground(new Color(0x39, 0x7D, 0x02));
 			
 			//Add board game view
-			this.add(new WarCardGameBoardView((WarCardGameModel)this.model));
+			this.add(new WarCardGameBoardView((WarCardGameModel)this.model, playerNumber));
 			
 			this.revalidate();
 		}

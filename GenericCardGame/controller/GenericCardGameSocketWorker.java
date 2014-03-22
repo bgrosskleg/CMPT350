@@ -4,8 +4,12 @@ import java.net.Socket;
 
 public abstract class GenericCardGameSocketWorker extends GenericMVCSocketWorker
 {
-	protected GenericCardGameSocketWorker(Socket socket, GenericCardGameController controller)
+	
+	public final int playerNum;
+	
+	protected GenericCardGameSocketWorker(Socket socket, final int playerNum, GenericCardGameController controller)
 	{
 		super(socket, controller);
+		this.playerNum = playerNum;
 	}
 }

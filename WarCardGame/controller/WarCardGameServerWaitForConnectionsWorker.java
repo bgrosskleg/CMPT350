@@ -8,30 +8,35 @@ import model.WarCardGamePlayer;
 
 public class WarCardGameServerWaitForConnectionsWorker extends GenericCardGameWaitForConnectionsWorker
 {			
-	public WarCardGameServerWaitForConnectionsWorker(int port, WarCardGameServerController controller) throws IOException
+	public WarCardGameServerWaitForConnectionsWorker(final int port, final int maxConnections, WarCardGameServerController controller) throws IOException
 	{
 		//http://www.oracle.com/technetwork/java/socket-140484.html
-		super(port, controller);
+		super(port, maxConnections, controller);
 	}
 
 	@Override
 	protected WarCardGameServerSocketWorker createSocketWorker(Socket socket) 
-	{		
-		if(((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().size() < ((WarCardGameModel)((WarCardGameServerController)this.controller).model).requiredNumberOfPlayers
-				&& this.acceptingConnections)
+	{				
+		//Create worker to handle communication to client applet
+		WarCardGameServerSocketWorker socketWorker = new WarCardGameServerSocketWorker(socket, this.currentConnections + 1, (WarCardGameServerController)this.controller);
+		
+		//Create new player object
+		WarCardGamePlayer newPlayer = new WarCardGamePlayer(socketWorker);
+		
+		//Send notify client which player they are
+		try 
 		{
-			WarCardGameServerSocketWorker socketWorker = new WarCardGameServerSocketWorker(socket, (WarCardGameServerController)this.controller);
-		
-			((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().add(new WarCardGamePlayer(socketWorker));
-		
-			if(((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().size() == ((WarCardGameModel)((WarCardGameServerController)this.controller).model).requiredNumberOfPlayers)
-			{
-				this.acceptingConnections = false;
-			}
-				
-			return socketWorker;
+			socketWorker.sendObject(newPlayer.getPlayerNumber());
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		return null;
+		//Add player to model
+		((WarCardGameModel)((WarCardGameServerController) controller).model).getPlayers().add(newPlayer);
+		
+		return socketWorker;
 	}
 }

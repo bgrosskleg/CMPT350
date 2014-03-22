@@ -1,14 +1,16 @@
 package controller;
 
+import java.io.IOException;
 import java.net.Socket;
 
+import view.WarCardGameClientAppletView;
 import model.WarCardGameModel;
 
 public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWorker
 {	
 	public WarCardGameClientAppletSocketWorker(Socket socket, WarCardGameClientAppletController controller)
 	{
-		super(socket, controller);
+		super(socket, 0, controller);
 	}
 
 	@Override
@@ -17,7 +19,19 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 		//Wait for object on stream
 		while(true)
 		{
-			Object object = this.recieveObject();
+			Object object = null;
+			
+			try 
+			{
+				object = this.recieveObject();
+			}
+			catch (Exception e) 
+			{
+				System.err.println("SOCKET ERROR - CLOSING CONNECTION");
+				//TODO close connection and delete player
+				e.printStackTrace();
+			}
+			
 			if(object instanceof WarCardGameModel)
 			{
 				System.out.println("OLD MODEL: \n" + controller.model.toString());
@@ -31,9 +45,17 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 				
 				System.out.println("NEW MODEL: \n" + controller.model.toString());
 			}
+			else if(object instanceof Integer)
+			{
+				((WarCardGameClientAppletController)controller).playerNumber = (Integer) object;
+				
+				((WarCardGameClientAppletView)((WarCardGameClientAppletController)controller).view).playerNumber =  (Integer) object;
+		
+				System.out.println("I AM PLAYER " + ((WarCardGameClientAppletController)controller).playerNumber);
+			}
 			else
 			{
-				System.err.println("Recieved object not type WarCardGameModel!");
+				System.err.println("Recieved object not type WarCardGameModel or Integer!");
 			}
 		}
 	}
@@ -43,6 +65,17 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 	{
 		//Transmit model to other side
 		synchronized(this.controller.model)
-		{this.sendObject(controller.model);}
+		{
+			try 
+			{
+				this.sendObject(controller.model);
+			}
+			catch (IOException e) 
+			{
+				System.err.println("SOCKET ERROR - CLOSING CONNECTION");
+				//TODO close connection and delete player
+				e.printStackTrace();
+			}
+		}
 	}
 }

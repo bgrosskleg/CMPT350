@@ -6,8 +6,7 @@ import controller.GenericCardGameSocketWorker;
 public class WarCardGamePlayer extends GenericCardGamePlayer
 {	
 	private static final long serialVersionUID = 1L;
-	
-	public String name;
+
 	public GenericCardGameCard cardPlayed;
 	public GenericCardGameCardList winPile;
 	public GenericCardGameCardList flipDeck;
@@ -20,10 +19,14 @@ public class WarCardGamePlayer extends GenericCardGamePlayer
 	public WarCardGamePlayer(GenericCardGameSocketWorker socketWorker) 
 	{
 		super(socketWorker);
-		cardPlayed = null;
-		name = null;
-		winPile = new GenericCardGameCardList();
-		flipDeck = new GenericCardGameCardList();
+		this.cardPlayed = null;
+		this.winPile = new GenericCardGameCardList();
+		this.flipDeck = new GenericCardGameCardList();
+	}
+	
+	public int getPlayerNumber()
+	{
+		return playerNum;
 	}
 		
 	@Override
@@ -31,10 +34,7 @@ public class WarCardGamePlayer extends GenericCardGamePlayer
 	{
 		String result = "";
 		
-		if(name == null)
-		{result += ("Name: NULL \n");}
-		else
-		{result += ("Name: " + name + "\n");}
+		result += ("PLAYER " + playerNum + "\n");
 		
 		if(cardPlayed == null)
 		{result += ("CardPlayed: NULL \n");}

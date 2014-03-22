@@ -15,9 +15,12 @@ import model.WarCardGamePlayer;
 public class WarCardGameBoardView extends JPanel
 {
 	private static final long serialVersionUID = 1L;
+	
+	private final int playerNum;
 
-	public WarCardGameBoardView(WarCardGameModel model)
+	public WarCardGameBoardView(WarCardGameModel model, int playerNum)
 	{
+		this.playerNum = playerNum;
 		/*
     	 * 			x0		x1		x2
     	 * 	 	_______________________
@@ -117,12 +120,20 @@ public class WarCardGameBoardView extends JPanel
         this.add(p1Winpile, gbc);
         
         gbc.fill = GridBagConstraints.NONE;
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        this.add(p2flip, gbc);
         
-        gbc.gridy = 3;
-        this.add(p1flip, gbc);
+        if(this.playerNum == 2)
+        { 
+        	gbc.gridx = 1;
+	        gbc.gridy = 0;
+	        this.add(p2flip, gbc);
+        }
+        
+        if(this.playerNum == 1)
+        {
+        	gbc.gridx = 1;
+        	gbc.gridy = 3;
+        	this.add(p1flip, gbc);
+        }
         
         this.setOpaque(false);
 	}
