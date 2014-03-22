@@ -5,8 +5,8 @@ import model.GenericMVCModel;
 
 public abstract class GenericMVCController 
 {
-	protected GenericMVCModel model;
-	protected GenericMVCView view;
+	protected final GenericMVCModel model;
+	protected final GenericMVCView view;
 	
 	protected GenericMVCController(GenericMVCModel model, GenericMVCView view)
 	{

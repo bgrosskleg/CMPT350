@@ -7,20 +7,37 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
-
+import model.GenericCardGameCard;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
 
-public class WarCardGameBoardView extends JPanel
+public class WarCardGameBoardView extends GenericCardGameView
 {
 	private static final long serialVersionUID = 1L;
-	
-	private final int playerNum;
+		
+	private GenericCardGameCardListView p1Deck;
+	private GenericCardGameCardListView p2Deck;
+	private GenericCardGameCardListView p1Winpile;
+	private GenericCardGameCardListView p2Winpile;
+	private GenericCardGameCard p1Card;
+	private GenericCardGameCard p2Card;
 
-	public WarCardGameBoardView(WarCardGameModel model, int playerNum)
+	public WarCardGameBoardView(WarCardGameModel model, int playerNumber)
 	{
-		this.playerNum = playerNum;
+		super(model, playerNumber);
+		this.state = GenericCardGameView.State.READY;
+	}
+
+	@Override
+	public void modelChanged() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void buildPanel() 
+	{
 		/*
     	 * 			x0		x1		x2
     	 * 	 	_______________________
@@ -54,12 +71,12 @@ public class WarCardGameBoardView extends JPanel
         gbc.weighty = 0.25;
         
         //TODO  Make all the approriate fields in the player object
-    	JPanel p1Deck = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(0)).flipDeck);
-    	JPanel p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(1)).flipDeck);
-    	JPanel p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(0)).winPile);
-    	JPanel p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)model.getPlayers().get(1)).winPile);
-    	JPanel p1Card = ((WarCardGamePlayer)model.getPlayers().get(0)).cardPlayed;
-    	JPanel p2Card = ((WarCardGamePlayer)model.getPlayers().get(1)).cardPlayed;
+        p1Deck = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).flipDeck);
+        p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).flipDeck);
+        p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).winPile);
+        p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).winPile);
+        p1Card = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed;
+        p2Card = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed;
         
     	JButton p1flip = new JButton("Player 1 Flip!");
     	JButton p2flip = new JButton("Player 2 Flip!");
@@ -69,8 +86,13 @@ public class WarCardGameBoardView extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				// TODO Auto-generated method stub
+				//Remove top card from flip deck and make it the played card
+				synchronized(model)
+				{
+					//p1Card = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).flipDeck.remove(0);
 				
+					//model.notifyModelSubscribers();
+				}
 			}
     		
     	});
@@ -80,10 +102,14 @@ public class WarCardGameBoardView extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				// TODO Auto-generated method stub
+				//Remove top card from flip deck and make it the played card
+				synchronized(model)
+				{
+					//p2Card = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).flipDeck.remove(0);
 				
+					//model.notifyModelSubscribers();
+				}
 			}
-    		
     	});
     	
     	
@@ -121,14 +147,14 @@ public class WarCardGameBoardView extends JPanel
         
         gbc.fill = GridBagConstraints.NONE;
         
-        if(this.playerNum == 2)
+        if(this.playerNumber == 2)
         { 
         	gbc.gridx = 1;
 	        gbc.gridy = 0;
 	        this.add(p2flip, gbc);
         }
         
-        if(this.playerNum == 1)
+        if(this.playerNumber == 1)
         {
         	gbc.gridx = 1;
         	gbc.gridy = 3;

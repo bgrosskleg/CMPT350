@@ -45,7 +45,7 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 		System.out.println("ENOUGH PLAYERS FOUND");
 
 		//Deal cards
-		dealCards();
+		//dealCards();
 
 		//Wait for players action
 		//evaluateHand();
@@ -69,9 +69,10 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 			}
 	
 			((GenericCardGameModel)model).getDeck().shuffle();
-		}
 		
-		model.notifyModelSubscribers();
+		
+			model.notifyModelSubscribers();
+		}
 
 	}
 
@@ -87,10 +88,11 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 						((WarCardGamePlayer)player).flipDeck.add(((WarCardGameModel)this.model).getDeck().remove(0));
 				}
 			}	
-		}
 		
-		//Send all players their card
-		((WarCardGameModel)this.model).notifyModelSubscribers();
+		
+			//Send all players their card
+			model.notifyModelSubscribers();
+		}
 	}
 
 	public void gameOver(int winner) 

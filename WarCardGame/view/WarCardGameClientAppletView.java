@@ -30,9 +30,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 
 	@Override
 	public void modelChanged() 
-	{
-		System.out.println("MODEL CHANGED");
-		
+	{		
 		if(this.state.equals(GenericCardGameView.State.WAITING))
 		{
 			if(((WarCardGameModel)model).getPlayers().size() < ((WarCardGameModel)this.model).requiredNumberOfPlayers)
@@ -51,6 +49,14 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 				this.setBackground(new Color(0x39, 0x7D, 0x02));
 				
 				//Add the game board view
+				
+				//This is causing the ConcurrentModification because
+				//notifyModelSubscribers()
+				//--Looping over subscriberList
+				//----modelChanged()
+				//------Create new view, model.addSubscriber()
+				//Adding subscriber while still iterating, locks/synchronizing has no affect because if adding
+				//subscriber was waiting for access, modelChanged() would never complete and deadlock, must re-work this
 				this.add(new WarCardGameBoardView((WarCardGameModel)this.model, playerNumber));
 								
 				this.revalidate();

@@ -50,7 +50,7 @@ public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 				System.out.println("SUBSCRIBERS NOTIFIED");
 
 				currentConnections++;
-				System.out.println(currentConnections + "CONNECTIONS");
+				System.out.println(currentConnections + " CONNECTIONS");
 			} 
 			catch (IOException e) 
 			{
