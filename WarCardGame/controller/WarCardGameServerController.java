@@ -48,7 +48,7 @@ public class WarCardGameServerController extends GenericCardGameController
 		dealCards();
 
 		//Wait for players action
-		//evaluateHand();
+		evaluateHand();
 	}
 
 	public void initializeDeck(int numOfDecks)
@@ -136,7 +136,7 @@ public class WarCardGameServerController extends GenericCardGameController
 		//Now we will put the cards in the appropriate places
 		for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)
 		{
-			((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(winningPlayer)).winPile.add(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed);
+			((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(winningPlayer)).winPile.add(0, (((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed));
 			((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed = null;
 		}
 		//Get ready for new hand
@@ -153,6 +153,8 @@ public class WarCardGameServerController extends GenericCardGameController
 				else
 				{
 					((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.shuffle();
+					((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.faceDown();
+					
 					while(!((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.isEmpty())
 						((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).flipDeck.add(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).winPile.remove(0));
 				}

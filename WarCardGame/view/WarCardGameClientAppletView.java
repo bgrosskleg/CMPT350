@@ -163,17 +163,31 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		gbc.gridy=0;
 		this.add(p2Winpile, gbc);
 
-		if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed != null)
+		if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed == null)
 		{
 			gbc.gridx=1;
 			gbc.gridy=1;
+			add(new JLabel("No Card Played"), gbc);
+		}
+		else
+		{
+			gbc.gridx=1;
+			gbc.gridy=1;
+			((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed.faceUp();
 			this.add(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed, gbc);
 		}
 
-		if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed != null)
+		if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed == null)
 		{
 			gbc.gridx=1;
 			gbc.gridy=2;
+			add(new JLabel("No Card Played"), gbc);
+		}
+		else
+		{
+			gbc.gridx=1;
+			gbc.gridy=2;
+			((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed.faceUp();
 			this.add(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed, gbc);
 		}
 

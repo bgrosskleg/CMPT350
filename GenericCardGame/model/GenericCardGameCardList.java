@@ -27,14 +27,20 @@ public class GenericCardGameCardList extends ArrayList<GenericCardGameCard> impl
 		//TODO  SORT CARDS SMALLEST TO LARGEST, ALTERNATING RED BLACK SUITS
 	}
 	
-	public void showAll()
+	public void faceUp()
 	{
-		//TODO Flip all cards face up
+		for(GenericCardGameCard card : this)
+		{
+			card.faceUp();
+		}
 	}
 	
-	public void hideAll()
+	public void faceDown()
 	{
-		//TODO Flip all cards face down
+		for(GenericCardGameCard card : this)
+		{
+			card.faceDown();
+		}
 	}	
 	
 	@Override

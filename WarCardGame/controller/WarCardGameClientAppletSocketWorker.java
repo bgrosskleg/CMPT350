@@ -107,6 +107,7 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 			{
 				WarCardGamePlayer player = ((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i));
 				WarCardGamePlayer newPlayer = ((WarCardGamePlayer)((WarCardGameModel)newModel).getPlayers().get(i));
+				
 				if(!player.winPile.equals(newPlayer.winPile))
 				{
 					player.winPile.clear();
@@ -115,6 +116,7 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 						player.winPile.add(newPlayer.winPile.remove(0));
 					}
 				}
+				
 				if(!player.flipDeck.equals(newPlayer.flipDeck))
 				{
 					player.flipDeck.clear();
@@ -123,13 +125,10 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 						player.flipDeck.add(newPlayer.flipDeck.remove(0));
 					}
 				}
+				
 				if(player.cardPlayed != newPlayer.cardPlayed)
 				{
-					if(player.cardPlayed.getValue() != newPlayer.cardPlayed.getValue()
-							|| player.cardPlayed.getSuit() != newPlayer.cardPlayed.getSuit())
-					{
-						player.cardPlayed = newPlayer.cardPlayed;
-					}
+					player.cardPlayed = newPlayer.cardPlayed;
 				}
 			}
 		}

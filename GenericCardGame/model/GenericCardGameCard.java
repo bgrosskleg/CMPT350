@@ -184,6 +184,16 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 		return this.suit;
 	}
 	
+	public void faceUp()
+	{
+		this.display = Display.FACEUP;
+	}
+	
+	public void faceDown()
+	{
+		this.display = Display.FACEDOWN;
+	}
+	
 	@Override
 	public String toString()
 	{
