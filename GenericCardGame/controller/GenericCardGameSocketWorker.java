@@ -2,14 +2,12 @@ package controller;
 
 import java.net.Socket;
 
+import model.GenericCardGameModel;
+
 public abstract class GenericCardGameSocketWorker extends GenericMVCSocketWorker
-{
-	
-	public final int playerNum;
-	
-	protected GenericCardGameSocketWorker(Socket socket, final int playerNum, GenericCardGameController controller)
+{	
+	protected GenericCardGameSocketWorker(Socket socket, GenericCardGameModel model, final int connectionNumber)
 	{
-		super(socket, controller);
-		this.playerNum = playerNum;
+		super(socket, model, connectionNumber);
 	}
 }

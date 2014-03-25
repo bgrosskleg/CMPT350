@@ -7,21 +7,13 @@ import model.GenericCardGameModel;
 public abstract class GenericCardGameView extends GenericMVCView
 {
 	private static final long serialVersionUID = 1L;
-
-	protected enum State
-	{
-		WAITING, READY;
-	}
-		
-	protected State state;
-	protected JLabel playerStatus;
-	
+			
 	public int playerNumber;
+	protected JLabel playerStatus;
 	
 	public GenericCardGameView(GenericCardGameModel model, int playerNumber) 
 	{
 		super(model);
 		this.playerNumber = playerNumber;
-		this.state = GenericCardGameView.State.WAITING;
 	}
 }

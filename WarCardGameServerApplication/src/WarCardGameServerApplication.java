@@ -9,6 +9,8 @@ import model.WarCardGameModel;
 
 public class WarCardGameServerApplication extends GenericCardGameServerApplication
 {
+	public static final int objectPort = 65000;
+	
 	public static void main(String [ ] args)
 	{				
 		WarCardGameServerApplication game = new WarCardGameServerApplication();
@@ -21,7 +23,7 @@ public class WarCardGameServerApplication extends GenericCardGameServerApplicati
 		
 		try
 		{
-			WarCardGameServerWaitForConnectionsWorker worker = new WarCardGameServerWaitForConnectionsWorker(65000, 2, (WarCardGameServerController)game.controller);
+			WarCardGameServerWaitForConnectionsWorker worker = new WarCardGameServerWaitForConnectionsWorker(objectPort, ((WarCardGameModel)game.model).getRequiredNumberOfPlayers(), (WarCardGameModel)game.model);
 			(new Thread(worker)).start();
 		}
 		catch (IOException e) 

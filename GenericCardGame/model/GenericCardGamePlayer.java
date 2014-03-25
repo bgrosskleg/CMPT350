@@ -6,13 +6,13 @@ public abstract class GenericCardGamePlayer extends GenericMVCModel
 {
 	private static final long serialVersionUID = 1L;
 	
-	protected final int playerNum;
+	protected final int playerNumber;
 	protected transient GenericCardGameSocketWorker socketWorker;
 
 	protected GenericCardGamePlayer(GenericCardGameSocketWorker socketWorker)
 	{
 		super();
-		this.playerNum = socketWorker.playerNum;
+		this.playerNumber = socketWorker.getConnectionNumber();
 		this.socketWorker = socketWorker;
 	}
 

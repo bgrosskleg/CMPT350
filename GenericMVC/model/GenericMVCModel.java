@@ -2,8 +2,6 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import interfaces.GenericMVCModelSubscriber;
 
 public abstract class GenericMVCModel implements Serializable
@@ -39,7 +37,7 @@ public abstract class GenericMVCModel implements Serializable
 	{
 		modelSubscriberList.remove(subscriber);
 	}
-
+	
 	/**
 	 * Calls the modelChanged() function in all the modelSubscribers
 	 */

@@ -15,7 +15,7 @@ import model.WarCardGamePlayer;
  * games will implement 
  *
  */
-public class WarCardGameServerController extends WarCardGameGeneralController
+public class WarCardGameServerController extends GenericCardGameController
 {	
 	public WarCardGameServerController(WarCardGameModel model, WarCardGameServerView view) 
 	{
@@ -28,7 +28,7 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 
 		System.out.println("WAITING FOR ENOUGH PLAYERS");
 
-		while(((WarCardGameModel)this.model).getPlayers().size() < ((WarCardGameModel)this.model).requiredNumberOfPlayers)
+		while(((WarCardGameModel)this.model).getPlayers().size() < ((WarCardGameModel)this.model).getRequiredNumberOfPlayers())
 		{
 			/*WAIT FOR PLAYERS CONNECTION*/
 			try 
@@ -45,7 +45,7 @@ public class WarCardGameServerController extends WarCardGameGeneralController
 		System.out.println("ENOUGH PLAYERS FOUND");
 
 		//Deal cards
-		//dealCards();
+		dealCards();
 
 		//Wait for players action
 		//evaluateHand();

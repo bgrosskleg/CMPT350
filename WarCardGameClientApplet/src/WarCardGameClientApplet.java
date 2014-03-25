@@ -5,13 +5,17 @@ import java.net.UnknownHostException;
 
 import controller.WarCardGameClientAppletController;
 import controller.WarCardGameClientAppletSocketWorker;
+import view.GenericMVCView;
 import view.WarCardGameClientAppletView;
+import model.GenericMVCModel;
 import model.WarCardGameModel;
 
 
 public class WarCardGameClientApplet extends GenericCardGameClientApplet
 {
 	private static final long serialVersionUID = 1L;
+	
+	public static final int objectPort = 65000;
 	
 	public WarCardGameClientApplet()
 	{
@@ -25,25 +29,24 @@ public class WarCardGameClientApplet extends GenericCardGameClientApplet
 	}
 
 	@Override
-	protected WarCardGameClientAppletView createView() 
+	protected WarCardGameClientAppletView createView(GenericMVCModel model, int playerNumber) 
 	{
-		return new WarCardGameClientAppletView((WarCardGameModel)this.model);	
+		return new WarCardGameClientAppletView((WarCardGameModel)model, playerNumber);	
 	}
 
 	@Override
-	protected WarCardGameClientAppletController createController() 
+	protected WarCardGameClientAppletController createController(GenericMVCModel model, GenericMVCView view) 
 	{
-		return new WarCardGameClientAppletController((WarCardGameModel)this.model, (WarCardGameClientAppletView)this.view);
+		return new WarCardGameClientAppletController((WarCardGameModel)model, (WarCardGameClientAppletView)view);
 	}
 
 	@Override
-	protected WarCardGameClientAppletSocketWorker createSocketWorker() 
+	protected WarCardGameClientAppletSocketWorker createSocketWorker(GenericMVCModel model) 
 	{
 		Socket socket;
 		try 
 		{
-			this.port = 65000;
-			socket = new Socket(InetAddress.getByName(this.getCodeBase().getHost()), this.port);
+			socket = new Socket(InetAddress.getByName(this.getCodeBase().getHost()), objectPort);
 		} 
 		catch (UnknownHostException e)
 		{
@@ -56,6 +59,6 @@ public class WarCardGameClientApplet extends GenericCardGameClientApplet
 			return null;
 		}
 		
-		return new WarCardGameClientAppletSocketWorker(socket, (WarCardGameClientAppletController)this.controller);
+		return new WarCardGameClientAppletSocketWorker(socket, (WarCardGameModel) model);
 	}
 }

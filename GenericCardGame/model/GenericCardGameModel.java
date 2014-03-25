@@ -7,14 +7,16 @@ public abstract class GenericCardGameModel extends GenericMVCModel
 	private static final long serialVersionUID = 1L;
 	
 	protected GenericCardGameCardList deck;	
+	protected int requiredNumberOfPlayers;
 	protected ArrayList<GenericCardGamePlayer> players;
 		
 	protected GenericCardGameModel()
 	{
 		//Calls the constructor of the GenericModel
 		super();
-		deck = new GenericCardGameCardList();
-		players = new ArrayList<GenericCardGamePlayer>();		
+		this.deck = new GenericCardGameCardList();
+		this.players = new ArrayList<GenericCardGamePlayer>();
+		this.requiredNumberOfPlayers = -1;
 	}
 	
 	public GenericCardGameCardList getDeck()
@@ -37,5 +39,10 @@ public abstract class GenericCardGameModel extends GenericMVCModel
 	{
 		this.players = players;
 		this.notifyModelSubscribers();
+	}
+	
+	public int getRequiredNumberOfPlayers()
+	{
+		return this.requiredNumberOfPlayers;
 	}
 }

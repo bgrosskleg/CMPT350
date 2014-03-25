@@ -26,7 +26,7 @@ public class WarCardGamePlayer extends GenericCardGamePlayer
 	
 	public int getPlayerNumber()
 	{
-		return playerNum;
+		return playerNumber;
 	}
 		
 	@Override
@@ -34,7 +34,7 @@ public class WarCardGamePlayer extends GenericCardGamePlayer
 	{
 		String result = "";
 		
-		result += ("PLAYER " + playerNum + "\n");
+		result += ("PLAYER " + playerNumber + "\n");
 		
 		if(cardPlayed == null)
 		{result += ("CardPlayed: NULL \n");}

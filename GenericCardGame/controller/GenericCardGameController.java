@@ -1,7 +1,6 @@
 package controller;
 
 import model.GenericCardGameModel;
-import model.GenericMVCModel;
 import view.GenericCardGameView;
 
 public abstract class GenericCardGameController extends GenericMVCController
@@ -10,7 +9,4 @@ public abstract class GenericCardGameController extends GenericMVCController
 	{
 		super(model, view);
 	}
-
-
-	protected abstract void updateModel(GenericMVCModel newModel);
 }

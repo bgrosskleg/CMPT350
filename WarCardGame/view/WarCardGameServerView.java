@@ -2,8 +2,13 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+
+import model.GenericCardGameCard;
 import model.WarCardGameModel;
+import model.WarCardGamePlayer;
 
 public class WarCardGameServerView extends GenericCardGameView
 {
@@ -18,34 +23,130 @@ public class WarCardGameServerView extends GenericCardGameView
 	protected void buildPanel() 
 	{	
 		this.setBackground(Color.RED);
-		this.setPreferredSize(new Dimension(500,500));
+		this.setPreferredSize(new Dimension(1000,1000));
 		this.setMaximumSize(getPreferredSize());
 		this.setMinimumSize(getPreferredSize());
 		
-		this.playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+		this.playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).getRequiredNumberOfPlayers()-((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		this.add(playerStatus);
 	}
 
 	@Override
 	public void modelChanged() 
-	{
-		if(((WarCardGameModel)model).getPlayers().size() < ((WarCardGameModel)this.model).requiredNumberOfPlayers)
+	{	
+		if(((WarCardGameModel) model).getPlayers().size() < ((WarCardGameModel) model).getRequiredNumberOfPlayers())
 		{
-			//Display waiting text
-			this.playerStatus.setText("Waiting for " + (((WarCardGameModel)this.model).requiredNumberOfPlayers-((WarCardGameModel)model).getPlayers().size()) + " more players...");
+			//REMAKE THE VIEW TO WAIT FOR PLAYERS
+			this.removeAll();
+			
+			this.setBackground(Color.RED);
+
+			this.playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).getRequiredNumberOfPlayers() - ((WarCardGameModel)model).getPlayers().size()) + " more players...");
+			this.add(playerStatus);
+		}
+		else if(((WarCardGameModel) model).getPlayers().size() == ((WarCardGameModel) model).getRequiredNumberOfPlayers())
+		{
+			//REMAKE THE VIEW TO DISPLAY GAME
+			this.removeAll();
+
+			//Green pepper from http://www.december.com/html/spec/color2.html
+			this.setBackground(new Color(0x39, 0x7D, 0x02));
+
+			//Build panel to display game
+			createWarCardGameBoardView();
 		}
 		else
 		{
-			//Display card game
-			this.removeAll();
-			
-			//Green pepper from http://www.december.com/html/spec/color2.html
-			this.setBackground(new Color(0x39, 0x7D, 0x02));
-			
-			//Add board game view
-			this.add(new WarCardGameBoardView((WarCardGameModel)this.model, playerNumber));
-			
-			this.revalidate();
+			new Exception("Impossible state, more players than required").printStackTrace();
 		}
+		
+		this.repaint();
+		this.revalidate();
+	}
+
+	private GenericCardGameCardListView p1Deck;
+	private GenericCardGameCardListView p2Deck;
+	private GenericCardGameCardListView p1Winpile;
+	private GenericCardGameCardListView p2Winpile;
+	private GenericCardGameCard p1Card;
+	private GenericCardGameCard p2Card;
+
+	private void createWarCardGameBoardView() 
+	{
+		/*
+		 * 			x0		x1		x2
+		 * 	 	_______________________
+		 * 		|p2		|		|p2		|
+		 *y0	|deck	|		|winpile|
+		 * 		|		|		|		|
+		 * 		|_______|_______|_______|
+		 * 		|		|p2		|		|
+		 *y1	|		|card	|		|
+		 * 		|		|played	|		|
+		 * 		|_______|_______|_______|
+		 * 		|		|p1		|		|
+		 *y2 	|		|card	|		|
+		 * 		|		|played	|		|
+		 * 		|_______|_______|_______|
+		 * 		|p1		|		|p1		|
+		 *y3 	|deck	|		|winpile|
+		 *	 	|		|		|		|
+		 *	 	|_______|_______|_______|
+		 */
+
+
+		// We create a JPanel with the GridLayout.
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		this.setPreferredSize(new Dimension(400,400));
+		this.setMaximumSize(getPreferredSize());
+		this.setMinimumSize(getPreferredSize());
+		gbc.fill= GridBagConstraints.BOTH;
+		gbc.weightx = 0.33;
+		gbc.weighty = 0.25;
+
+		//TODO  Make all the approriate fields in the player object
+		p1Deck = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).flipDeck);
+		p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).flipDeck);
+		p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).winPile);
+		p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).winPile);
+		p1Card = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed;
+		p2Card = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed;
+
+		
+		gbc.ipady=50;
+		gbc.gridx=0;
+		gbc.gridy=0;
+		this.add(p2Deck, gbc);
+
+		gbc.gridx=2;
+		gbc.gridy=0;
+		this.add(p2Winpile, gbc);
+
+		if(p2Card != null)
+		{
+			gbc.gridx=1;
+			gbc.gridy=1;
+			this.add(p2Card, gbc);
+		}
+
+		if(p1Card != null)
+		{
+			gbc.gridx=1;
+			gbc.gridy=2;
+			this.add(p1Card, gbc);
+		}
+
+		gbc.gridx=0;
+		gbc.gridy=3;
+		this.add(p1Deck, gbc);
+
+		gbc.gridx=2;
+		gbc.gridy=3;
+		this.add(p1Winpile, gbc);
+
+		gbc.fill = GridBagConstraints.NONE;
+
+		this.setOpaque(false);	
 	}
 }
