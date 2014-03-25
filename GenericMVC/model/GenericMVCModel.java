@@ -43,25 +43,10 @@ public abstract class GenericMVCModel implements Serializable
 	 */
 	public synchronized void notifyModelSubscribers() 
 	{
-		new Exception().printStackTrace();
 		//CANNOT USE FOR-EACH LOOP AS THE LIST CANNOT BE MODIFIED WHILE ITERATED
 		for(GenericMVCModelSubscriber subscriber : modelSubscriberList)
 		{
 			subscriber.modelChanged();
-		}
-		
-		//MUST USE ITERATOR.REMOVE()
-		//http://stackoverflow.com/questions/11177348/how-to-add-element-in-list-while-iterating-in-java
-		//http://stackoverflow.com/questions/223918/efficient-equivalent-for-removing-elements-while-iterating-the-collection
-		//http://stackoverflow.com/questions/6700717/how-to-iterate-through-an-array-list-arrayindexoutofboundsexception
-		
-		//Iterator<GenericMVCModelSubscriber> iter = modelSubscriberList.iterator();
-		//while(iter.hasNext())
-		//{
-		//	GenericMVCModelSubscriber subscriber = iter.next();
-		//	subscriber.modelChanged();
-		//}
-		
-		
+		}		
 	}
 }

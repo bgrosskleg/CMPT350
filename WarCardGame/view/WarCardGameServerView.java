@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 
-import model.GenericCardGameCard;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
 
@@ -71,8 +70,6 @@ public class WarCardGameServerView extends GenericCardGameView
 	private GenericCardGameCardListView p2Deck;
 	private GenericCardGameCardListView p1Winpile;
 	private GenericCardGameCardListView p2Winpile;
-	private GenericCardGameCard p1Card;
-	private GenericCardGameCard p2Card;
 
 	private void createWarCardGameBoardView() 
 	{
@@ -113,8 +110,6 @@ public class WarCardGameServerView extends GenericCardGameView
 		p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).flipDeck);
 		p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).winPile);
 		p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).winPile);
-		p1Card = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed;
-		p2Card = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed;
 
 		
 		gbc.ipady=50;
@@ -126,18 +121,18 @@ public class WarCardGameServerView extends GenericCardGameView
 		gbc.gridy=0;
 		this.add(p2Winpile, gbc);
 
-		if(p2Card != null)
+		if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed != null)
 		{
 			gbc.gridx=1;
 			gbc.gridy=1;
-			this.add(p2Card, gbc);
+			this.add(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed, gbc);
 		}
 
-		if(p1Card != null)
+		if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed != null)
 		{
 			gbc.gridx=1;
 			gbc.gridy=2;
-			this.add(p1Card, gbc);
+			this.add(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed, gbc);
 		}
 
 		gbc.gridx=0;
