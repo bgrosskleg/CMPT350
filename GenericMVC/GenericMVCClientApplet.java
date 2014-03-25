@@ -19,7 +19,7 @@ public abstract class GenericMVCClientApplet extends JApplet
 	protected int port;
 	
 	public void init()
-	{
+	{		
 		try 
         {
             SwingUtilities.invokeAndWait(new Runnable() 

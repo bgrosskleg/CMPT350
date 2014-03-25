@@ -22,6 +22,8 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	@Override
 	protected void buildPanel() 
 	{			
+		this.setLayout(new GridBagLayout());
+		
 		this.setPreferredSize(new Dimension(1000,1000));
 		this.setMaximumSize(getPreferredSize());
 		this.setMinimumSize(getPreferredSize());
@@ -62,8 +64,8 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 			new Exception("Impossible state, more players than required").printStackTrace();
 		}
 		
-		this.repaint();
 		this.revalidate();
+		this.repaint();
 	}
 
 	private GenericCardGameCardListView p1Deck;
@@ -98,7 +100,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 
 
 		// We create a JPanel with the GridLayout.
-		this.setLayout(new GridBagLayout());
+		//this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		this.setPreferredSize(new Dimension(400,400));
 		this.setMaximumSize(getPreferredSize());
@@ -198,6 +200,6 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 			this.add(p1flip, gbc);
 		}
 
-		this.setOpaque(false);	
+		this.setOpaque(true);	
 	}
 }
