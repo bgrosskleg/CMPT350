@@ -22,13 +22,13 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	protected void buildPanel() 
 	{			
 		this.setLayout(new GridBagLayout());
-		
+
 		this.setPreferredSize(new Dimension(1000,1000));
 		this.setMaximumSize(getPreferredSize());
 		this.setMinimumSize(getPreferredSize());
-		
+
 		this.setBackground(Color.YELLOW);
-		
+
 		this.playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).getRequiredNumberOfPlayers() - ((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		this.add(playerStatus);
 	}
@@ -41,7 +41,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		{
 			//REMAKE THE VIEW TO WAIT FOR PLAYERS
 			this.removeAll();
-			
+
 			this.setBackground(Color.YELLOW);
 
 			this.playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).getRequiredNumberOfPlayers() - ((WarCardGameModel)model).getPlayers().size()) + " more players...");
@@ -62,7 +62,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		{
 			new Exception("Impossible state, more players than required").printStackTrace();
 		}
-		
+
 		this.revalidate();
 		this.repaint();
 	}
@@ -115,6 +115,24 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		JButton p1flip = new JButton("Player 1 Flip!");
 		JButton p2flip = new JButton("Player 2 Flip!");
 
+
+		final JTextArea chatDisplayBox = ((WarCardGameModel)model).chatArea;
+		chatDisplayBox.setEditable(false);
+		chatDisplayBox.setCursor(null);
+		chatDisplayBox.setOpaque(true);
+		chatDisplayBox.setFocusable(false);
+		chatDisplayBox.setLineWrap(true);
+		chatDisplayBox.setWrapStyleWord(true);
+		
+		final JScrollPane scrollingChat = new JScrollPane(chatDisplayBox);
+		scrollingChat.setPreferredSize(new Dimension(200,100));
+
+		final JTextField p1ChatEnterText = new JTextField("");
+		final JTextField p2ChatEnterText = new JTextField("");
+
+		JButton p1Send = new JButton("Send Chat");
+		JButton p2Send = new JButton("Send Chat");
+
 		p1flip.addActionListener(new ActionListener()
 		{
 			@Override
@@ -145,6 +163,46 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 					if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed == null)
 					{
 						((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).flipDeck.remove(0);
+
+						model.notifyModelSubscribers();
+					}
+				}
+			}
+		});
+
+		p1Send.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				synchronized(model)
+				{
+					if(!p1ChatEnterText.getText().isEmpty())
+					{
+						chatDisplayBox.append(
+								"\nPlayer 1: " +
+										p1ChatEnterText.getText());
+						p1ChatEnterText.setText("");
+
+
+						model.notifyModelSubscribers();
+					}
+				}
+			}
+		});
+		
+		p2Send.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				synchronized(model)
+				{
+					if(!p2ChatEnterText.getText().isEmpty())
+					{
+						chatDisplayBox.append(
+								"\nPlayer 2: " +
+										p2ChatEnterText.getText());
+						p2ChatEnterText.setText("");
+
 
 						model.notifyModelSubscribers();
 					}
@@ -199,6 +257,12 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		gbc.gridy=3;
 		this.add(p1Winpile, gbc);
 
+
+		//Box for chat
+		gbc.gridx = 3;
+		gbc.gridy = 1;
+		this.add(scrollingChat, gbc);
+
 		gbc.fill = GridBagConstraints.NONE;
 
 		if(this.playerNumber == 2)
@@ -206,6 +270,17 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 			gbc.gridx = 1;
 			gbc.gridy = 0;
 			this.add(p2flip, gbc);
+
+			//Chat Stuff
+			p2ChatEnterText.setPreferredSize(new Dimension(200, 5));
+			gbc.gridx = 3;
+			gbc.gridy = 2;
+			this.add(p2ChatEnterText, gbc);
+
+			gbc.gridx = 3;
+			gbc.gridy = 3;
+			this.add(p2Send, gbc);
+
 		}
 
 		if(this.playerNumber == 1)
@@ -213,6 +288,16 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 			gbc.gridx = 1;
 			gbc.gridy = 3;
 			this.add(p1flip, gbc);
+
+			//Chat Stuff
+			p1ChatEnterText.setPreferredSize(new Dimension(200, 5));
+			gbc.gridx = 3;
+			gbc.gridy = 2;
+			this.add(p1ChatEnterText, gbc);
+
+			gbc.gridx = 3;
+			gbc.gridy = 3;
+			this.add(p1Send, gbc);
 		}
 
 		this.setOpaque(true);	

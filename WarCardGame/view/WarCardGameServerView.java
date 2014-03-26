@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
@@ -26,9 +29,9 @@ public class WarCardGameServerView extends GenericCardGameView
 		this.setPreferredSize(new Dimension(1000,1000));
 		this.setMaximumSize(getPreferredSize());
 		this.setMinimumSize(getPreferredSize());
-		
+
 		this.setBackground(Color.RED);
-		
+
 		this.playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).getRequiredNumberOfPlayers()-((WarCardGameModel)model).getPlayers().size()) + " more players...");
 		this.add(playerStatus);
 	}
@@ -40,7 +43,7 @@ public class WarCardGameServerView extends GenericCardGameView
 		{
 			//REMAKE THE VIEW TO WAIT FOR PLAYERS
 			this.removeAll();
-			
+
 			this.setBackground(Color.RED);
 
 			this.playerStatus = new JLabel("Waiting for " + (((WarCardGameModel)this.model).getRequiredNumberOfPlayers() - ((WarCardGameModel)model).getPlayers().size()) + " more players...");
@@ -61,7 +64,7 @@ public class WarCardGameServerView extends GenericCardGameView
 		{
 			new Exception("Impossible state, more players than required").printStackTrace();
 		}
-		
+
 		this.revalidate();
 		this.repaint();
 	}
@@ -110,8 +113,20 @@ public class WarCardGameServerView extends GenericCardGameView
 		p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).flipDeck);
 		p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).winPile);
 		p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).winPile);
-
 		
+		//Chat box
+		final JTextArea chatDisplayBox = ((WarCardGameModel)model).chatArea;
+		chatDisplayBox.setEditable(false);
+		chatDisplayBox.setCursor(null);
+		chatDisplayBox.setOpaque(true);
+		chatDisplayBox.setFocusable(false);
+		chatDisplayBox.setLineWrap(true);
+		chatDisplayBox.setWrapStyleWord(true);
+
+		final JScrollPane scrollingChat = new JScrollPane(chatDisplayBox);
+		scrollingChat.setPreferredSize(new Dimension(200,100));
+
+
 		gbc.ipady=50;
 		gbc.gridx=0;
 		gbc.gridy=0;
@@ -156,6 +171,11 @@ public class WarCardGameServerView extends GenericCardGameView
 		gbc.gridx=2;
 		gbc.gridy=3;
 		this.add(p1Winpile, gbc);
+
+		//Box for chat
+		gbc.gridx = 3;
+		gbc.gridy = 1;
+		this.add(scrollingChat, gbc);
 
 		gbc.fill = GridBagConstraints.NONE;
 

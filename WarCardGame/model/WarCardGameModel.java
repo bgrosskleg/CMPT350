@@ -1,8 +1,12 @@
 package model;
 
+import javax.swing.JTextArea;
+
 public class WarCardGameModel extends GenericCardGameModel
 {	
 	private static final long serialVersionUID = 1L;
+	
+	public JTextArea chatArea;
 	
 	public WarCardGameModel()
 	{
@@ -11,6 +15,7 @@ public class WarCardGameModel extends GenericCardGameModel
 		super();
 		
 		this.requiredNumberOfPlayers = 2;
+		this.chatArea = new JTextArea("");
 	}
 	
 	@Override 

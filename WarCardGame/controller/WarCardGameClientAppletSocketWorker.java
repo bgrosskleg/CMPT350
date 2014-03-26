@@ -131,6 +131,11 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 					player.cardPlayed = newPlayer.cardPlayed;
 				}
 			}
+			//For the Chat Box
+			if(!((WarCardGameModel)this.model).chatArea.getText().equals(((WarCardGameModel)newModel).chatArea.getText()))
+			{
+				((WarCardGameModel)this.model).chatArea.setText(((WarCardGameModel)newModel).chatArea.getText());
+			}
 		}
 	}
 }
