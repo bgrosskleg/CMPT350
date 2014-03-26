@@ -59,13 +59,10 @@ public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 	 */
 	public void run()
 	{		
-<<<<<<< HEAD
+
 		while(true)
-=======
-		//runs until the maximum allowed users have accessed the applet
-		while(currentConnections < maxConnections)
->>>>>>> branch 'master' of https://github.com/bgrosskleg/CMPT350.git
 		{
+			//runs until the maximum allowed users have accessed the applet
 			while(currentConnections < maxConnections)
 			{
 				GenericMVCSocketWorker worker;

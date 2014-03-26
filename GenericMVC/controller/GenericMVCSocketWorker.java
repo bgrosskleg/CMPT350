@@ -32,20 +32,16 @@ public abstract class GenericMVCSocketWorker implements Runnable, GenericMVCMode
 	protected ObjectInputStream OIS;
 	protected ObjectOutputStream OOS;
 
-<<<<<<< HEAD
-	protected GenericMVCSocketWorker(Socket socket, GenericMVCModel model, GenericMVCWaitForConnectionsWorker connectionsWorker)
-=======
 	/**
 	 * creates a new ObjectOutputStream and a new ObjectInputStream for the socket
 	 * 
 	 * @param socket what specific socket is transmitting the data
 	 * @param model the current state of the model
 	 * @param model.addModelSubscriber the specific client that is receiving this model
-	 * @param connectionNumber the connection number assigned to a particular connection
+	 * @param conectionsWorker the connections worker that is responsible for assigning connectionNumbers
 	 * @throws general exception, prints stack trace and exits
 	 */
-	protected GenericMVCSocketWorker(Socket socket, GenericMVCModel model, final int connectionNumber)
->>>>>>> branch 'master' of https://github.com/bgrosskleg/CMPT350.git
+	protected GenericMVCSocketWorker(Socket socket, GenericMVCModel model, GenericMVCWaitForConnectionsWorker connectionsWorker)	
 	{
 		this.socket = socket;
 		this.model = model;
