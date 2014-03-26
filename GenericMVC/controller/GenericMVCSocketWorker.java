@@ -16,15 +16,25 @@ public abstract class GenericMVCSocketWorker implements Runnable, GenericMVCMode
 	protected GenericMVCModel model;
 	protected Socket socket;
 	protected int connectionNumber;
+	protected GenericMVCWaitForConnectionsWorker connectionsWorker;
 	protected ObjectInputStream OIS;
 	protected ObjectOutputStream OOS;
 
-	protected GenericMVCSocketWorker(Socket socket, GenericMVCModel model, final int connectionNumber)
+	protected GenericMVCSocketWorker(Socket socket, GenericMVCModel model, GenericMVCWaitForConnectionsWorker connectionsWorker)
 	{
 		this.socket = socket;
 		this.model = model;
 		this.model.addModelSubscriber(this);
-		this.connectionNumber = connectionNumber;
+		if(connectionsWorker != null)
+		{
+			this.connectionNumber = ++connectionsWorker.currentConnections;
+		
+			this.connectionsWorker = connectionsWorker;
+		}
+		else
+		{
+			this.connectionNumber = -1;
+		}
 		
 		try
 		{		
@@ -42,7 +52,7 @@ public abstract class GenericMVCSocketWorker implements Runnable, GenericMVCMode
 	protected void sendObject(Object object) throws IOException
 	{ 
 		System.out.println("GenericMVCSocketWorker: SendObject");
-		//new Exception().printStackTrace();
+		
 		OOS.reset();
 		OOS.writeObject(object);
 		OOS.flush();
@@ -52,7 +62,7 @@ public abstract class GenericMVCSocketWorker implements Runnable, GenericMVCMode
 	{
 		Object object = OIS.readObject();
 		System.out.println("GenericMVCSocketWorker: RecieveObject");
-		//new Exception().printStackTrace();
+		
 		return object;
 	}
 	

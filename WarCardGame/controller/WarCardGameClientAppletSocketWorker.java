@@ -11,7 +11,7 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 {	
 	public WarCardGameClientAppletSocketWorker(Socket socket, WarCardGameModel model)
 	{
-		super(socket, model , -1);
+		super(socket, model , null);
 		
 		try 
 		{

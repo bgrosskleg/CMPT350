@@ -9,13 +9,13 @@ import model.WarCardGamePlayer;
 
 public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 {	
-	public WarCardGameServerSocketWorker(Socket socket, WarCardGameModel model ,final int connectionNumber)
+	public WarCardGameServerSocketWorker(Socket socket, WarCardGameModel model , WarCardGameServerWaitForConnectionsWorker connectionsWorker)
 	{
-		super(socket, model, connectionNumber);
+		super(socket, model, connectionsWorker);
 		
 		try 
 		{
-			this.sendObject(connectionNumber);
+			this.sendObject(this.connectionNumber);
 		} 
 		catch (IOException e) 
 		{
@@ -36,9 +36,27 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 			} 
 			catch (Exception e) 
 			{
+				//e.printStackTrace();
+				
 				System.err.println("SOCKET ERROR - CLOSING CONNECTION");
 				//TODO close connection and delete player
-				e.printStackTrace();
+				
+				//Remove this as model subscriber
+				model.removeModelSubscriber(this);
+				
+				//Remove player from model that corresponds to this worker
+				((WarCardGameModel) model).getPlayers().remove(connectionsWorker.currentConnections - 1);
+							
+				//Notify all subscribers on server, including all server socket workers and server view
+				model.notifyModelSubscribers();
+				
+				//Reduce number of connections
+				this.connectionsWorker.currentConnections--;
+				
+				System.out.println(this.connectionsWorker.currentConnections + " CONNECTIONS");
+				
+				//Ends current thread
+				return;
 			}
 			
 			if(object instanceof WarCardGameModel)

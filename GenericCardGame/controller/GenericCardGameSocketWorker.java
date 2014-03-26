@@ -6,8 +6,8 @@ import model.GenericCardGameModel;
 
 public abstract class GenericCardGameSocketWorker extends GenericMVCSocketWorker
 {	
-	protected GenericCardGameSocketWorker(Socket socket, GenericCardGameModel model, final int connectionNumber)
+	protected GenericCardGameSocketWorker(Socket socket, GenericCardGameModel model, GenericCardGameWaitForConnectionsWorker connectionsWorker)
 	{
-		super(socket, model, connectionNumber);
+		super(socket, model, connectionsWorker);
 	}
 }

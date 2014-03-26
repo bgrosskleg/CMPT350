@@ -22,6 +22,8 @@ public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 		this.port = port;
 		this.serverSocket = new ServerSocket(port);
 		this.maxConnections = maxConnections;
+		this.currentConnections = 0;
+		
 		if(this.serverSocket != null)
 		{
 			System.out.println("Server listening on port: " + port);
@@ -31,37 +33,50 @@ public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 	@Override
 	public void run()
 	{		
-		while(currentConnections < maxConnections)
+		while(true)
 		{
-			GenericMVCSocketWorker worker;
-			try
+			while(currentConnections < maxConnections)
 			{
-				//server.accept returns a client connection
-				System.out.println("WAITING FOR CONNECTION");
+				GenericMVCSocketWorker worker;
+				try
+				{
+					//server.accept returns a client connection
+					System.out.println("WAITING FOR CONNECTION");
+	
+					Socket socket = serverSocket.accept();
+					System.out.println("CONNECTION ACCEPTED");
+	
+					worker = createServerSocketWorker(socket, this);
+					System.out.println("SOCKET WORKER CREATED");
+	
+					(new Thread(worker)).start();
+					System.out.println("THREAD STARTED");
+	
+					model.notifyModelSubscribers();
+					System.out.println("SUBSCRIBERS NOTIFIED");
+	
+					System.out.println(currentConnections + " CONNECTIONS");
+				} 
+				catch (IOException e) 
+				{
+					System.err.println("Accept failed: " + port);
+					System.exit(-1);
+				}
+				
+				if(currentConnections == maxConnections)
+				{
+					System.out.println("STOPPED ACCEPTING CONNECTIONS");
+				}
+			}
 
-				Socket socket = serverSocket.accept();
-				System.out.println("CONNECTION ACCEPTED");
-
-				worker = createServerSocketWorker(socket, model);
-				System.out.println("SOCKET WORKER CREATED");
-
-				(new Thread(worker)).start();
-				System.out.println("THREAD STARTED");
-
-				model.notifyModelSubscribers();
-				System.out.println("SUBSCRIBERS NOTIFIED");
-
-				currentConnections++;
-				System.out.println(currentConnections + " CONNECTIONS");
-			} 
-			catch (IOException e) 
+			try 
 			{
-				System.err.println("Accept failed: " + port);
-				System.exit(-1);
+				Thread.sleep(1000);
+			} catch (InterruptedException e) 
+			{
+				e.printStackTrace();
 			}
 		}
-
-		System.out.println("STOPPED ACCEPTING CONNECTIONS");
 	}
-	protected abstract GenericMVCSocketWorker createServerSocketWorker(Socket socket, GenericMVCModel model);
+	protected abstract GenericMVCSocketWorker createServerSocketWorker(Socket socket, GenericMVCWaitForConnectionsWorker connectionsWorker);
 }

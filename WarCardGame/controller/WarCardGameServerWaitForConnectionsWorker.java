@@ -3,7 +3,6 @@ package controller;
 import java.io.IOException;
 import java.net.Socket;
 
-import model.GenericMVCModel;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
 
@@ -16,10 +15,10 @@ public class WarCardGameServerWaitForConnectionsWorker extends GenericCardGameWa
 	}
 
 	@Override
-	protected WarCardGameServerSocketWorker createServerSocketWorker(Socket socket, GenericMVCModel model) 
+	protected WarCardGameServerSocketWorker createServerSocketWorker(Socket socket, GenericMVCWaitForConnectionsWorker connectionsWorker) 
 	{				
 		//Create worker to handle communication to client applet
-		WarCardGameServerSocketWorker serverSocketWorker = new WarCardGameServerSocketWorker(socket, (WarCardGameModel) model, this.currentConnections + 1);
+		WarCardGameServerSocketWorker serverSocketWorker = new WarCardGameServerSocketWorker(socket, (WarCardGameModel) model, (WarCardGameServerWaitForConnectionsWorker) connectionsWorker);
 		
 		//Create new player object
 		WarCardGamePlayer newPlayer = new WarCardGamePlayer(serverSocketWorker);
