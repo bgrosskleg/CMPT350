@@ -10,7 +10,22 @@ import view.WarCardGameClientAppletView;
 import model.GenericMVCModel;
 import model.WarCardGameModel;
 
-
+/**
+ * contains:
+ * 
+ * public variables:
+ * objectPort(int)
+ * 
+ * public methods:
+ * WarCardGaeClientApplet()
+ * 
+ * protected methods:
+ * createModel()
+ * createView(GenericMVCModel, playerNumber)
+ * createController(GenericMVCModel, GenericMVCView)
+ * createSocketWorker(GenericMVCModel)
+ *
+ */
 public class WarCardGameClientApplet extends GenericCardGameClientApplet
 {
 	private static final long serialVersionUID = 1L;
@@ -19,6 +34,7 @@ public class WarCardGameClientApplet extends GenericCardGameClientApplet
 	
 	public WarCardGameClientApplet()
 	{
+		//call the constructor from GenericCardGameClientApplet
 		super();
 	}
 	

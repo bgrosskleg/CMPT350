@@ -6,9 +6,26 @@ import java.net.Socket;
 import model.GenericMVCModel;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
-
+/**
+ * contains:
+ * 
+ * public methods:
+ * WarCardGameClientAppletSocketWorker(Socket, WarCardGameModel)
+ * run()
+ * modelChanged()
+ * 
+ * protected methods:
+ * updateModel(GenericMVCModel)
+ * 
+ */
 public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWorker
 {	
+	/**
+	 * 
+	 * @param socket
+	 * @param model
+	 * @throws general exception if anything goes wrong to print out the output
+	 */
 	public WarCardGameClientAppletSocketWorker(Socket socket, WarCardGameModel model)
 	{
 		super(socket, model , -1);
