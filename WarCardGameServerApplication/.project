@@ -30,5 +30,10 @@
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/WarCardGame</locationURI>
 		</link>
+		<link>
+			<name>resources</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/GenericCardGame/resources</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
