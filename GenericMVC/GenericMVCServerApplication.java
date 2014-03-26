@@ -2,7 +2,13 @@
 import controller.GenericMVCController;
 import view.GenericMVCView;
 import model.GenericMVCModel;
-
+/**
+ * contains:
+ * 
+ * protected methods:
+ * GenericVMCServerApplication()
+ * 
+ */
 
 public abstract class GenericMVCServerApplication 
 {	
@@ -10,6 +16,9 @@ public abstract class GenericMVCServerApplication
 	protected GenericMVCView view;
 	protected GenericMVCController controller;
 		
+	/**
+	 * creates a model, view, and controller
+	 */
 	protected GenericMVCServerApplication()
 	{
 		model = createModel();

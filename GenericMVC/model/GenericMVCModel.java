@@ -3,7 +3,17 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import interfaces.GenericMVCModelSubscriber;
-
+/**
+ * contains:
+ * 
+ * public methods:
+ * 
+ * 
+ * protected methods:
+ * protected GenericMVCModel()
+ * synchronized addModelSubscriber(GenericMVCModelSubscriber)
+ * 
+ */
 public abstract class GenericMVCModel implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -21,7 +31,8 @@ public abstract class GenericMVCModel implements Serializable
 	//SUBSCRIBERS/OBSERVERS****************************************************************
 
 	/**
-	 * Add modelSubscriber
+	 * adds a subscriber to the model, if more than one person is trying to be added at the same time it creates a queue
+	 * 
 	 * @param subscriber the subscriber to add
 	 */
 	public synchronized void addModelSubscriber(GenericMVCModelSubscriber subscriber) 
@@ -30,7 +41,8 @@ public abstract class GenericMVCModel implements Serializable
 	}
 
 	/**
-	 * Remove modelSubscriber
+	 * removes a subscriber from the model, if more than one person is trying to leave at the same time it creates a queue
+	 * 
 	 * @param subscriber the subscriber to remove
 	 */
 	public synchronized void removeModelSubscriber(GenericMVCModelSubscriber subscriber) 
@@ -39,7 +51,9 @@ public abstract class GenericMVCModel implements Serializable
 	}
 	
 	/**
-	 * Calls the modelChanged() function in all the modelSubscribers
+	 * notifies all subscribers of a change to the model
+	 * 
+	 * calls the modelChanged() function in all the modelSubscribers
 	 */
 	public synchronized void notifyModelSubscribers() 
 	{

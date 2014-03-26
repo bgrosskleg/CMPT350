@@ -5,7 +5,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import model.GenericMVCModel;
-
+/**
+ * contains:
+ * 
+ * public methods:
+ * run()
+ * 
+ * protected methods:
+ * GenericMVCWaitForConnectionsWorker(final int, final int, GenericMVCModel)
+ *
+ */
 public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 {
 	protected final int port;
@@ -14,6 +23,14 @@ public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 	protected final int maxConnections;
 	protected int currentConnections;
 	
+	/**
+	 * listens at the port and waits to be connected to until the applet is closed
+	 * 
+	 * @param port the virtual connection point
+	 * @param maxConnections controls how many people may access the applet
+	 * @param model the current state of the model
+	 * @throws IOException
+	 */
 	protected GenericMVCWaitForConnectionsWorker(final int port, final int maxConnections, GenericMVCModel model) throws IOException
 	{
 		//http://www.oracle.com/technetwork/java/socket-140484.html
@@ -31,9 +48,23 @@ public abstract class GenericMVCWaitForConnectionsWorker implements Runnable
 	}
 	
 	@Override
+	/**
+	 * starts the GenericMVCSocketWorker running
+	 * <p>
+	 * creates a worker, a socket, and a socketworker.
+	 * starts a new thread and notifies the subscribers (users listening on ports) of the current model
+	 * runs until the maximum number of allowed subscribers have connected
+	 * 
+	 * @throws if the port is not available, terminates the program
+	 */
 	public void run()
 	{		
+<<<<<<< HEAD
 		while(true)
+=======
+		//runs until the maximum allowed users have accessed the applet
+		while(currentConnections < maxConnections)
+>>>>>>> branch 'master' of https://github.com/bgrosskleg/CMPT350.git
 		{
 			while(currentConnections < maxConnections)
 			{

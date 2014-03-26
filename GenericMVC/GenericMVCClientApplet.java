@@ -7,7 +7,13 @@ import controller.GenericMVCSocketWorker;
 import view.GenericMVCView;
 import model.GenericMVCModel;
 
-
+/**
+ * contains:
+ * 
+ * public methods:
+ * init()
+ * 
+ */
 public abstract class GenericMVCClientApplet extends JApplet 
 {
 	private static final long serialVersionUID = 1L;
@@ -18,6 +24,15 @@ public abstract class GenericMVCClientApplet extends JApplet
 	protected GenericMVCSocketWorker socketWorker;
 	protected int port;
 	
+	/**
+	 * initializes the client applet window
+	 * 
+	 * creates a model, view, controller, and socketWorker
+	 * starts a new thread for the socketWorker
+	 * creates the view for the client
+	 * 
+	 * @throws if any exception is given to print the stack trace and show wher it broke
+	 */
 	public void init()
 	{		
 		try 
