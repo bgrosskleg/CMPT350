@@ -7,18 +7,34 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import model.GenericCardGameCardList;
-
+/**
+ * contains:
+ * 
+ * public methods:
+ * 
+ * paintComponent(Graphics)
+ */
 public class GenericCardGameCardListView extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 
 	GenericCardGameCardList cards;
 	
+	/**
+	 * adds the card game list given to this card game list
+	 * 
+	 * @param cards this cards
+	 */
 	GenericCardGameCardListView(GenericCardGameCardList cards)
 	{
 		this.cards = cards;
 	}
 	
+	/**
+	 * draw the cards and set a number for how many cards are in the deck
+	 * 
+	 * convert the Graphics object to a Graphics2D object
+	 */
 	@Override
 	public void paintComponent(Graphics g)
 	{

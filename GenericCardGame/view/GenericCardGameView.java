@@ -11,6 +11,12 @@ public abstract class GenericCardGameView extends GenericMVCView
 	public int playerNumber;
 	protected JLabel playerStatus;
 	
+	/**
+	 * generate the view from the GenericMVCView and add playerNumbers
+	 * 
+	 * @param model this model
+	 * @param playerNumber this playerNumber
+	 */
 	public GenericCardGameView(GenericCardGameModel model, int playerNumber) 
 	{
 		super(model);

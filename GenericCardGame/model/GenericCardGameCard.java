@@ -12,7 +12,22 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
+/**
+ * contains:
+ * 
+ * public methods:
+ * paintComponent(Graphics)
+ * equals(Object)
+ * compareTo(GenericCardGameCard)
+ * getOwner()
+ * setOwner(GenericCardGamePlayer)
+ * getValue()
+ * getSuit()
+ * faceUp()
+ * toString()
+ * faceDown() 
+ *
+ */
 public class GenericCardGameCard extends JPanel implements Comparable<GenericCardGameCard>, Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -20,8 +35,12 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 	public static final int WIDTH = 71;
 	public static final int HEIGHT = 96;
 	
-	//each enum has been given a value in brackets behind it (this will allow us to compare them later)
-	//** if we ever implement a game where aces are low this will have to be overwritten
+	/**
+	 * each enum has been given a value in brackets behind it
+	 * this will allow us to compare their values later
+	 *
+	 * note: in some games the ACE will be low and this may have to be changed
+	 */
 	public static enum Value
 	{
 		TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8),
@@ -53,6 +72,15 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 	private ImageIcon cardFace;
 	private ImageIcon cardBack;
 	
+	/**
+	 * creates a simple card with a value, a suit, and two picture representations(back view/front view)
+	 * 
+	 * retrieves the appropriate picture associated with the value and suit of the card
+	 * 
+	 * @param value the number associated with the card object
+	 * @param suit the suit associated with the card object
+	 * @throws generic exception and prints the stackTrace so we can see what happened
+	 */
 	public GenericCardGameCard(Value value, Suit suit)
 	{
 		super();
@@ -91,7 +119,11 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 		this.setMaximumSize(getPreferredSize());
 		this.setMinimumSize(getPreferredSize());
 	}
-	
+	/**
+	 * retrieves the image for the card and parses it into a Graphics2D object
+	 * 
+	 * @param g the image to give to the view
+	 */
 	@Override
 	public void paintComponent(Graphics g)
 	{
@@ -132,9 +164,12 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 	}
 	
 	/**
-	 * Equals is used in the ArrayList contains function
-	 * By implementing equals for each type of object it is possible to call
+	 * checks to see if two cards are equal
+	 * 
+	 * equals is used in the ArrayList contains function
+	 * by implementing equals for each type of object it is possible to call
 	 * ArrayList<Card>.contains(Card) and it will work
+	 * @param other the card that we are comparing this card to
 	 */
 	@Override
 	public boolean equals(Object other) 
@@ -154,6 +189,11 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 	   return false;
 	}
 	
+	/**
+	 * compares the ordinal values that were given to each card (TWO=2, ACE=14, etc)
+	 * 
+	 * @return 0 if two cards are equal, -1 if this card is less than the object it is compared to, otherwise return 1
+	 */
 	@Override
 	public int compareTo(GenericCardGameCard that) 
 	{
@@ -165,36 +205,70 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 			return 1;
 	}
 
+	/**
+	 * returns this owner
+	 * 
+	 * @return the owner
+	 */
 	public GenericCardGamePlayer getOwner() 
 	{
 		return owner;
 	}
 
+	/**
+	 * sets this owner
+	 * 
+	 * @param owner sets the owner
+	 */
 	public void setOwner(GenericCardGamePlayer owner) 
 	{
 		this.owner = owner;
 	}
 	
+	/**
+	 * gets this value
+	 * 
+	 * @return this value
+	 */	
 	public Value getValue()
 	{
 		return this.value;
 	}
 	
+	/**
+	 * gets this suit
+	 * 
+	 * @return this suit
+	 */
 	public Suit getSuit()
 	{
 		return this.suit;
 	}
 	
+	/**
+	 * sets the display of this card to FACEUP
+	 * 
+	 */
 	public void faceUp()
 	{
 		this.display = Display.FACEUP;
 	}
 	
+	/**
+	 * sets the display of this card to FACEDOWN
+	 */
 	public void faceDown()
 	{
 		this.display = Display.FACEDOWN;
 	}
 	
+	/**
+	 * converts the card value and the suit value to a string value
+	 * 
+	 * used for error handling and the ability to see what is happening inside the system
+	 * 
+	 * @return a string representing the value and suit of a card
+	 */
 	@Override
 	public String toString()
 	{
