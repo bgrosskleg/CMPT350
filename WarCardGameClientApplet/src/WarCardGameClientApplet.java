@@ -32,30 +32,54 @@ public class WarCardGameClientApplet extends GenericCardGameClientApplet
 	
 	public static final int objectPort = 65000;
 	
+	/**
+	 * calls the GenericCardGameClientApplet constructor
+	 */
 	public WarCardGameClientApplet()
 	{
-		//call the constructor from GenericCardGameClientApplet
 		super();
 	}
 	
+	/**
+	 * creates the WarCardGameModel
+	 */
 	@Override
 	protected WarCardGameModel createModel() 
 	{
 		return new WarCardGameModel();
 	}
 
+	/**
+	 * creates a new Applet view and gives the player a model
+	 * 
+	 * @param model the current model
+	 * @param playerNumber the players id number
+	 * @return the Applet view with a player and a model
+	 */
 	@Override
 	protected WarCardGameClientAppletView createView(GenericMVCModel model, int playerNumber) 
 	{
 		return new WarCardGameClientAppletView((WarCardGameModel)model, playerNumber);	
 	}
 
+	/**
+	 * creates a new Applet Controller and gives it the model and view
+	 * 
+	 * @param model the model parameter
+	 * @param view the veiw parameter
+	 * @return the ClientAppletController with a model and a view
+	 */
 	@Override
 	protected WarCardGameClientAppletController createController(GenericMVCModel model, GenericMVCView view) 
 	{
 		return new WarCardGameClientAppletController((WarCardGameModel)model, (WarCardGameClientAppletView)view);
 	}
 
+	/**
+	 * creates a socketWorker and gives it a socket and a model to work with
+	 * 
+	 * @param model the model to be given to the socketWorker
+	 */
 	@Override
 	protected WarCardGameClientAppletSocketWorker createSocketWorker(GenericMVCModel model) 
 	{
