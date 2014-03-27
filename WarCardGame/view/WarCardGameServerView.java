@@ -12,15 +12,35 @@ import javax.swing.JTextArea;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
 
+/**
+ *	contains:
+ *	
+ *	public methods:
+ *	WarCardGameServerView(WarCardGameModel)
+ *	modelChanged()
+ * 
+ *	protected methods:
+ *	buildPanel()
+ */
 public class WarCardGameServerView extends GenericCardGameView
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * creates the server model
+	 * 
+	 * @param model the server model
+	 */
 	public WarCardGameServerView(WarCardGameModel model)
 	{
 		super(model, 0);
 	}
 
+	/**
+	 * builds the GridBagLayout, sets the default window size, waits for players to connect
+	 * 
+	 * keeps track of the status of connected players
+	 */
 	@Override
 	protected void buildPanel() 
 	{	
@@ -36,6 +56,12 @@ public class WarCardGameServerView extends GenericCardGameView
 		this.add(playerStatus);
 	}
 
+	/**
+	 * updates the model view to the current state
+	 * 
+	 * if a player exits display win screen for remaining player
+	 * @throws exception if too many players connect at the same times exceeding maximum allowed connections 
+	 */
 	@Override
 	public void modelChanged() 
 	{	
@@ -74,6 +100,14 @@ public class WarCardGameServerView extends GenericCardGameView
 	private GenericCardGameCardListView p1Winpile;
 	private GenericCardGameCardListView p2Winpile;
 
+	/**
+	 * creates the GameBoardView that the player sees on their screen
+	 * <p>
+	 * <li>creates the layout for where the players decks and cards go
+	 * <li>keeps track of, and displays, the amount of cards in each deck
+	 * <li>initializes the chat box
+	 * <li>synchronizes separate players views so that everyone is viewing the same thing in real time
+	 */
 	private void createWarCardGameBoardView() 
 	{
 		/*
@@ -108,7 +142,7 @@ public class WarCardGameServerView extends GenericCardGameView
 		gbc.weightx = 0.33;
 		gbc.weighty = 0.25;
 
-		//TODO  Make all the approriate fields in the player object
+		//TODO  Make all the appropriate fields in the player object
 		p1Deck = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).flipDeck);
 		p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).flipDeck);
 		p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).winPile);

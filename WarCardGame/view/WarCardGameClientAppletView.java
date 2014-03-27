@@ -9,18 +9,37 @@ import java.awt.event.ActionListener;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
 
+/**
+ *	contains:
+ *
+ *	public methods:
+ *	WarCardGameClientAppletView(WarCardGameModel, final int)
+ *	modelChanged()
+ *	
+ *	protected methods:
+ *	buildPanel()
+ */
 public class WarCardGameClientAppletView extends GenericCardGameView
 {
 	private static final long serialVersionUID = 1L;
 
 	private boolean newGame;
 	
+	/**
+	 * sets newGame to true and prepares to initialize a game in the applet
+	 * 
+	 * @param model the model to be looked at
+	 * @param playerNumber the number of players connected to the server
+	 */
 	public WarCardGameClientAppletView(WarCardGameModel model, final int playerNumber) 
 	{
 		super(model, playerNumber);
 		this.newGame = true;
 	}
 
+	/**
+	 * builds the GridBagLayout, sets the default window size, waits for players to connect
+	 */
 	@Override
 	protected void buildPanel() 
 	{			
@@ -36,7 +55,12 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		this.add(playerStatus);
 	}
 
-
+	/**
+	 * updates the model view to the current state
+	 * 
+	 * if a player exits display win screen for remaining player
+	 * @throws exception if too many players connect at the same times exceeding maximum allowed connections 
+	 */
 	@Override
 	public void modelChanged() 
 	{	
@@ -83,6 +107,14 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	private GenericCardGameCardListView p1Winpile;
 	private GenericCardGameCardListView p2Winpile;
 
+	/**
+	 * creates the GameBoardView that the player sees on their screen
+	 * <p>
+	 * <li>creates the layout for where the players decks and cards go
+	 * <li>keeps track of, and displays, the amount of cards in each deck
+	 * <li>initializes the chat box
+	 * <li>synchronizes separate players views so that everyone is viewing the same thing in real time
+	 */
 	private void createWarCardGameBoardView() 
 	{
 		/*

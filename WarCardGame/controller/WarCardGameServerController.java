@@ -11,17 +11,39 @@ import model.WarCardGameModel;
 import model.WarCardGamePlayer;
 
 /**
- * a generic game controller class that provides simple functions that all card
- * games will implement 
+ * contains:
+ * 
+ *  public methods:
+ *  WarCardGameServerController(WarCardGameModel, WarCardGameServerView)
+ *  initializeGame()
+ *	initializeDeck(int)
+ *	initializePlayers()
+ *	dealCards()
+ *	gameOver(int)
+ *	evaluateHand()
  *
  */
 public class WarCardGameServerController extends GenericCardGameController
 {	
+	/**
+	 * gets the model and the view
+	 * 
+	 * @param model the current model
+	 * @param view the current view
+	 */
 	public WarCardGameServerController(WarCardGameModel model, WarCardGameServerView view) 
 	{
 		super(model, view);
 	}
 
+	/**
+	 * waits for enough players, when enough players are found:
+	 * <p>
+	 * <li>initializes the deck
+	 * <li>initializes the players
+	 * <li>deals the cards
+	 * <li>evaluates the players hands
+	 */
 	public void initializeGame() 
 	{
 		
@@ -70,6 +92,13 @@ public class WarCardGameServerController extends GenericCardGameController
 		}
 	}
 
+	/**
+	 * sets up the number of decks and cards to be used
+	 * 
+	 * some War games may have more than one deck if the users wish.
+	 * 
+	 * @param numOfDecks number of decks to be initialized
+	 */
 	public void initializeDeck(int numOfDecks)
 	{
 		synchronized(this.model)
@@ -95,6 +124,9 @@ public class WarCardGameServerController extends GenericCardGameController
 
 	}
 	
+	/**
+	 * give a player a deck, a winpile, and a cardplayed
+	 */
 	public void initializePlayers()
 	{
 		for(GenericCardGamePlayer player : ((WarCardGameModel)this.model).getPlayers())
@@ -107,6 +139,9 @@ public class WarCardGameServerController extends GenericCardGameController
 		}
 	}
 
+	/**
+	 * deal the cards between however many players are currently in the game
+	 */
 	public void dealCards()
 	{
 		synchronized(this.model)
@@ -126,11 +161,14 @@ public class WarCardGameServerController extends GenericCardGameController
 		}
 	}
 
+	/**
+	 * sends a popup box to both players informing them of the winner and reinitializes the game
+	 * @param winner the player who has valiantly won the game
+	 */
 	public void gameOver(int winner) 
 	{
 		//This pop-ups on the server window not the client applets
 		
-		// TODO Auto-generated method stub
 		//custom title, no icon
 		JOptionPane.showMessageDialog(null,
 				"Player " + winner+1 + " wins!",
@@ -139,6 +177,10 @@ public class WarCardGameServerController extends GenericCardGameController
 		this.initializeGame();
 	}
 
+	/**
+	 * evaluates the players hands and moves cards to the appropriate decks 
+	 * @throws Exception general exception that will print out the StackTrace
+	 */
 	public void evaluateHand() throws Exception 
 	{ 
 		//Finds the player with the highest card and places cards accordingly

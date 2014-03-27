@@ -7,8 +7,26 @@ import model.GenericMVCModel;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
 
+/**
+ * contains:
+ * 
+ * public methods:
+ * WarCardGameServerSocketWorker(Socket, WarCardGameModel, WarCardGameServerWaitForConnectionsWorker)
+ * run()
+ * modelChanged()
+ * updateModel(GenericMVCModel)
+ */
 public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 {	
+	
+	/**
+	 * recieves the socket model and connectionWorker
+	 * 
+	 * @param socket the socket being used
+	 * @param model the model to look at
+	 * @param connectionsWorker the connection port waiting for a new model to be sent
+	 * @throws IOException and prints the StackTrace if anything goes wrong
+	 */
 	public WarCardGameServerSocketWorker(Socket socket, WarCardGameModel model , WarCardGameServerWaitForConnectionsWorker connectionsWorker)
 	{
 		super(socket, model, connectionsWorker);
@@ -23,6 +41,9 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 		}
 	}
 	
+	/**
+	 * waits for a new model to be sent, updates the current model when a new one is received
+	 */
 	@Override
 	public void run() 
 	{
@@ -75,6 +96,10 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 		}
 	}
 	
+	/**
+	 * send this user's updated model to all users
+	 */
+
 	@Override
 	public void modelChanged() 
 	{
@@ -94,6 +119,9 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 		}
 	}
 
+	/**
+	 * takes in data from the new model, compares it to the current model, updates the current model
+	 */
 	@Override
 	protected void updateModel(GenericMVCModel newModel)
 	{

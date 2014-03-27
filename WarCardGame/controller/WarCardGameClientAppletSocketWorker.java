@@ -21,10 +21,11 @@ import model.WarCardGamePlayer;
 public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWorker
 {	
 	/**
+	 * takes in a socket and a model and sets up a players socket
 	 * 
-	 * @param socket
-	 * @param model
-	 * @throws general exception if anything goes wrong to print out the output
+	 * @param socket the socket to be added to the player
+	 * @param model the model to be sent to the player
+	 * @throws general exception, if anything goes wrong print out the output
 	 */
 	public WarCardGameClientAppletSocketWorker(Socket socket, WarCardGameModel model)
 	{
@@ -41,6 +42,9 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 		}
 	}
 
+	/**
+	 * waits for a new model to be sent, updates the current model when a new one is received
+	 */
 	@Override
 	public void run() 
 	{
@@ -84,6 +88,9 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 		}
 	}
 
+	/**
+	 * send this user's updated model to all users
+	 */
 	@Override
 	public void modelChanged() 
 	{
@@ -103,6 +110,9 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 		}
 	}
 
+	/**
+	 * takes in data from the new model, compares it to the current model, updates the current model
+	 */
 	@Override
 	protected void updateModel(GenericMVCModel newModel)
 	{
