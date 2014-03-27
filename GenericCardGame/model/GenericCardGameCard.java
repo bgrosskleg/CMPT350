@@ -5,11 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Toolkit;
 import java.io.Serializable;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 /**
@@ -93,28 +91,21 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 				
 		cardFace = null;
 		cardBack = null;
-		try 
-		{
-			//Filepath's originate at the root folder of the project itself
-			//to get the image, step up one level to CMPT350 folder with '../'
-			//then drill down into 'GenericCardGame' and find the resource needed
-			String cardPath = "../Resources/cards";
 
-			String imagePath;
-			imagePath = cardPath + "/" + suit + "/" + value + ".png";
-			
-			File imageFile = new File(imagePath);
-			
-			//System.out.println(imagePath);
-			cardFace = new ImageIcon(ImageIO.read(imageFile));
-			
-			imagePath = cardPath + "/BACK.png";
-			cardBack = new ImageIcon(ImageIO.read(new File(imagePath)));
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
+		//In order to load the images both in Eclipse IDE and a Java JAR file, need to use getResource()
+		//In order to use getResource(), files need to be in src folder, as a subpackage (vs. a linked folder on buildpath)
+		String cardPath = "/resources/cards";
+
+		String imagePath;
+		imagePath = cardPath + "/" + suit + "/" + value + ".png";
+				
+		//Below method works both in Eclipse IDE and JAR's when BACK.png image is in the src folder
+		//Toolkit.getDefaultToolkit().getImage(getClass().getResource("/BACK.png")));
+		
+		cardFace = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource(imagePath)));
+		
+		imagePath = cardPath + "/BACK.png";
+		cardBack = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource(imagePath)));
 		
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.setMaximumSize(getPreferredSize());
