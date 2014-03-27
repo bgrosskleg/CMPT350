@@ -46,6 +46,9 @@ public class WarCardGameServerController extends GenericCardGameController
 	
 			System.out.println("ENOUGH PLAYERS FOUND");
 	
+			//Clear the chat area
+			((WarCardGameModel) this.model).chatArea.setText("");
+			
 			//Initialize deck
 			initializeDeck(1);
 			
