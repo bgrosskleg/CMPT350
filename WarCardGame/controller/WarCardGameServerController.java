@@ -24,31 +24,47 @@ public class WarCardGameServerController extends GenericCardGameController
 
 	public void initializeGame() 
 	{
-		initializeDeck(1);
+		
 
 		System.out.println("WAITING FOR ENOUGH PLAYERS");
 
-		while(((WarCardGameModel)this.model).getPlayers().size() < ((WarCardGameModel)this.model).getRequiredNumberOfPlayers())
+		while(true)
 		{
-			/*WAIT FOR PLAYERS CONNECTION*/
+			while(((WarCardGameModel)this.model).getPlayers().size() < ((WarCardGameModel)this.model).getRequiredNumberOfPlayers())
+			{
+				/*WAIT FOR PLAYERS CONNECTION*/
+				try 
+				{
+					Thread.sleep(1000);
+				} 
+				catch (InterruptedException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+	
+			System.out.println("ENOUGH PLAYERS FOUND");
+	
+			//Initialize deck
+			initializeDeck(1);
+			
+			//Initialize players
+			initializePlayers();
+			
+			//Deal cards
+			dealCards();
+	
+			//Wait for players action
 			try 
 			{
-				Thread.sleep(50);
+				evaluateHand();
 			} 
-			catch (InterruptedException e) 
+			catch (Exception e) 
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("PLAYER LEFT GAME");
 			}
 		}
-
-		System.out.println("ENOUGH PLAYERS FOUND");
-
-		//Deal cards
-		dealCards();
-
-		//Wait for players action
-		evaluateHand();
 	}
 
 	public void initializeDeck(int numOfDecks)
@@ -70,10 +86,22 @@ public class WarCardGameServerController extends GenericCardGameController
 	
 			((GenericCardGameModel)model).getDeck().shuffle();
 		
-		
-			model.notifyModelSubscribers();
+			//Notify subscribers is called imediately after initializing in dealCards()
+			//model.notifyModelSubscribers();
 		}
 
+	}
+	
+	public void initializePlayers()
+	{
+		for(GenericCardGamePlayer player : ((WarCardGameModel)this.model).getPlayers())
+		{
+			((WarCardGamePlayer) player).flipDeck = new GenericCardGameCardList();
+			((WarCardGamePlayer) player).winPile = new GenericCardGameCardList();
+			((WarCardGamePlayer) player).cardPlayed = null;
+			//Do not reset socket worker to keep remaining players connection intact,
+			//ie only need to reset the remaining players decks and card played
+		}
 	}
 
 	public void dealCards()
@@ -97,6 +125,8 @@ public class WarCardGameServerController extends GenericCardGameController
 
 	public void gameOver(int winner) 
 	{
+		//This pop-ups on the server window not the client applets
+		
 		// TODO Auto-generated method stub
 		//custom title, no icon
 		JOptionPane.showMessageDialog(null,
@@ -106,15 +136,16 @@ public class WarCardGameServerController extends GenericCardGameController
 		this.initializeGame();
 	}
 
-	public void evaluateHand() 
-	{
+	public void evaluateHand() throws Exception 
+	{ 
 		//Finds the player with the highest card and places cards accordingly
 		//Doesn't handle wars yet
 		int winningPlayer = -1;
 		int highestCard = -1;
 		for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)
 		{
-			while(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed == null)
+			while(((WarCardGameModel)this.model).getPlayers().size() == ((WarCardGameModel)this.model).getRequiredNumberOfPlayers() &&
+					 ((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed == null)
 			{
 				try 
 				{
@@ -125,6 +156,12 @@ public class WarCardGameServerController extends GenericCardGameController
 					e.printStackTrace();
 				}
 			}
+			
+			if(((WarCardGameModel)this.model).getPlayers().size() < ((WarCardGameModel)this.model).getRequiredNumberOfPlayers())
+			{
+				throw new Exception("Not enough players");
+			}
+			
 			if(((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed.getValue().ordinal() > highestCard)
 			{
 				highestCard = ((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(i)).cardPlayed.getValue().ordinal();
@@ -133,6 +170,10 @@ public class WarCardGameServerController extends GenericCardGameController
 		}
 		//Send model for players to view
 		((WarCardGameModel)this.model).notifyModelSubscribers();
+		
+		//Delay for the users to see the outcome of the hand
+		Thread.sleep(2500);
+		
 		//Now we will put the cards in the appropriate places
 		for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)
 		{

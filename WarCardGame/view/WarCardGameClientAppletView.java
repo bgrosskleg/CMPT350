@@ -13,9 +13,12 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 {
 	private static final long serialVersionUID = 1L;
 
+	private boolean newGame;
+	
 	public WarCardGameClientAppletView(WarCardGameModel model, final int playerNumber) 
 	{
 		super(model, playerNumber);
+		this.newGame = true;
 	}
 
 	@Override
@@ -39,6 +42,12 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	{	
 		if(((WarCardGameModel) model).getPlayers().size() < ((WarCardGameModel) model).getRequiredNumberOfPlayers())
 		{
+			if(!newGame)
+			{
+				JOptionPane.showMessageDialog(null, "YOU WIN! Other player left or connection lost.");
+				newGame = true;
+			}
+			
 			//REMAKE THE VIEW TO WAIT FOR PLAYERS
 			this.removeAll();
 
@@ -49,6 +58,8 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		}
 		else if(((WarCardGameModel) model).getPlayers().size() == ((WarCardGameModel) model).getRequiredNumberOfPlayers())
 		{
+			newGame = false;
+			
 			//REMAKE THE VIEW TO DISPLAY GAME
 			this.removeAll();
 
