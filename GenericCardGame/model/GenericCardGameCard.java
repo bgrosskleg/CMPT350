@@ -98,7 +98,8 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 			//Filepath's originate at the root folder of the project itself
 			//to get the image, step up one level to CMPT350 folder with '../'
 			//then drill down into 'GenericCardGame' and find the resource needed
-			String cardPath = "../GenericCardGame/resources/cards";
+			String cardPath = "../Resources/cards";
+
 			String imagePath;
 			imagePath = cardPath + "/" + suit + "/" + value + ".png";
 			

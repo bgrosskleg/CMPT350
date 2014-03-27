@@ -26,11 +26,6 @@
 			<locationURI>WORKSPACE_LOC/GenericMVC</locationURI>
 		</link>
 		<link>
-			<name>Resources</name>
-			<type>2</type>
-			<locationURI>WORKSPACE_LOC/Resources</locationURI>
-		</link>
-		<link>
 			<name>WarCardGame</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/WarCardGame</locationURI>
