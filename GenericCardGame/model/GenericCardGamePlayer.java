@@ -14,7 +14,7 @@ public abstract class GenericCardGamePlayer extends GenericMVCModel
 {
 	private static final long serialVersionUID = 1L;
 	
-	protected final int playerNumber;
+	public int playerNumber;
 	protected transient GenericCardGameSocketWorker socketWorker;
 	
 	/**

@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
 import view.WarCardGameServerView;
@@ -129,13 +131,25 @@ public class WarCardGameServerController extends GenericCardGameController
 	 */
 	public void initializePlayers()
 	{
-		for(GenericCardGamePlayer player : ((WarCardGameModel)this.model).getPlayers())
+		for(int iter = 0 ; iter < ((WarCardGameModel)this.model).getPlayers().size(); iter++)
 		{
-			((WarCardGamePlayer) player).flipDeck = new GenericCardGameCardList();
-			((WarCardGamePlayer) player).winPile = new GenericCardGameCardList();
-			((WarCardGamePlayer) player).cardPlayed = null;
+			((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(iter)).flipDeck = new GenericCardGameCardList();
+			((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(iter)).winPile = new GenericCardGameCardList();
+			((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(iter)).cardPlayed = null;
+			
 			//Do not reset socket worker to keep remaining players connection intact,
-			//ie only need to reset the remaining players decks and card played
+			//but re-assign their connectionNumber ie player number
+			((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(iter)).getSocketWorker().connectionNumber = iter + 1;
+			try 
+			{
+				((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(iter)).playerNumber = iter + 1;
+				((WarCardGamePlayer)((WarCardGameModel)this.model).getPlayers().get(iter)).getSocketWorker().sendObject(iter + 1);
+			} catch (IOException e) 
+			{
+				// TODO Auto-generated catch block
+				System.err.println("Failure re-assigning player numbers");
+				//e.printStackTrace();
+			}
 		}
 	}
 
@@ -167,14 +181,14 @@ public class WarCardGameServerController extends GenericCardGameController
 	 */
 	public void gameOver(int winner) 
 	{
-		//This pop-ups on the server window not the client applets
+		//This pop-ups on the server window not the client applets, commented out so no server-side interaction required
 		
 		//custom title, no icon
-		JOptionPane.showMessageDialog(null,
-				"Player " + winner+1 + " wins!",
-				"Game Over",
-				JOptionPane.PLAIN_MESSAGE);
-		this.initializeGame();
+		//JOptionPane.showMessageDialog(null,
+		//		"Player " + winner+1 + " wins!",
+		//		"Game Over",
+		//		JOptionPane.PLAIN_MESSAGE);
+		//this.initializeGame();
 	}
 
 	/**
@@ -217,7 +231,7 @@ public class WarCardGameServerController extends GenericCardGameController
 		((WarCardGameModel)this.model).notifyModelSubscribers();
 		
 		//Delay for the users to see the outcome of the hand
-		Thread.sleep(2500);
+		Thread.sleep(2000);
 		
 		//Now we will put the cards in the appropriate places
 		for(int i = 0; i < ((WarCardGameModel)this.model).getPlayers().size();i++)

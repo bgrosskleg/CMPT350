@@ -3,6 +3,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import controller.GenericMVCSocketWorker;
 import controller.WarCardGameClientAppletController;
 import controller.WarCardGameClientAppletSocketWorker;
 import view.GenericMVCView;
@@ -57,9 +58,9 @@ public class WarCardGameClientApplet extends GenericCardGameClientApplet
 	 * @return the Applet view with a player and a model
 	 */
 	@Override
-	protected WarCardGameClientAppletView createView(GenericMVCModel model, int playerNumber) 
+	protected WarCardGameClientAppletView createView(GenericMVCModel model, GenericMVCSocketWorker socketWorker) 
 	{
-		return new WarCardGameClientAppletView((WarCardGameModel)model, playerNumber);	
+		return new WarCardGameClientAppletView((WarCardGameModel)model, (WarCardGameClientAppletSocketWorker)socketWorker);	
 	}
 
 	/**

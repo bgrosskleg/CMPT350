@@ -33,7 +33,7 @@ public class WarCardGameServerView extends GenericCardGameView
 	 */
 	public WarCardGameServerView(WarCardGameModel model)
 	{
-		super(model, 0);
+		super(model, null);
 	}
 
 	/**

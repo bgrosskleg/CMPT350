@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 
+import controller.WarCardGameClientAppletSocketWorker;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,9 +33,9 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	 * @param model the model to be looked at
 	 * @param playerNumber the number of players connected to the server
 	 */
-	public WarCardGameClientAppletView(WarCardGameModel model, final int playerNumber) 
+	public WarCardGameClientAppletView(WarCardGameModel model, WarCardGameClientAppletSocketWorker socketWorker) 
 	{
-		super(model, playerNumber);
+		super(model, socketWorker);
 		this.newGame = true;
 	}
 
@@ -308,7 +310,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 
 		gbc.fill = GridBagConstraints.NONE;
 
-		if(this.playerNumber == 2)
+		if(this.socketWorker.getConnectionNumber() == 2)
 		{ 
 			gbc.gridx = 1;
 			gbc.gridy = 0;
@@ -326,7 +328,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 
 		}
 
-		if(this.playerNumber == 1)
+		if(this.socketWorker.getConnectionNumber() == 1)
 		{
 			gbc.gridx = 1;
 			gbc.gridy = 3;

@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 import model.GenericMVCModel;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
@@ -38,7 +40,9 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 		} 
 		catch (Exception e) 
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(null, "Communication with server lost!");
 		}
 	}
 
@@ -60,8 +64,12 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 			catch (Exception e) 
 			{
 				System.err.println("SOCKET ERROR - CLOSING CONNECTION");
-				//TODO close connection and delete player
-				e.printStackTrace();
+				
+				//e.printStackTrace();
+				
+				JOptionPane.showMessageDialog(null, "Lost communication to server!");
+				
+				System.exit(-1);
 			}
 			
 			if(object instanceof WarCardGameModel)
@@ -80,6 +88,11 @@ public class WarCardGameClientAppletSocketWorker extends GenericCardGameSocketWo
 				}
 				
 				System.out.println("NEW MODEL: \n" + this.model.toString());
+			}
+			else if(object instanceof Integer)
+			{
+				this.connectionNumber = (Integer) object;
+				System.out.println("I AM PLAYER " + this.connectionNumber);
 			}
 			else
 			{

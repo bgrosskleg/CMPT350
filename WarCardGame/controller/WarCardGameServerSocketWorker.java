@@ -60,13 +60,13 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 				//e.printStackTrace();
 				
 				System.err.println("SOCKET ERROR - CLOSING CONNECTION");
-				//TODO close connection and delete player
+				//Close connection and delete player
 				
 				//Remove this as model subscriber
 				model.removeModelSubscriber(this);
 				
 				//Remove player from model that corresponds to this worker
-				((WarCardGameModel) model).getPlayers().remove(connectionsWorker.currentConnections - 1);
+				((WarCardGameModel) model).getPlayers().remove(this.connectionNumber-1);
 							
 				//Notify all subscribers on server, including all server socket workers and server view
 				model.notifyModelSubscribers();

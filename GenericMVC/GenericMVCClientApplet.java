@@ -45,7 +45,7 @@ public abstract class GenericMVCClientApplet extends JApplet
                 	
                 	socketWorker = createSocketWorker(model);
                 	
-                	view = createView(model, socketWorker.getConnectionNumber());
+                	view = createView(model, socketWorker);
                 	
                 	controller = createController(model, view);
                 	
@@ -63,7 +63,7 @@ public abstract class GenericMVCClientApplet extends JApplet
 	}
 		
 	protected abstract GenericMVCModel createModel();
-	protected abstract GenericMVCView createView(GenericMVCModel model, int connectionNumber);
+	protected abstract GenericMVCView createView(GenericMVCModel model, GenericMVCSocketWorker socketWorker);
 	protected abstract GenericMVCController createController(GenericMVCModel model, GenericMVCView view);
 	protected abstract GenericMVCSocketWorker createSocketWorker(GenericMVCModel model);
 }

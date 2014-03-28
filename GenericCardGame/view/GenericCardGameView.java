@@ -2,13 +2,14 @@ package view;
 
 import javax.swing.JLabel;
 
+import controller.GenericCardGameSocketWorker;
 import model.GenericCardGameModel;
 
 public abstract class GenericCardGameView extends GenericMVCView
 {
 	private static final long serialVersionUID = 1L;
 			
-	public int playerNumber;
+	public final GenericCardGameSocketWorker socketWorker;
 	protected JLabel playerStatus;
 	
 	/**
@@ -17,9 +18,9 @@ public abstract class GenericCardGameView extends GenericMVCView
 	 * @param model this model
 	 * @param playerNumber this playerNumber
 	 */
-	public GenericCardGameView(GenericCardGameModel model, int playerNumber) 
+	public GenericCardGameView(GenericCardGameModel model, GenericCardGameSocketWorker socketWorker) 
 	{
 		super(model);
-		this.playerNumber = playerNumber;
+		this.socketWorker = socketWorker;
 	}
 }
