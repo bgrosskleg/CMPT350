@@ -186,7 +186,8 @@ public class WarCardGameServerController extends GenericCardGameController
 		//		"Player " + winner+1 + " wins!",
 		//		"Game Over",
 		//		JOptionPane.PLAIN_MESSAGE);
-		//this.initializeGame();
+		
+		this.initializeGame();
 	}
 
 	/**
