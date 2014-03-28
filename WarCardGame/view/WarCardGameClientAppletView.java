@@ -109,6 +109,9 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	private GenericCardGameCardListView p2Deck;
 	private GenericCardGameCardListView p1Winpile;
 	private GenericCardGameCardListView p2Winpile;
+	
+	private JTextField p1ChatEnterText;
+	private JTextField p2ChatEnterText;
 
 	private void removeAllButTextBox()
 	{
@@ -206,8 +209,11 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		final JScrollPane scrollingChat = new JScrollPane(chatDisplayBox);
 		scrollingChat.setPreferredSize(new Dimension(200,100));
 
-		final JTextField p1ChatEnterText = new JTextField("");
-		final JTextField p2ChatEnterText = new JTextField("");
+		if(!this.hasTextField())
+		{
+			p1ChatEnterText = new JTextField("");
+			p2ChatEnterText = new JTextField("");
+		}
 
 		JButton p1Send = new JButton("Send Chat");
 		JButton p2Send = new JButton("Send Chat");
