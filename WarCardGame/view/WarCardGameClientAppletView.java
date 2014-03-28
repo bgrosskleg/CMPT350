@@ -95,6 +95,16 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 
 			//Build panel to display game
 			createWarCardGameBoardView();
+			
+			if(this.socketWorker.getConnectionNumber() == 1)
+			{
+				this.p1ChatEnterText.requestFocus();
+			}
+				
+			else if(this.socketWorker.getConnectionNumber() == 2)
+			{
+				this.p2ChatEnterText.requestFocus();
+			}
 		}
 		else
 		{
