@@ -1,8 +1,13 @@
 package controller;
 
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.Socket;
 
+import javax.swing.ImageIcon;
+
+import model.GenericCardGameCard;
+import model.GenericCardGamePlayer;
 import model.GenericMVCModel;
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
@@ -126,8 +131,7 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 	protected void updateModel(GenericMVCModel newModel)
 	{
 		System.out.println("WarCardGameGeneralWorker: UpdateModel");
-		//synchronized(model)
-		//{
+	
 		// Compare interesting parts of the model and update local model
 		
 		if(((WarCardGameModel)this.model).getPlayers().size() != ((WarCardGameModel)newModel).getPlayers().size())
@@ -150,7 +154,7 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 					player.winPile.clear();
 					while(!newPlayer.winPile.isEmpty())
 					{
-						player.winPile.add(newPlayer.winPile.remove(0));
+						player.winPile.add(loadCardImages(newPlayer.winPile.remove(0)));
 					}
 				}
 				
@@ -159,15 +163,14 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 					player.flipDeck.clear();
 					while(!newPlayer.flipDeck.isEmpty())
 					{
-						player.flipDeck.add(newPlayer.flipDeck.remove(0));
+						player.flipDeck.add(loadCardImages(newPlayer.flipDeck.remove(0)));
 					}
 				}
 				
 				if(player.cardPlayed != newPlayer.cardPlayed)
 				{
-					player.cardPlayed = newPlayer.cardPlayed;
+					player.cardPlayed = loadCardImages(newPlayer.cardPlayed);
 				}
-				
 			}
 			//For the Chat Box
 			if(!((WarCardGameModel)this.model).chatArea.getText().equals(((WarCardGameModel)newModel).chatArea.getText()))
@@ -175,5 +178,66 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 				((WarCardGameModel)this.model).chatArea.setText(((WarCardGameModel)newModel).chatArea.getText());
 			}
 		}
+	
+	
+		//Load images of cards on client side if not loaded already, by loading client side we significantly reduce transmit size
+		String cardPath = "/resources/cards";
+		for(GenericCardGamePlayer player : ((WarCardGameModel)this.model).getPlayers())
+		{
+			String imagePath;
+			//Below method works both in Eclipse IDE and JAR's when BACK.png image is in the src folder
+			//Toolkit.getDefaultToolkit().getImage(getClass().getResource("/BACK.png"));
+			
+			//Initially, (on first load and updateModel) all cards are in flip deck so load the flipdeck images
+			if(((WarCardGamePlayer) player).flipDeck != null)
+			{
+				for(GenericCardGameCard card : ((WarCardGamePlayer) player).flipDeck)
+				{
+					if(card.getCardFace() == null)
+					{
+						//Load face
+						imagePath = cardPath + "/" + card.getSuit() + "/" + card.getValue().toString() + ".png";
+						System.err.println("LOAD IMAGE: " + imagePath);
+						card.setCardFace(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource(imagePath))));
+					}
+					
+					
+					if(card.getCardBack() == null)
+					{
+						//Load back
+						imagePath = cardPath + "/BACK.png";
+						System.err.println("LOAD IMAGE: " + imagePath);
+						card.setCardBack(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource(imagePath))));				
+					}
+				}
+			}
+		}
+	}
+		
+	private GenericCardGameCard loadCardImages(GenericCardGameCard card)
+	{
+		String cardPath = "/resources/cards";
+		String imagePath;
+
+		//Below method works both in Eclipse IDE and JAR's when BACK.png image is in the src folder ie src/*
+		//Toolkit.getDefaultToolkit().getImage(getClass().getResource("/BACK.png"));
+
+		if(card.getCardFace() == null)
+		{
+			//Load face
+			imagePath = cardPath + "/" + card.getSuit() + "/" + card.getValue().toString() + ".png";
+			//System.err.println("LOAD IMAGE: " + imagePath);
+			card.setCardFace(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource(imagePath))));
+		}
+
+		if(card.getCardBack() == null)
+		{
+			//Load back
+			imagePath = cardPath + "/BACK.png";
+			//System.err.println("LOAD IMAGE: " + imagePath);
+			card.setCardBack(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource(imagePath))));				
+		}
+		
+		return card;
 	}
 }

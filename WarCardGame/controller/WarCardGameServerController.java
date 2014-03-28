@@ -2,8 +2,6 @@ package controller;
 
 import java.io.IOException;
 
-import javax.swing.JOptionPane;
-
 import view.WarCardGameServerView;
 import model.GenericCardGameCard;
 import model.GenericCardGameCardList;

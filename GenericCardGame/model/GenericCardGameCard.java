@@ -67,8 +67,8 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 	private Suit suit;
 	private Display display;
 	
-	private ImageIcon cardFace;
-	private ImageIcon cardBack;
+	private transient ImageIcon cardFace;
+	private transient ImageIcon cardBack;
 	
 	/**
 	 * creates a simple card with a value, a suit, and two picture representations(back view/front view)
@@ -100,7 +100,7 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 		imagePath = cardPath + "/" + suit + "/" + value + ".png";
 				
 		//Below method works both in Eclipse IDE and JAR's when BACK.png image is in the src folder
-		//Toolkit.getDefaultToolkit().getImage(getClass().getResource("/BACK.png")));
+		//Toolkit.getDefaultToolkit().getImage(getClass().getResource("/BACK.png"));
 		
 		cardFace = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource(imagePath)));
 		
@@ -252,6 +252,26 @@ public class GenericCardGameCard extends JPanel implements Comparable<GenericCar
 	public void faceDown()
 	{
 		this.display = Display.FACEDOWN;
+	}
+	
+	public void setCardFace(ImageIcon cardFace)
+	{
+		this.cardFace = cardFace;
+	}
+	
+	public ImageIcon getCardFace()
+	{
+		return this.cardFace;
+	}
+	
+	public void setCardBack(ImageIcon cardBack)
+	{
+		this.cardBack = cardBack;
+	}
+	
+	public ImageIcon getCardBack()
+	{
+		return this.cardBack;
 	}
 	
 	/**
