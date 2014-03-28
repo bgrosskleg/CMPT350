@@ -1,10 +1,10 @@
-CMPT 350 Project - README
+CMPT 350 Project - War Card Game - README
 
 March 28, 2014
 
-Brian Grosskleg
-Paul Thomson
-John Mason
+Brian Grosskleg 	bwg771@mail.usask.ca
+Paul Thomson		pat964@mail.usask.ca
+John Mason			jrm120@mail.usask.ca
 
 
 1) Server Setup
@@ -104,3 +104,17 @@ John Mason
 	If the server goes down, both clients are notified of loss of connection. 
 	The WarCardGameServerApplication.jar (see 1.6) will need to be restarted, and the clients browsers will need to be
 	refreshed.
+	
+4) Testing
+
+	We started the server locally and played locally for development.  When there were not bugs and it was functional
+	we deployed it on a webserver.  Once running on a webserver, we tested sending game states around.  Originally,
+	we loaded card images server side and send the images with the game state as objects.  This caused immense
+	latency, so we built the applet to load images on its end as it received cards.  This meant that the model state
+	was "text" based and much smaller, this improved response time incredibly and made the game playable.
+	
+	We also iteratively tested the chat feature, implementing key listeners and the scrollable chat area.  This
+	makes the chat useful and provides value added feature to the player.
+	
+	After multiple sessions of testing, with the exception of both players concurrently modifying the game state, we
+	conclude that our program is stable and handles most game play scenarios properly.
