@@ -83,7 +83,6 @@ public class WarCardGameServerView extends GenericCardGameView
 		{
 			if(!newGame)
 			{
-				JOptionPane.showMessageDialog(null, "YOU WIN! Other player left or connection lost.");
 				newGame = true;
 				intialized = false;
 			}
