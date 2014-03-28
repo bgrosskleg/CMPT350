@@ -91,7 +91,7 @@ public class WarCardGameServerSocketWorker extends GenericCardGameSocketWorker
 			}
 			else
 			{
-				System.err.println("Recieved object not type WarCardGameModel!");
+				System.err.println("Recieved object not type WarCardGameModel or JTextArea!");
 			}
 		}
 	}
