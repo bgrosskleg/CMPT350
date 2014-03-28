@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 
 import controller.WarCardGameClientAppletSocketWorker;
 
@@ -204,29 +205,11 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).winPile);
 		p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).winPile);
 
+		
+		//FLIP BUTTONS
+		
 		JButton p1flip = new JButton("Player 1 Flip!");
 		JButton p2flip = new JButton("Player 2 Flip!");
-
-
-		final JTextArea chatDisplayBox = ((WarCardGameModel)model).chatArea;
-		chatDisplayBox.setEditable(false);
-		chatDisplayBox.setCursor(null);
-		chatDisplayBox.setOpaque(true);
-		chatDisplayBox.setFocusable(false);
-		chatDisplayBox.setLineWrap(true);
-		chatDisplayBox.setWrapStyleWord(true);
-		
-		final JScrollPane scrollingChat = new JScrollPane(chatDisplayBox);
-		scrollingChat.setPreferredSize(new Dimension(200,100));
-
-		if(!this.hasTextField())
-		{
-			p1ChatEnterText = new JTextField("");
-			p2ChatEnterText = new JTextField("");
-		}
-
-		JButton p1Send = new JButton("Send Chat");
-		JButton p2Send = new JButton("Send Chat");
 
 		p1flip.addActionListener(new ActionListener()
 		{
@@ -265,6 +248,72 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 			}
 		});
 
+		
+		//CHAT AREA
+		
+		final JTextArea chatDisplayBox = ((WarCardGameModel)model).chatArea;
+		DefaultCaret caret = (DefaultCaret) ((WarCardGameModel)model).chatArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
+		chatDisplayBox.setEditable(false);
+		chatDisplayBox.setCursor(null);
+		chatDisplayBox.setOpaque(true);
+		chatDisplayBox.setFocusable(false);
+		chatDisplayBox.setLineWrap(true);
+		chatDisplayBox.setWrapStyleWord(true);
+		
+		final JScrollPane scrollingChat = new JScrollPane(chatDisplayBox);
+		scrollingChat.setPreferredSize(new Dimension(200,100));
+
+		if(!this.hasTextField())
+		{
+			p1ChatEnterText = new JTextField("");
+			p2ChatEnterText = new JTextField("");
+			
+			p1ChatEnterText.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					synchronized(model)
+					{
+						if(!p1ChatEnterText.getText().isEmpty())
+						{
+							chatDisplayBox.append(
+									"\nPlayer 1: " +
+											p1ChatEnterText.getText());
+							p1ChatEnterText.setText("");
+	
+	
+							model.notifyModelSubscribers();
+						}
+					}
+				}
+			});
+			
+			p2ChatEnterText.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					synchronized(model)
+					{
+						if(!p2ChatEnterText.getText().isEmpty())
+						{
+							chatDisplayBox.append(
+									"\nPlayer 2: " +
+											p2ChatEnterText.getText());
+							p2ChatEnterText.setText("");
+
+
+							model.notifyModelSubscribers();
+						}
+					}
+				}
+			});
+		}
+
+		JButton p1Send = new JButton("Send Chat");
+		JButton p2Send = new JButton("Send Chat");
+		
 		p1Send.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
