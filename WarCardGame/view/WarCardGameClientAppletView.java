@@ -28,6 +28,10 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	private static final long serialVersionUID = 1L;
 
 	private boolean newGame;
+	private boolean intialized;
+	
+	private JTextArea chatDisplayBox;
+	private JScrollPane scrollingChat;
 	
 	/**
 	 * sets newGame to true and prepares to initialize a game in the applet
@@ -39,6 +43,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	{
 		super(model, socketWorker);
 		this.newGame = true;
+		this.intialized = false;
 	}
 
 	/**
@@ -74,6 +79,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 			{
 				JOptionPane.showMessageDialog(null, "YOU WIN! Other player left or connection lost.");
 				newGame = true;
+				intialized = false;
 			}
 			
 			//REMAKE THE VIEW TO WAIT FOR PLAYERS
@@ -89,7 +95,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 			newGame = false;
 			
 			//REMAKE THE VIEW TO DISPLAY GAME
-			this.removeAllButTextBox();
+			this.removeOnlyCards();
 
 			//Green pepper from http://www.december.com/html/spec/color2.html
 			this.setBackground(new Color(0x39, 0x7D, 0x02));
@@ -124,15 +130,15 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	private JTextField p1ChatEnterText;
 	private JTextField p2ChatEnterText;
 
-	private void removeAllButTextBox()
+	private void removeOnlyCards()
 	{
 		ArrayList<Component> compList = new ArrayList<Component>();
 		for(int i = 0; i < this.getComponentCount(); i++)
 		{
 			Component c = this.getComponent(i);
-			if(c instanceof JTextField)
+			if(c instanceof JTextField || c instanceof JTextArea || c instanceof JButton || c instanceof JScrollPane)
 			{
-				
+				//Do nothing
 			}
 			else
 			{
@@ -143,18 +149,6 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		{
 			this.remove(compList.remove(0));
 		}
-	}
-
-	private boolean hasTextField()
-	{
-		for(int i = 0; i < this.getComponentCount(); i++)
-		{
-			if(this.getComponent(i) instanceof JTextField)
-			{
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -177,7 +171,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		 * 		|		|p2		|		|
 		 *y1	|		|card	|		|
 		 * 		|		|played	|		|
-		 * 		|_______|_______|_______|
+		 * 		|_______|_______|_______|		chat
 		 * 		|		|p1		|		|
 		 *y2 	|		|card	|		|
 		 * 		|		|played	|		|
@@ -206,155 +200,212 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).winPile);
 
 		
-		//FLIP BUTTONS
-		
-		JButton p1flip = new JButton("Player 1 Flip!");
-		JButton p2flip = new JButton("Player 2 Flip!");
-
-		p1flip.addActionListener(new ActionListener()
+		//BUTTONS
+		JButton p1flip = null;
+		JButton p2flip = null;
+		JButton p1Send = null;
+		JButton p2Send = null;
+				
+		//CARD FLIPPING
+		if(!this.intialized)
 		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				//Remove top card from flip deck and make it the played card
-				synchronized(model)
-				{
-					if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed == null)
-					{
-						((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).flipDeck.remove(0);
-
-						model.notifyModelSubscribers();
-					}
-				}
-			}
-
-		});
-
-		p2flip.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				//Remove top card from flip deck and make it the played card
-				synchronized(model)
-				{
-					if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed == null)
-					{
-						((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).flipDeck.remove(0);
-
-						model.notifyModelSubscribers();
-					}
-				}
-			}
-		});
-
-		
-		//CHAT AREA
-		
-		final JTextArea chatDisplayBox = ((WarCardGameModel)model).chatArea;
-		DefaultCaret caret = (DefaultCaret) ((WarCardGameModel)model).chatArea.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		
-		chatDisplayBox.setEditable(false);
-		chatDisplayBox.setCursor(null);
-		chatDisplayBox.setOpaque(true);
-		chatDisplayBox.setFocusable(false);
-		chatDisplayBox.setLineWrap(true);
-		chatDisplayBox.setWrapStyleWord(true);
-		
-		final JScrollPane scrollingChat = new JScrollPane(chatDisplayBox);
-		scrollingChat.setPreferredSize(new Dimension(200,100));
-
-		if(!this.hasTextField())
-		{
-			p1ChatEnterText = new JTextField("");
-			p2ChatEnterText = new JTextField("");
+			gbc.fill = GridBagConstraints.NONE;
 			
-			p1ChatEnterText.addActionListener(new ActionListener()
+			if(this.socketWorker.getConnectionNumber() == 1)
 			{
-				public void actionPerformed(ActionEvent e)
+				p1flip = new JButton("Player 1 Flip!");
+				p1flip.addActionListener(new ActionListener()
 				{
-					synchronized(model)
+					@Override
+					public void actionPerformed(ActionEvent e) 
 					{
-						if(!p1ChatEnterText.getText().isEmpty())
+						//Remove top card from flip deck and make it the played card
+						synchronized(model)
 						{
-							chatDisplayBox.append(
-									"\nPlayer 1: " +
-											p1ChatEnterText.getText());
-							p1ChatEnterText.setText("");
-	
-	
-							model.notifyModelSubscribers();
+							if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed == null)
+							{
+								((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).cardPlayed = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).flipDeck.remove(0);
+		
+								model.notifyModelSubscribers();
+							}
 						}
 					}
-				}
-			});
+				});
+							
+				gbc.gridx = 1;
+				gbc.gridy = 3;
+				this.add(p1flip, gbc);
+				
+			}
 			
-			p2ChatEnterText.addActionListener(new ActionListener()
+			if(this.socketWorker.getConnectionNumber() == 2)
 			{
-				public void actionPerformed(ActionEvent e)
+				p2flip = new JButton("Player 2 Flip!");
+				p2flip.addActionListener(new ActionListener()
 				{
-					synchronized(model)
+					@Override
+					public void actionPerformed(ActionEvent e) 
 					{
-						if(!p2ChatEnterText.getText().isEmpty())
+						//Remove top card from flip deck and make it the played card
+						synchronized(model)
 						{
-							chatDisplayBox.append(
-									"\nPlayer 2: " +
-											p2ChatEnterText.getText());
-							p2ChatEnterText.setText("");
-
-
-							model.notifyModelSubscribers();
+							if(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed == null)
+							{
+								((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).cardPlayed = ((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).flipDeck.remove(0);
+		
+								model.notifyModelSubscribers();
+							}
 						}
 					}
+				});
+				
+				if(this.socketWorker.getConnectionNumber() == 2)
+				{ 
+					gbc.gridx = 1;
+					gbc.gridy = 0;
+					this.add(p2flip, gbc);
 				}
-			});
+			}
+			
+		
+			//CHAT AREA
+			
+			final int chatWidth = 300;
+			final int chatHeight = 400;
+			final int textfieldHeight = 30;
+			
+			
+			chatDisplayBox = ((WarCardGameModel)model).chatArea;
+			chatDisplayBox.setEditable(false);
+			chatDisplayBox.setCursor(null);
+			chatDisplayBox.setOpaque(true);
+			chatDisplayBox.setFocusable(false);
+			chatDisplayBox.setLineWrap(true);
+			chatDisplayBox.setWrapStyleWord(true);
+			
+			DefaultCaret caret1 = (DefaultCaret) ((WarCardGameModel)model).chatArea.getCaret();
+			caret1.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+			
+			scrollingChat = new JScrollPane(chatDisplayBox);
+		
+			//Box for chat
+			scrollingChat.setPreferredSize(new Dimension(chatWidth, chatHeight));
+			scrollingChat.setMinimumSize(getPreferredSize());
+			gbc.gridx = 3;
+			gbc.gridy = 1;
+			this.add(scrollingChat, gbc);
+		
+			
+			//CHAT FIELDS AND BUTTONS
+			
+			if(this.socketWorker.getConnectionNumber() == 1)
+			{
+				p1ChatEnterText = new JTextField("");
+				p1ChatEnterText.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						synchronized(model)
+						{
+							if(!p1ChatEnterText.getText().isEmpty())
+							{
+								chatDisplayBox.append("\nPlayer 1: " +	p1ChatEnterText.getText());
+								p1ChatEnterText.setText("");
+	
+								model.notifyModelSubscribers();
+							}
+						}
+					}
+				});
+				
+				p1Send = new JButton("Send Chat");
+				p1Send.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						synchronized(model)
+						{
+							if(!p1ChatEnterText.getText().isEmpty())
+							{
+								chatDisplayBox.append("\nPlayer 1: " + p1ChatEnterText.getText());
+								p1ChatEnterText.setText("");
+
+								model.notifyModelSubscribers();
+							}
+						}
+					}
+				});
+				
+				//Create player 1 chat buttons
+				p1ChatEnterText.setPreferredSize(new Dimension(chatWidth, textfieldHeight));
+				p1ChatEnterText.setMinimumSize(getPreferredSize());
+				gbc.gridx = 3;
+				gbc.gridy = 2;
+				this.add(p1ChatEnterText, gbc);
+					
+				gbc.gridx = 3;
+				gbc.gridy = 3;
+				this.add(p1Send, gbc);
+			}
+			
+			if(this.socketWorker.getConnectionNumber() == 2)
+			{
+				p2ChatEnterText = new JTextField("");
+				p2ChatEnterText.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						synchronized(model)
+						{
+							if(!p2ChatEnterText.getText().isEmpty())
+							{
+								chatDisplayBox.append("\nPlayer 2: " + p2ChatEnterText.getText());
+								p2ChatEnterText.setText("");
+	
+								model.notifyModelSubscribers();
+							}
+						}
+					}
+				});
+				
+				p2Send = new JButton("Send Chat");
+				p2Send.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						synchronized(model)
+						{
+							if(!p2ChatEnterText.getText().isEmpty())
+							{
+								chatDisplayBox.append("\nPlayer 2: " + p2ChatEnterText.getText());
+								p2ChatEnterText.setText("");
+
+								model.notifyModelSubscribers();
+							}
+						}
+					}
+				});
+								
+				//Create player 2 chat buttons
+				p2ChatEnterText.setPreferredSize(new Dimension(chatWidth, textfieldHeight));
+				p2ChatEnterText.setMinimumSize(getPreferredSize());
+				p2ChatEnterText.setMaximumSize(getPreferredSize());
+				gbc.gridx = 3;
+				gbc.gridy = 2;
+				this.add(p2ChatEnterText, gbc);
+									
+				gbc.gridx = 3;
+				gbc.gridy = 3;
+				this.add(p2Send, gbc);
+			}
+			
+			this.intialized = true;
 		}
-
-		JButton p1Send = new JButton("Send Chat");
-		JButton p2Send = new JButton("Send Chat");
 		
-		p1Send.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				synchronized(model)
-				{
-					if(!p1ChatEnterText.getText().isEmpty())
-					{
-						chatDisplayBox.append(
-								"\nPlayer 1: " +
-										p1ChatEnterText.getText());
-						p1ChatEnterText.setText("");
-
-
-						model.notifyModelSubscribers();
-					}
-				}
-			}
-		});
+		gbc.fill= GridBagConstraints.BOTH;
 		
-		p2Send.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				synchronized(model)
-				{
-					if(!p2ChatEnterText.getText().isEmpty())
-					{
-						chatDisplayBox.append(
-								"\nPlayer 2: " +
-										p2ChatEnterText.getText());
-						p2ChatEnterText.setText("");
-
-
-						model.notifyModelSubscribers();
-					}
-				}
-			}
-		});
-
-
+		chatDisplayBox.setText(((WarCardGameModel)model).chatArea.getText());
+		scrollingChat.getVerticalScrollBar().setValue(scrollingChat.getVerticalScrollBar().getMaximum());
 
 		gbc.ipady=50;
 		gbc.gridx=0;
@@ -400,52 +451,6 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 		gbc.gridx=2;
 		gbc.gridy=3;
 		this.add(p1Winpile, gbc);
-
-
-		//Box for chat
-		gbc.gridx = 3;
-		gbc.gridy = 1;
-		this.add(scrollingChat, gbc);
-
-		gbc.fill = GridBagConstraints.NONE;
-
-		if(this.socketWorker.getConnectionNumber() == 2)
-		{ 
-			gbc.gridx = 1;
-			gbc.gridy = 0;
-			this.add(p2flip, gbc);
-
-			//Chat Stuff
-			if(!this.hasTextField())
-			{
-				p2ChatEnterText.setPreferredSize(new Dimension(200, 5));
-				gbc.gridx = 3;
-				gbc.gridy = 2;
-				this.add(p2ChatEnterText, gbc);
-			}
-
-			gbc.gridx = 3;
-			gbc.gridy = 3;
-			this.add(p2Send, gbc);
-
-		}
-
-		if(this.socketWorker.getConnectionNumber() == 1)
-		{
-			gbc.gridx = 1;
-			gbc.gridy = 3;
-			this.add(p1flip, gbc);
-
-			//Chat Stuff
-			p1ChatEnterText.setPreferredSize(new Dimension(200, 5));
-			gbc.gridx = 3;
-			gbc.gridy = 2;
-			this.add(p1ChatEnterText, gbc);
-
-			gbc.gridx = 3;
-			gbc.gridy = 3;
-			this.add(p1Send, gbc);
-		}
 
 		this.setOpaque(true);	
 	}

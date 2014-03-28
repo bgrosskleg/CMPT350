@@ -1,13 +1,19 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.text.DefaultCaret;
 
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
@@ -26,6 +32,12 @@ public class WarCardGameServerView extends GenericCardGameView
 {
 	private static final long serialVersionUID = 1L;
 
+	private boolean newGame;
+	private boolean intialized;
+	
+	private JTextArea chatDisplayBox;
+	private JScrollPane scrollingChat;
+	
 	/**
 	 * creates the server model
 	 * 
@@ -34,6 +46,8 @@ public class WarCardGameServerView extends GenericCardGameView
 	public WarCardGameServerView(WarCardGameModel model)
 	{
 		super(model, null);
+		this.newGame = true;
+		this.intialized = false;
 	}
 
 	/**
@@ -67,6 +81,13 @@ public class WarCardGameServerView extends GenericCardGameView
 	{	
 		if(((WarCardGameModel) model).getPlayers().size() < ((WarCardGameModel) model).getRequiredNumberOfPlayers())
 		{
+			if(!newGame)
+			{
+				JOptionPane.showMessageDialog(null, "YOU WIN! Other player left or connection lost.");
+				newGame = true;
+				intialized = false;
+			}
+			
 			//REMAKE THE VIEW TO WAIT FOR PLAYERS
 			this.removeAll();
 
@@ -77,8 +98,10 @@ public class WarCardGameServerView extends GenericCardGameView
 		}
 		else if(((WarCardGameModel) model).getPlayers().size() == ((WarCardGameModel) model).getRequiredNumberOfPlayers())
 		{
+			newGame = false;
+			
 			//REMAKE THE VIEW TO DISPLAY GAME
-			this.removeAll();
+			this.removeOnlyCards();
 
 			//Green pepper from http://www.december.com/html/spec/color2.html
 			this.setBackground(new Color(0x39, 0x7D, 0x02));
@@ -99,6 +122,27 @@ public class WarCardGameServerView extends GenericCardGameView
 	private GenericCardGameCardListView p2Deck;
 	private GenericCardGameCardListView p1Winpile;
 	private GenericCardGameCardListView p2Winpile;
+	
+	private void removeOnlyCards()
+	{
+		ArrayList<Component> compList = new ArrayList<Component>();
+		for(int i = 0; i < this.getComponentCount(); i++)
+		{
+			Component c = this.getComponent(i);
+			if(c instanceof JTextField || c instanceof JTextArea || c instanceof JButton || c instanceof JScrollPane)
+			{
+				//Do nothing
+			}
+			else
+			{
+				compList.add(c);
+			}
+		}
+		while(!compList.isEmpty())
+		{
+			this.remove(compList.remove(0));
+		}
+	}
 
 	/**
 	 * creates the GameBoardView that the player sees on their screen
@@ -120,7 +164,7 @@ public class WarCardGameServerView extends GenericCardGameView
 		 * 		|		|p2		|		|
 		 *y1	|		|card	|		|
 		 * 		|		|played	|		|
-		 * 		|_______|_______|_______|
+		 * 		|_______|_______|_______|		chat
 		 * 		|		|p1		|		|
 		 *y2 	|		|card	|		|
 		 * 		|		|played	|		|
@@ -142,24 +186,51 @@ public class WarCardGameServerView extends GenericCardGameView
 		gbc.weightx = 0.33;
 		gbc.weighty = 0.25;
 
-		//TODO  Make all the appropriate fields in the player object
+		//TODO  Make all the approriate fields in the player object
 		p1Deck = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).flipDeck);
 		p2Deck = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).flipDeck);
 		p1Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(0)).winPile);
 		p2Winpile = new GenericCardGameCardListView(((WarCardGamePlayer)((WarCardGameModel)model).getPlayers().get(1)).winPile);
+
+						
+		//CARD FLIPPING
+		if(!this.intialized)
+		{
+			gbc.fill = GridBagConstraints.NONE;	
 		
-		//Chat box
-		final JTextArea chatDisplayBox = ((WarCardGameModel)model).chatArea;
-		chatDisplayBox.setEditable(false);
-		chatDisplayBox.setCursor(null);
-		chatDisplayBox.setOpaque(true);
-		chatDisplayBox.setFocusable(false);
-		chatDisplayBox.setLineWrap(true);
-		chatDisplayBox.setWrapStyleWord(true);
-
-		final JScrollPane scrollingChat = new JScrollPane(chatDisplayBox);
-		scrollingChat.setPreferredSize(new Dimension(200,100));
-
+			//CHAT AREA
+			
+			final int chatWidth = 300;
+			final int chatHeight = 400;		
+			
+			chatDisplayBox = ((WarCardGameModel)model).chatArea;
+			chatDisplayBox.setEditable(false);
+			chatDisplayBox.setCursor(null);
+			chatDisplayBox.setOpaque(true);
+			chatDisplayBox.setFocusable(false);
+			chatDisplayBox.setLineWrap(true);
+			chatDisplayBox.setWrapStyleWord(true);
+			
+			DefaultCaret caret1 = (DefaultCaret) ((WarCardGameModel)model).chatArea.getCaret();
+			caret1.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+			
+			scrollingChat = new JScrollPane(chatDisplayBox);
+		
+			//Box for chat
+			scrollingChat.setPreferredSize(new Dimension(chatWidth, chatHeight));
+			scrollingChat.setMinimumSize(getPreferredSize());
+			gbc.gridx = 3;
+			gbc.gridy = 1;
+			this.add(scrollingChat, gbc);
+		
+				
+			this.intialized = true;
+		}
+		
+		gbc.fill= GridBagConstraints.BOTH;
+		
+		chatDisplayBox.setText(((WarCardGameModel)model).chatArea.getText());
+		scrollingChat.getVerticalScrollBar().setValue(scrollingChat.getVerticalScrollBar().getMaximum());
 
 		gbc.ipady=50;
 		gbc.gridx=0;
@@ -205,13 +276,6 @@ public class WarCardGameServerView extends GenericCardGameView
 		gbc.gridx=2;
 		gbc.gridy=3;
 		this.add(p1Winpile, gbc);
-
-		//Box for chat
-		gbc.gridx = 3;
-		gbc.gridy = 1;
-		this.add(scrollingChat, gbc);
-
-		gbc.fill = GridBagConstraints.NONE;
 
 		this.setOpaque(true);	
 	}
