@@ -7,6 +7,7 @@ import controller.WarCardGameClientAppletSocketWorker;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import model.WarCardGameModel;
 import model.WarCardGamePlayer;
@@ -87,7 +88,7 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 			newGame = false;
 			
 			//REMAKE THE VIEW TO DISPLAY GAME
-			this.removeAll();
+			this.removeAllButTextBox();
 
 			//Green pepper from http://www.december.com/html/spec/color2.html
 			this.setBackground(new Color(0x39, 0x7D, 0x02));
@@ -108,6 +109,39 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 	private GenericCardGameCardListView p2Deck;
 	private GenericCardGameCardListView p1Winpile;
 	private GenericCardGameCardListView p2Winpile;
+
+	private void removeAllButTextBox()
+	{
+		ArrayList<Component> compList = new ArrayList<Component>();
+		for(int i = 0; i < this.getComponentCount(); i++)
+		{
+			Component c = this.getComponent(i);
+			if(c instanceof JTextField)
+			{
+				
+			}
+			else
+			{
+				compList.add(c);
+			}
+		}
+		while(!compList.isEmpty())
+		{
+			this.remove(compList.remove(0));
+		}
+	}
+
+	private boolean hasTextField()
+	{
+		for(int i = 0; i < this.getComponentCount(); i++)
+		{
+			if(this.getComponent(i) instanceof JTextField)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * creates the GameBoardView that the player sees on their screen
@@ -317,10 +351,13 @@ public class WarCardGameClientAppletView extends GenericCardGameView
 			this.add(p2flip, gbc);
 
 			//Chat Stuff
-			p2ChatEnterText.setPreferredSize(new Dimension(200, 5));
-			gbc.gridx = 3;
-			gbc.gridy = 2;
-			this.add(p2ChatEnterText, gbc);
+			if(!this.hasTextField())
+			{
+				p2ChatEnterText.setPreferredSize(new Dimension(200, 5));
+				gbc.gridx = 3;
+				gbc.gridy = 2;
+				this.add(p2ChatEnterText, gbc);
+			}
 
 			gbc.gridx = 3;
 			gbc.gridy = 3;
